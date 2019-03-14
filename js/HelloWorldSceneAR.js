@@ -79,20 +79,6 @@ export default class HelloWorldSceneAR extends Component {
   render() {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized}>
-        <ViroText
-          text={this.state.text}
-          scale={[0.5, 0.5, 0.5]}
-          position={[0, 0, -1]}
-          style={styles.helloWorldTextStyle}
-        />
-
-        <ViroBox
-          materials={["grid"]}
-          position={[0, -0.5, -1]}
-          scale={[0.3, 0.3, 0.1]}
-          animation={{ name: "rotate", run: true, loop: true }}
-        />
-
         <ViroAmbientLight color={"#aaaaaa"} />
 
         <ViroSpotLight
@@ -105,23 +91,6 @@ export default class HelloWorldSceneAR extends Component {
         />
 
         <ViroNode>
-          <Viro3DObject
-            dragType="FixedDistance"
-            onDrag={() => {}}
-            source={require("./res/emoji_smile/emoji_smile.vrx")}
-            resources={[
-              require("./res/emoji_smile/emoji_smile_diffuse.png"),
-              require("./res/emoji_smile/emoji_smile_normal.png"),
-              require("./res/emoji_smile/emoji_smile_specular.png")
-            ]}
-            position={[-0.5, 0.5, -1]}
-            scale={this.state.scale}
-            rotation={this.state.rotation}
-            onPinch={this._onPinch}
-            onRotate={this._onRotate}
-            type="VRX"
-          />
-
           {/* stool below */}
           {/* <Viro3DObject
             dragType="FixedDistance"
@@ -135,10 +104,24 @@ export default class HelloWorldSceneAR extends Component {
           /> */}
           <ViroARPlaneSelector>
             <Viro3DObject
-              dragType="FixedDistance"
+              dragType="FixedToWorld"
               onDrag={() => {}}
               source={require("./res/sofa/model.obj")}
               resources={[require("./res/sofa/materials.mtl")]}
+              position={[0, 0, 0]}
+              scale={this.state.scale}
+              rotation={this.state.rotation}
+              onPinch={this._onPinch}
+              onRotate={this._onRotate}
+              type="OBJ"
+            />
+          </ViroARPlaneSelector>
+
+          <ViroARPlaneSelector>
+            <Viro3DObject
+              source={require("./res/chair/models.obj")}
+              resources={[require("./res/chair/materials.mtl")]}
+              // position={[0, 0.5, 0]}
               scale={this.state.scale}
               rotation={this.state.rotation}
               onPinch={this._onPinch}
