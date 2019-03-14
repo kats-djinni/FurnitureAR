@@ -24,12 +24,14 @@ export default class HelloWorldSceneAR extends Component {
     // Set initial state here
     this.state = {
       text: "Initializing AR...",
-      rotation: [0, 0, 0]
+      rotation: [0, 0, 0],
+      scale: [1, 1, 1]
     };
 
     // bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
     this._onRotate = this._onRotate.bind(this);
+    this._onPinch = this._onPinch.bind(this);
   }
   _onInitialized(state, reason) {
     if (state == ViroConstants.TRACKING_NORMAL) {
@@ -56,6 +58,18 @@ export default class HelloWorldSceneAR extends Component {
           this.state.rotation[0],
           this.state.rotation[1] + rotationFactor,
           this.state.rotation[2]
+        ]
+      });
+    }
+  }
+
+  _onPinch(pinchState, scaleFactor, source) {
+    if (pinchState === 3) {
+      this.setState({
+        scale: [
+          this.state.scale[0] * scaleFactor,
+          this.state.scale[1] * scaleFactor,
+          this.state.scale[2] * scaleFactor
         ]
       });
     }
@@ -100,8 +114,9 @@ export default class HelloWorldSceneAR extends Component {
               require("./res/emoji_smile/emoji_smile_specular.png")
             ]}
             position={[-0.5, 0.5, -1]}
-            scale={[0.2, 0.2, 0.2]}
+            scale={this.state.scale}
             rotation={this.state.rotation}
+            onPinch={this._onPinch}
             onRotate={this._onRotate}
             type="VRX"
           />
