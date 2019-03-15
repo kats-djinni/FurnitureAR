@@ -25,7 +25,7 @@ import {
   ViroARSceneNavigator
 } from 'react-viro'
 
-import { Overlay } from 'react-native-elements'
+import { Overlay, Icon } from 'react-native-elements'
 import AllProducts from './js/AllProductPage'
 
 /*
@@ -64,9 +64,13 @@ export default class ViroSample extends Component {
 
         <ViroARSceneNavigator style={localStyles.arView} {...this.state.sharedProps}
           initialScene={{scene: InitialARScene}} />
-        <View style={{position: 'absolute',  left: 0, right: 0, bottom: 77, alignItems: 'center'}}>
+        <View style={localStyles.navBar}>
           <TouchableHighlight underlayColor={'#00000000'} 
             onPress={this.testButton}>
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+          </TouchableHighlight>
+
+          <TouchableHighlight underlayColor={'#00000000'} >
             <Image source={require("./js/res/btn_mode_objects.png")} />
           </TouchableHighlight>
 
@@ -111,6 +115,16 @@ var localStyles = StyleSheet.create({
     borderWidth: 1,
     // borderColor: '#ffffff00',
     borderColor: '#00000000'
+  },
+
+  navBar: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: "space-around",
+    position: 'absolute',  
+    left: 0, 
+    right: 0, 
+    bottom: 77
   }
 });
 
