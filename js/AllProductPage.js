@@ -2,15 +2,15 @@
 
 import React, { Component } from "react";
 
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, Button } from "react-native";
 // import console = require("console");
 import store from "./store";
 import { connect } from "react-redux";
 import { getAllProducts } from "./store/products";
 
 class AllProductPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       products: []
     };
@@ -21,6 +21,7 @@ class AllProductPage extends Component {
   }
 
   render() {
+    
     return (
       <View style={styles.AllProductPage}>
         <Text style={styles.AllProductPage}>Choose Products</Text>
@@ -31,7 +32,13 @@ class AllProductPage extends Component {
               <Image
                 style={{ width: 200, height: 200 }}
                 source={{ uri: item.thumbnail }}
+                // onPress ={(item) => this.props.pickItem(item)}
               />
+              <Button
+              onPress={(item) => this.props.pickItem(item)}
+            title="Press Me"
+          />
+              
             </View>
           );
         })}

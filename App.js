@@ -27,6 +27,9 @@ import {
 
 import { Overlay } from 'react-native-elements'
 import AllProducts from './js/AllProductPage'
+import { conditionalExpression } from '@babel/types';
+
+
 
 /*
  TODO: Insert your API key below
@@ -48,17 +51,27 @@ export default class ViroSample extends Component {
 
     this.state = {
       sharedProps : sharedProps,
-      isVisible: false
+      isVisible: false,
+      pickedProducts: []
     }
   }
 
   testButton = () => {
     this.setState({isVisible: true})
   }
+  
+  handlePress = (event) =>{
+    // this.setState({
+    //    pickedProducts: event
+    // })
+    console.log(event)
+    
+  }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
+    console.log("do I see it?",this.state.pickedProducts)
     return(
       <View style={localStyles.outer} >
 
@@ -82,7 +95,7 @@ export default class ViroSample extends Component {
           width="auto"
           height="auto"
           onBackdropPress={() => this.setState({ isVisible: false })}>
-            <AllProducts />
+            <AllProducts pickItem={this.handlePress} />
         </Overlay> 
 
       </View>
