@@ -7,7 +7,7 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import store from "./store";
 import { connect } from "react-redux";
 
-export default class AllProductPage extends Component {
+class AllProductPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -54,4 +54,4 @@ const mapStateToProps = state => ({
   products: state.products.products
 });
 
-module.exports = connect(mapStateToProps)(AllProductPage);
+export default connect(mapStateToProps)(AllProductPage);
