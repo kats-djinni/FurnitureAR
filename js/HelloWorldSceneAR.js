@@ -101,13 +101,21 @@ export default class HelloWorldSceneAR extends Component {
             position={[-0.5, 0.5, -1]}
             scale={[0.007, 0.007, 0.007]}
             type="OBJ"
-          /> */}
+            /> */}
           <ViroARPlaneSelector>
             <Viro3DObject
               dragType="FixedToWorld"
               onDrag={() => {}}
-              source={require("./res/sofa/model.obj")}
-              resources={[require("./res/sofa/materials.mtl")]}
+              source={{
+                uri:
+                  "https://poly.googleapis.com/downloads/fp/1552556729377784/7Q_Ab2HLll1/c7YDClm08KI/model.obj"
+              }}
+              resources={[
+                {
+                  uri:
+                    "https://poly.googleapis.com/downloads/fp/1552556729377784/7Q_Ab2HLll1/c7YDClm08KI/materials.mtl"
+                }
+              ]}
               position={[0, 0, 0]}
               scale={this.state.scale}
               rotation={this.state.rotation}
@@ -116,11 +124,21 @@ export default class HelloWorldSceneAR extends Component {
               type="OBJ"
             />
           </ViroARPlaneSelector>
+        </ViroNode>
 
+        <ViroNode>
           <ViroARPlaneSelector>
             <Viro3DObject
-              source={require("./res/chair/models.obj")}
-              resources={[require("./res/chair/materials.mtl")]}
+              source={{
+                uri:
+                  "https://poly.googleapis.com/downloads/fp/1551711596400293/3txPAhYeu-x/3DjXPukLzqV/model.obj"
+              }}
+              resources={[
+                {
+                  uri:
+                    "https://poly.googleapis.com/downloads/fp/1551711596400293/3txPAhYeu-x/3DjXPukLzqV/materials.mtl"
+                }
+              ]}
               // position={[0, 0.5, 0]}
               scale={this.state.scale}
               rotation={this.state.rotation}

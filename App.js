@@ -32,12 +32,14 @@ var sharedProps = {
 }
 
 // Sets the default scene you want for AR and VR
-var InitialARScene = require('./js/HelloWorldSceneAR')
-var InitialVRScene = require('./js/HelloWorldScene')
+var InitialARScene = require('./js/HelloWorldSceneAR');
+var InitialVRScene = require('./js/HelloWorldScene');
+var AllProductPage = require('./js/AllProductPage');
 
 var UNSET = "UNSET";
-var VR_NAVIGATOR_TYPE = "VR"
-var AR_NAVIGATOR_TYPE = "AR"
+var VR_NAVIGATOR_TYPE = "VR";
+var AR_NAVIGATOR_TYPE = "AR";
+var All_PRODUCT = 'All_PRODUCT'
 
 // This determines which type of experience to launch in, or UNSET, if the user should
 // be presented with a choice of AR or VR. By default, we offer the user a choice.
@@ -45,28 +47,31 @@ var defaultNavigatorType = UNSET;
 
 export default class ViroSample extends Component {
   constructor() {
-    super()
+    super();
 
     this.state = {
       navigatorType : defaultNavigatorType,
       sharedProps : sharedProps
     }
-    this._getExperienceSelector = this._getExperienceSelector.bind(this)
-    this._getARNavigator = this._getARNavigator.bind(this)
-    this._getVRNavigator = this._getVRNavigator.bind(this)
-    this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(this)
-    this._exitViro = this._exitViro.bind(this)
+    this._getExperienceSelector = this._getExperienceSelector.bind(this);
+    this._getARNavigator = this._getARNavigator.bind(this);
+    this._getVRNavigator = this._getVRNavigator.bind(this);
+    this._getAllProductNavigator = this._getAllProductNavigator.bind(this)
+    this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(this);
+    this._exitViro = this._exitViro.bind(this);
   }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
     if (this.state.navigatorType == UNSET) {
-      return this._getExperienceSelector()
+      return this._getExperienceSelector();
     } else if (this.state.navigatorType == VR_NAVIGATOR_TYPE) {
-      return this._getVRNavigator()
+      return this._getVRNavigator();
     } else if (this.state.navigatorType == AR_NAVIGATOR_TYPE) {
-      return this._getARNavigator()
+      return this._getARNavigator();
+    } else if (this.state.navigatorType == All_PRODUCT){
+      return this._getAllProductNavigator();
     }
   }
 
@@ -93,6 +98,14 @@ export default class ViroSample extends Component {
 
             <Text style={localStyles.buttonText}>VR</Text>
           </TouchableHighlight>
+          
+          <TouchableHighlight style={localStyles.buttons}
+            onPress={this._getExperienceButtonOnPress(All_PRODUCT)}
+            underlayColor={'#68a0ff'} >
+
+            <Text style={localStyles.buttonText}>All Product</Text>
+          </TouchableHighlight>
+          
         </View>
       </View>
     );
@@ -114,6 +127,14 @@ export default class ViroSample extends Component {
     );
   }
 
+  _getAllProductNavigator() {
+    return (
+      <View>
+        <AllProductPage />  
+      </View>
+    );
+  }
+  
   // This function returns an anonymous/lambda function to be used
   // by the experience selector buttons
   _getExperienceButtonOnPress(navigatorType) {
