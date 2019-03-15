@@ -23,7 +23,7 @@ class AllProductPage extends Component {
   render() {
     return (
       <View style={styles.AllProductPage}>
-        <Text style={styles.AllProductPage}>This is All Product Page!!!!!</Text>
+        <Text style={styles.AllProductPage}>Choose Products</Text>
         {this.props.products.map((item, index) => {
           return (
             <View key={index}>
@@ -47,7 +47,10 @@ var styles = StyleSheet.create({
     color: "#000000",
     textAlignVertical: "center",
     textAlign: "center",
-    marginTop: 20
+    margin: 20
+  },
+  SingleItem: {
+    flex: 1
   }
 });
 
