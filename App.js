@@ -35,39 +35,34 @@ var sharedProps = {
 // Sets the default scene you want for AR and VR
 var InitialARScene = require('./js/HelloWorldSceneAR')
 
-// var UNSET = "UNSET";
-// var AR_NAVIGATOR_TYPE = "AR"
-
 // This determines which type of experience to launch in, or UNSET, if the user should
 // be presented with a choice of AR or VR. By default, we offer the user a choice.
 // var defaultNavigatorType = UNSET;
 
 export default class ViroSample extends Component {
   constructor() {
-    super()
+    super();
 
     this.state = {
       sharedProps : sharedProps
     }
-
   }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
-  
-  return(
-    <View style={localStyles.outer} >
+    return(
+      <View style={localStyles.outer} >
 
-      <ViroARSceneNavigator style={localStyles.arView} {...this.state.sharedProps}
-        initialScene={{scene: InitialARScene}} />
-      <View style={{position: 'absolute',  left: 0, right: 0, bottom: 77, alignItems: 'center'}}>
-        <TouchableHighlight underlayColor={'#00000000'} >
-          <Image source={require("./js/res/btn_mode_objects.png")} />
-        </TouchableHighlight>
+        <ViroARSceneNavigator style={localStyles.arView} {...this.state.sharedProps}
+          initialScene={{scene: InitialARScene}} />
+        <View style={{position: 'absolute',  left: 0, right: 0, bottom: 77, alignItems: 'center'}}>
+          <TouchableHighlight underlayColor={'#00000000'} >
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+          </TouchableHighlight>
+        </View>
       </View>
-    </View>
-  )
+    )
   }
 }
 
