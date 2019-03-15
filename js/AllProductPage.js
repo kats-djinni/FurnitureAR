@@ -62,7 +62,4 @@ const mapDispatchToProps = dispatch => ({
   getProducts: () => dispatch(getAllProducts())
 });
 
-module.exports = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AllProductPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AllProductPage);

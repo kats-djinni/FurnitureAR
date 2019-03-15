@@ -15,6 +15,7 @@ import {
   StyleSheet,
   PixelRatio,
   TouchableHighlight,
+  Image
 } from 'react-native';
 
 import {
@@ -22,7 +23,10 @@ import {
   ViroMaterials,
   ViroVRSceneNavigator,
   ViroARSceneNavigator
-} from 'react-viro';
+} from 'react-viro'
+
+import { Overlay } from 'react-native-elements'
+import AllProducts from './js/AllProductPage'
 
 /*
  TODO: Insert your API key below
@@ -32,179 +36,81 @@ var sharedProps = {
 }
 
 // Sets the default scene you want for AR and VR
-var InitialARScene = require('./js/HelloWorldSceneAR');
-var InitialVRScene = require('./js/HelloWorldScene');
-var AllProductPage = require('./js/AllProductPage');
-
-var UNSET = "UNSET";
-var VR_NAVIGATOR_TYPE = "VR";
-var AR_NAVIGATOR_TYPE = "AR";
-var All_PRODUCT = 'All_PRODUCT'
+var InitialARScene = require('./js/HelloWorldSceneAR')
 
 // This determines which type of experience to launch in, or UNSET, if the user should
 // be presented with a choice of AR or VR. By default, we offer the user a choice.
-var defaultNavigatorType = UNSET;
+// var defaultNavigatorType = UNSET;
 
 export default class ViroSample extends Component {
   constructor() {
     super();
 
     this.state = {
-      navigatorType : defaultNavigatorType,
-      sharedProps : sharedProps
+      sharedProps : sharedProps,
+      isVisible: false
     }
-    this._getExperienceSelector = this._getExperienceSelector.bind(this);
-    this._getARNavigator = this._getARNavigator.bind(this);
-    this._getVRNavigator = this._getVRNavigator.bind(this);
-    this._getAllProductNavigator = this._getAllProductNavigator.bind(this)
-    this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(this);
-    this._exitViro = this._exitViro.bind(this);
+  }
+
+  testButton = () => {
+    this.setState({isVisible: true})
   }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
-    if (this.state.navigatorType == UNSET) {
-      return this._getExperienceSelector();
-    } else if (this.state.navigatorType == VR_NAVIGATOR_TYPE) {
-      return this._getVRNavigator();
-    } else if (this.state.navigatorType == AR_NAVIGATOR_TYPE) {
-      return this._getARNavigator();
-    } else if (this.state.navigatorType == All_PRODUCT){
-      return this._getAllProductNavigator();
-    }
-  }
-
-  // Presents the user with a choice of an AR or VR experience
-  _getExperienceSelector() {
-    return (
+    return(
       <View style={localStyles.outer} >
-        <View style={localStyles.inner} >
 
-          <Text style={localStyles.titleText}>
-            Choose your desired experience:
-          </Text>
-
-          <TouchableHighlight style={localStyles.buttons}
-            onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
-            underlayColor={'#68a0ff'} >
-
-            <Text style={localStyles.buttonText}>AR</Text>
+        <ViroARSceneNavigator style={localStyles.arView} {...this.state.sharedProps}
+          initialScene={{scene: InitialARScene}} />
+        <View style={{position: 'absolute',  left: 0, right: 0, bottom: 77, alignItems: 'center'}}>
+          <TouchableHighlight underlayColor={'#00000000'} 
+            onPress={this.testButton}>
+            <Image source={require("./js/res/btn_mode_objects.png")} />
           </TouchableHighlight>
 
-          <TouchableHighlight style={localStyles.buttons}
-            onPress={this._getExperienceButtonOnPress(VR_NAVIGATOR_TYPE)}
-            underlayColor={'#68a0ff'} >
-
-            <Text style={localStyles.buttonText}>VR</Text>
+          <TouchableHighlight underlayColor={'#00000000'} >
+            <Image source={require("./js/res/btn_mode_objects.png")} />
           </TouchableHighlight>
-          
-          <TouchableHighlight style={localStyles.buttons}
-            onPress={this._getExperienceButtonOnPress(All_PRODUCT)}
-            underlayColor={'#68a0ff'} >
-
-            <Text style={localStyles.buttonText}>All Product</Text>
-          </TouchableHighlight>
-          
         </View>
+
+        <Overlay 
+          isVisible={this.state.isVisible} 
+          overlayBackgroundColor="#ACC6C7"
+          // windowBackgroundColor="gray"
+          width="auto"
+          height="auto"
+          onBackdropPress={() => this.setState({ isVisible: false })}>
+            <AllProducts />
+        </Overlay> 
+
       </View>
-    );
-  }
-
-  // Returns the ViroARSceneNavigator which will start the AR experience
-  _getARNavigator() {
-    return (
-      <ViroARSceneNavigator {...this.state.sharedProps}
-        initialScene={{scene: InitialARScene}} />
-    );
-  }
-  
-  // Returns the ViroSceneNavigator which will start the VR experience
-  _getVRNavigator() {
-    return (
-      <ViroVRSceneNavigator {...this.state.sharedProps}
-        initialScene={{scene: InitialVRScene}} onExitViro={this._exitViro}/>
-    );
-  }
-
-  _getAllProductNavigator() {
-    return (
-      <View>
-        <AllProductPage />  
-      </View>
-    );
-  }
-  
-  // This function returns an anonymous/lambda function to be used
-  // by the experience selector buttons
-  _getExperienceButtonOnPress(navigatorType) {
-    return () => {
-      this.setState({
-        navigatorType : navigatorType
-      })
-    }
-  }
-
-  // This function "exits" Viro by setting the navigatorType to UNSET.
-  _exitViro() {
-    this.setState({
-      navigatorType : UNSET
-    })
+    )
   }
 }
 
 var localStyles = StyleSheet.create({
-  viroContainer :{
-    flex : 1,
-    backgroundColor: "black",
-  },
   outer : {
     flex : 1,
-    flexDirection: 'row',
-    alignItems:'center',
-    backgroundColor: "black",
   },
-  inner: {
-    flex : 1,
-    flexDirection: 'column',
-    alignItems:'center',
-    backgroundColor: "black",
+
+  arView: {
+    flex:1,
   },
-  titleText: {
-    paddingTop: 30,
-    paddingBottom: 20,
-    color:'#fff',
-    textAlign:'center',
-    fontSize : 25
-  },
-  buttonText: {
-    color:'#fff',
-    textAlign:'center',
-    fontSize : 20
-  },
+
   buttons : {
     height: 80,
-    width: 150,
+    width: 80,
     paddingTop:20,
     paddingBottom:20,
     marginTop: 10,
     marginBottom: 10,
-    backgroundColor:'#68a0cf',
+    backgroundColor:'#f0f8ff',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#fff',
-  },
-  exitButton : {
-    height: 50,
-    width: 100,
-    paddingTop:10,
-    paddingBottom:10,
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor:'#68a0cf',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#fff',
+    // borderColor: '#ffffff00',
+    borderColor: '#00000000'
   }
 });
 
