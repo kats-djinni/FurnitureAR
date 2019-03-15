@@ -6,8 +6,9 @@ import { StyleSheet, View, Text, Image } from "react-native";
 // import console = require("console");
 import store from "./store";
 import { connect } from "react-redux";
+import { getAllProducts } from "./store/products";
 
-export default class AllProductPage extends Component {
+class AllProductPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -16,16 +17,16 @@ export default class AllProductPage extends Component {
   }
 
   componentDidMount() {
-    store.getState();
+    this.props.getProducts();
   }
 
   render() {
     return (
       <View style={styles.AllProductPage}>
         <Text style={styles.AllProductPage}>This is All Product Page!!!!!</Text>
-        {this.props.products.map(item => {
+        {this.props.products.map((item, index) => {
           return (
-            <View>
+            <View key={index}>
               <Text>Name: {item.displayName}</Text>
               <Image
                 style={{ width: 200, height: 200 }}
@@ -54,4 +55,11 @@ const mapStateToProps = state => ({
   products: state.products.products
 });
 
-module.exports = connect(mapStateToProps)(AllProductPage);
+const mapDispatchToProps = dispatch => ({
+  getProducts: () => dispatch(getAllProducts())
+});
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AllProductPage);
