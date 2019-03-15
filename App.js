@@ -23,7 +23,10 @@ import {
   ViroMaterials,
   ViroVRSceneNavigator,
   ViroARSceneNavigator
-} from 'react-viro';
+} from 'react-viro'
+
+import { Overlay } from 'react-native-elements'
+import AllProducts from './js/AllProductPage'
 
 /*
  TODO: Insert your API key below
@@ -44,8 +47,13 @@ export default class ViroSample extends Component {
     super();
 
     this.state = {
-      sharedProps : sharedProps
+      sharedProps : sharedProps,
+      isVisible: false
     }
+  }
+
+  testButton = () => {
+    this.setState({isVisible: true})
   }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
@@ -57,10 +65,26 @@ export default class ViroSample extends Component {
         <ViroARSceneNavigator style={localStyles.arView} {...this.state.sharedProps}
           initialScene={{scene: InitialARScene}} />
         <View style={{position: 'absolute',  left: 0, right: 0, bottom: 77, alignItems: 'center'}}>
+          <TouchableHighlight underlayColor={'#00000000'} 
+            onPress={this.testButton}>
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+          </TouchableHighlight>
+
           <TouchableHighlight underlayColor={'#00000000'} >
             <Image source={require("./js/res/btn_mode_objects.png")} />
           </TouchableHighlight>
         </View>
+
+        <Overlay 
+          isVisible={this.state.isVisible} 
+          overlayBackgroundColor="#ACC6C7"
+          // windowBackgroundColor="gray"
+          width="auto"
+          height="auto"
+          onBackdropPress={() => this.setState({ isVisible: false })}>
+            <AllProducts />
+        </Overlay> 
+
       </View>
     )
   }
