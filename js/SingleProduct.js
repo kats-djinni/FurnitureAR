@@ -25,6 +25,7 @@ export default  class SingleProduct extends Component{
           }
           this._onRotate = this._onRotate.bind(this);
           this._onPinch = this._onPinch.bind(this);
+          this._onClick = this._onClick.bind(this)
     }
 
     _onRotate(rotateState, rotationFactor, source) {
@@ -58,6 +59,10 @@ export default  class SingleProduct extends Component{
           });
         }
       }
+      
+      _onClick (event) {
+        console.log('im inside Single Product', event)
+      }
 
     render(){
         return(
@@ -79,6 +84,7 @@ export default  class SingleProduct extends Component{
                     onPinch={this._onPinch}
                     onRotate={this._onRotate}
                     type="OBJ"
+                    onClick={() => this._onClick(this.props.item)}
                     />
                     </ViroARPlaneSelector>
                 </ViroNode>

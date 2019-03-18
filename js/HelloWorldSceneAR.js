@@ -25,16 +25,11 @@ export default class HelloWorldSceneAR extends Component {
 
     // Set initial state here
     this.state = {
-      // text: "Initializing AR...",
-      // rotation: [0, 0, 0],
-      // scale: [1, 1, 1]
     };
 
 
     // bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
-    // this._onRotate = this._onRotate.bind(this);
-    // this._onPinch = this._onPinch.bind(this);
     this._render3DObj = this._render3DObj.bind(this)
     this._defaultView = this._defaultView.bind(this)
   }
@@ -116,13 +111,9 @@ ViroAnimations.registerAnimations({
   }
 });
 
-// module.exports = HelloWorldSceneAR;
 const mapStateToProps = state => ({
   products: state.products.pickedProducts
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   getProducts: () => dispatch(getAllProducts())
-// });
 
 module.exports = connect(mapStateToProps, null)(HelloWorldSceneAR);

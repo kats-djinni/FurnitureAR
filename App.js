@@ -55,8 +55,8 @@ export default class ViroSample extends Component {
     this.state = {
       sharedProps : sharedProps,
       isVisible: false,
-      visibleFavorites: false
-
+      visibleFavorites: false,
+      // isDeleteVisible: false
     }
   }
 
@@ -88,7 +88,8 @@ export default class ViroSample extends Component {
         <View style={localStyles.navBar}>
       
           <TouchableHighlight underlayColor={'#00000000'} 
-            onPress={this.productsButton}>
+            onPress={this.productsButton}
+            >
             <Image source={require("./js/res/btn_mode_objects.png")} />
           </TouchableHighlight>
 
@@ -100,8 +101,16 @@ export default class ViroSample extends Component {
           <TouchableHighlight underlayColor={'#00000000'} >
             <Image source={require("./js/res/btn_mode_objects.png")} />
           </TouchableHighlight>
+          
+
         </View>
 
+        {/* <View style={display}>
+        <TouchableHighlight underlayColor={'#00000000'} >
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+        </TouchableHighlight>
+        </View> */}
+        
         <Overlay 
           isVisible={this.state.isVisible} 
           overlayBackgroundColor="#ACC6C7"
