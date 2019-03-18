@@ -8,6 +8,7 @@
  */
 
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   AppRegistry,
   Text,
@@ -50,7 +51,6 @@ export default class ViroSample extends Component {
 
     this.state = {
       sharedProps: sharedProps,
-
       isVisible: false,
       visibleFavorites: false
     };
@@ -58,6 +58,10 @@ export default class ViroSample extends Component {
 
   productsButton = () => {
     this.setState({ isVisible: true });
+  };
+
+  changeVisibility = () => {
+    this.setState({ isVisible: !this.state.isVisible });
   };
 
   favoritesButton = () => {
@@ -69,6 +73,7 @@ export default class ViroSample extends Component {
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
+    console.log("do I have product, in App", this.props.pickedItem);
     return (
       <View style={localStyles.outer}>
         <ViroARSceneNavigator
@@ -100,12 +105,11 @@ export default class ViroSample extends Component {
         <Overlay
           isVisible={this.state.isVisible}
           overlayBackgroundColor="#ACC6C7"
-          // windowBackgroundColor="gray"
           width="auto"
           height="auto"
           onBackdropPress={() => this.setState({ isVisible: false })}
         >
-          <AllProducts />
+          <AllProducts visibilityChange={this.changeVisibility} />
         </Overlay>
 
         <Overlay
@@ -156,4 +160,17 @@ var localStyles = StyleSheet.create({
   }
 });
 
-module.exports = ViroSample;
+// module.exports = ViroSample
+const mapStateToProps = state => ({
+  products: state.products.products,
+  pickedItem: state.products.pickedProducts
+});
+
+// const mapDispatchToProps = dispatch => ({
+//   getProducts: () => dispatch(getAllProducts())
+// });
+
+module.exports = connect(
+  mapStateToProps,
+  null
+)(ViroSample);
