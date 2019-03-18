@@ -27,6 +27,8 @@ import {
 
 import { Overlay } from 'react-native-elements'
 import AllProducts from './js/AllProductPage'
+import FavoritesPage from './js/FavoritesPage'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 /*
  TODO: Insert your API key below
@@ -48,12 +50,19 @@ export default class ViroSample extends Component {
 
     this.state = {
       sharedProps : sharedProps,
-      isVisible: false
+      isVisible: false,
+      visibleFavorites: false
     }
   }
 
-  testButton = () => {
+  productsButton = () => {
     this.setState({isVisible: true})
+  }
+
+  favoritesButton = () => {
+    this.setState({
+      visibleFavorites: true
+    })
   }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
@@ -66,23 +75,33 @@ export default class ViroSample extends Component {
           initialScene={{scene: InitialARScene}} />
         <View style={{position: 'absolute',  left: 0, right: 0, bottom: 77, alignItems: 'center'}}>
           <TouchableHighlight underlayColor={'#00000000'} 
-            onPress={this.testButton}>
-            <Image source={require("./js/res/btn_mode_objects.png")} />
+            onPress={this.productsButton}>
+            <Icon name="add-circle-outline" type="ion-icon" />
           </TouchableHighlight>
 
-          <TouchableHighlight underlayColor={'#00000000'} >
-            <Image source={require("./js/res/btn_mode_objects.png")} />
+          <TouchableHighlight underlayColor={'#00000000'}
+            onPress={this.favoritesButton}>
+            <Icon name="fas fa-igloo" />
           </TouchableHighlight>
         </View>
 
         <Overlay 
           isVisible={this.state.isVisible} 
-          overlayBackgroundColor="#ACC6C7"
+          overlayBackgroundColor="#E5E8E9"
           // windowBackgroundColor="gray"
           width="auto"
           height="auto"
           onBackdropPress={() => this.setState({ isVisible: false })}>
             <AllProducts />
+        </Overlay>
+
+        <Overlay 
+          isVisible={this.state.visibleFavorites} 
+          overlayBackgroundColor="#E5E8E9"
+          width="auto"
+          height={700}
+          onBackdropPress={() => this.setState({ visibleFavorites: false })}>
+            <FavoritesPage />
         </Overlay> 
 
       </View>
