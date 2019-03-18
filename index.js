@@ -14,6 +14,8 @@ export default class Root extends Component {
   }
 }
 
+console.disableYellowBox = true;
+
 AppRegistry.registerComponent("ViroSample", () => Root);
 
 // The below line is necessary for use with the TestBed App
