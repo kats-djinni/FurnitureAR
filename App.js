@@ -26,9 +26,11 @@ import {
   ViroARSceneNavigator
 } from 'react-viro'
 
+
 import { Overlay } from 'react-native-elements'
 import AllProducts from './js/AllProductPage'
-import { conditionalExpression } from '@babel/types';
+import FavoritesPage from './js/FavoritesPage'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 
 
@@ -53,17 +55,24 @@ export default class ViroSample extends Component {
     this.state = {
       sharedProps : sharedProps,
       isVisible: false,
-      // pickedProducts: []
+      visibleFavorites: false
+
     }
   }
 
-  testButton = () => {
+  productsButton = () => {
     this.setState({isVisible: true})
   }
   
   changeVisibility = () => {
   this.setState({isVisible: !this.state.isVisible})
 }
+
+  favoritesButton = () => {
+    this.setState({
+      visibleFavorites: true
+    })
+  }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
@@ -73,11 +82,18 @@ export default class ViroSample extends Component {
       <View style={localStyles.outer} >
 
         <ViroARSceneNavigator style={localStyles.arView} {...this.state.sharedProps}
-          initialScene={{scene: InitialARScene}}
-          />
-        <View style={{position: 'absolute',  left: 0, right: 0, bottom: 77, alignItems: 'center'}}>
+
+          initialScene={{scene: InitialARScene}} />
+
+        <View style={localStyles.navBar}>
+      
           <TouchableHighlight underlayColor={'#00000000'} 
-            onPress={this.testButton}>
+            onPress={this.productsButton}>
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+          </TouchableHighlight>
+
+          <TouchableHighlight underlayColor={'#00000000'}
+            onPress={this.favoritesButton}>
             <Image source={require("./js/res/btn_mode_objects.png")} />
           </TouchableHighlight>
 
@@ -89,11 +105,19 @@ export default class ViroSample extends Component {
         <Overlay 
           isVisible={this.state.isVisible} 
           overlayBackgroundColor="#ACC6C7"
-          // windowBackgroundColor="gray"
           width="auto"
           height="auto"
           onBackdropPress={() => this.setState({ isVisible: false })}>
             <AllProducts visibilityChange={this.changeVisibility} />
+        </Overlay>
+
+        <Overlay 
+          isVisible={this.state.visibleFavorites} 
+          overlayBackgroundColor="#E5E8E9"
+          width="auto"
+          height={700}
+          onBackdropPress={() => this.setState({ visibleFavorites: false })}>
+            <FavoritesPage />
         </Overlay> 
 
       </View>
@@ -122,6 +146,16 @@ var localStyles = StyleSheet.create({
     borderWidth: 1,
     // borderColor: '#ffffff00',
     borderColor: '#00000000'
+  },
+
+  navBar: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: "space-around",
+    position: 'absolute',  
+    left: 0, 
+    right: 0, 
+    bottom: 77
   }
 });
 

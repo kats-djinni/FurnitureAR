@@ -70,9 +70,11 @@ const mapStateToProps = state => ({
   products: state.products.products
 });
 
+
 const mapDispatchToProps = dispatch => ({
   getProducts: () => dispatch(getAllProducts()),
   addPickedItem: (item) => dispatch(pickProduct(item))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllProductPage);
+
