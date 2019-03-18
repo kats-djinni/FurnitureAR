@@ -58,8 +58,10 @@ const mapStateToProps = state => ({
   products: state.products.products
 });
 
+
 const mapDispatchToProps = dispatch => ({
   getProducts: () => dispatch(getAllProducts())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllProductPage);
+

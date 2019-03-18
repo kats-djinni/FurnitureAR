@@ -25,10 +25,12 @@ import {
   ViroARSceneNavigator
 } from 'react-viro'
 
+
 import { Overlay } from 'react-native-elements'
 import AllProducts from './js/AllProductPage'
 import FavoritesPage from './js/FavoritesPage'
 import Icon from 'react-native-vector-icons/FontAwesome'
+
 
 /*
  TODO: Insert your API key below
@@ -50,6 +52,7 @@ export default class ViroSample extends Component {
 
     this.state = {
       sharedProps : sharedProps,
+
       isVisible: false,
       visibleFavorites: false
     }
@@ -73,21 +76,28 @@ export default class ViroSample extends Component {
 
         <ViroARSceneNavigator style={localStyles.arView} {...this.state.sharedProps}
           initialScene={{scene: InitialARScene}} />
-        <View style={{position: 'absolute',  left: 0, right: 0, bottom: 77, alignItems: 'center'}}>
+
+        <View style={localStyles.navBar}>
           <TouchableHighlight underlayColor={'#00000000'} 
             onPress={this.productsButton}>
-            <Icon name="add-circle-outline" type="ion-icon" />
+            <Image source={require("./js/res/btn_mode_objects.png")} />
           </TouchableHighlight>
 
-          <TouchableHighlight underlayColor={'#00000000'}
+          <TouchableHighlight underlayColor={'#00000000'} >
             onPress={this.favoritesButton}>
-            <Icon name="fas fa-igloo" />
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+          </TouchableHighlight>
+
+          <TouchableHighlight underlayColor={'#00000000'} >
+            <Image source={require("./js/res/btn_mode_objects.png")} />
           </TouchableHighlight>
         </View>
 
         <Overlay 
           isVisible={this.state.isVisible} 
-          overlayBackgroundColor="#E5E8E9"
+
+          overlayBackgroundColor="#ACC6C7"
+
           // windowBackgroundColor="gray"
           width="auto"
           height="auto"
@@ -130,6 +140,16 @@ var localStyles = StyleSheet.create({
     borderWidth: 1,
     // borderColor: '#ffffff00',
     borderColor: '#00000000'
+  },
+
+  navBar: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: "space-around",
+    position: 'absolute',  
+    left: 0, 
+    right: 0, 
+    bottom: 77
   }
 });
 
