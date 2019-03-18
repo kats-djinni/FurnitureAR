@@ -1,49 +1,18 @@
-/**
- * Copyright (c) 2017-present, Viro, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  AppRegistry,
-  Text,
-  View,
-  StyleSheet,
-  PixelRatio,
-  TouchableHighlight,
-  Image
-} from "react-native";
+import { View, StyleSheet, TouchableHighlight, Image } from "react-native";
 
-import {
-  ViroBox,
-  ViroMaterials,
-  ViroVRSceneNavigator,
-  ViroARSceneNavigator
-} from "react-viro";
+import { ViroARSceneNavigator } from "react-viro";
 
 import { Overlay } from "react-native-elements";
 import AllProducts from "./js/AllProductPage";
 import FavoritesPage from "./js/FavoritesPage";
-import Icon from "react-native-vector-icons/FontAwesome";
 
-/*
- TODO: Insert your API key below
- */
 var sharedProps = {
   apiKey: "7C313AAF-F252-430D-9124-1B1DF5CE1CA2"
 };
 
-// Sets the default scene you want for AR and VR
-var InitialARScene = require("./js/HelloWorldSceneAR");
-
-// This determines which type of experience to launch in, or UNSET, if the user should
-// be presented with a choice of AR or VR. By default, we offer the user a choice.
-// var defaultNavigatorType = UNSET;
+var InitialARScene = require("./js/HomeScreen");
 
 export default class ViroSample extends Component {
   constructor() {
@@ -70,10 +39,7 @@ export default class ViroSample extends Component {
     });
   };
 
-  // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
-  // if you are building a specific type of experience.
   render() {
-    console.log("do I have product, in App", this.props.pickedItem);
     return (
       <View style={localStyles.outer}>
         <ViroARSceneNavigator
@@ -145,7 +111,6 @@ var localStyles = StyleSheet.create({
     backgroundColor: "#f0f8ff",
     borderRadius: 10,
     borderWidth: 1,
-    // borderColor: '#ffffff00',
     borderColor: "#00000000"
   },
 
@@ -160,15 +125,10 @@ var localStyles = StyleSheet.create({
   }
 });
 
-// module.exports = ViroSample
 const mapStateToProps = state => ({
   products: state.products.products,
   pickedItem: state.products.pickedProducts
 });
-
-// const mapDispatchToProps = dispatch => ({
-//   getProducts: () => dispatch(getAllProducts())
-// });
 
 module.exports = connect(
   mapStateToProps,

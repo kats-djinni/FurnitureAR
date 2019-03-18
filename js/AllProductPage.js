@@ -11,10 +11,8 @@ import {
   Button,
   AsyncStorage
 } from "react-native";
-// import store from "./store";
 import { connect } from "react-redux";
 import { getAllProducts, pickProduct } from "./store/products";
-// import console = require("console");
 
 class AllProductPage extends Component {
   constructor(props) {
@@ -38,12 +36,11 @@ class AllProductPage extends Component {
       await AsyncStorage.setItem("favorites", JSON.stringify(item));
       this.setState({ favorites: item });
     } catch (error) {
-      // Error saving data
+      console.log(error);
     }
   };
 
   render() {
-    console.log("working", this.state.favorites);
     return (
       <View style={styles.AllProductPage}>
         <Text style={styles.AllProductPage}>Choose Products</Text>
@@ -62,7 +59,7 @@ class AllProductPage extends Component {
               </TouchableHighlight>
               <View>
                 <Button
-                  title="Fave"
+                  title="Favorite"
                   onPress={() => this._storeFavorite(item)}
                 />
               </View>
