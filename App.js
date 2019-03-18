@@ -8,6 +8,7 @@
  */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   AppRegistry,
   Text,
@@ -32,6 +33,7 @@ import FavoritesPage from './js/FavoritesPage'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 
+
 /*
  TODO: Insert your API key below
  */
@@ -52,15 +54,19 @@ export default class ViroSample extends Component {
 
     this.state = {
       sharedProps : sharedProps,
-
       isVisible: false,
       visibleFavorites: false
+
     }
   }
 
   productsButton = () => {
     this.setState({isVisible: true})
   }
+  
+  changeVisibility = () => {
+  this.setState({isVisible: !this.state.isVisible})
+}
 
   favoritesButton = () => {
     this.setState({
@@ -71,19 +77,22 @@ export default class ViroSample extends Component {
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
+    console.log('do I have product, in App', this.props.pickedItem)
     return(
       <View style={localStyles.outer} >
 
         <ViroARSceneNavigator style={localStyles.arView} {...this.state.sharedProps}
+
           initialScene={{scene: InitialARScene}} />
 
         <View style={localStyles.navBar}>
+      
           <TouchableHighlight underlayColor={'#00000000'} 
             onPress={this.productsButton}>
             <Image source={require("./js/res/btn_mode_objects.png")} />
           </TouchableHighlight>
 
-          <TouchableHighlight underlayColor={'#00000000'} >
+          <TouchableHighlight underlayColor={'#00000000'}
             onPress={this.favoritesButton}>
             <Image source={require("./js/res/btn_mode_objects.png")} />
           </TouchableHighlight>
@@ -95,14 +104,11 @@ export default class ViroSample extends Component {
 
         <Overlay 
           isVisible={this.state.isVisible} 
-
           overlayBackgroundColor="#ACC6C7"
-
-          // windowBackgroundColor="gray"
           width="auto"
           height="auto"
           onBackdropPress={() => this.setState({ isVisible: false })}>
-            <AllProducts />
+            <AllProducts visibilityChange={this.changeVisibility} />
         </Overlay>
 
         <Overlay 
@@ -153,4 +159,14 @@ var localStyles = StyleSheet.create({
   }
 });
 
-module.exports = ViroSample
+// module.exports = ViroSample
+const mapStateToProps = state => ({
+  products: state.products.products,
+  pickedItem: state.products.pickedProducts
+});
+
+// const mapDispatchToProps = dispatch => ({
+//   getProducts: () => dispatch(getAllProducts())
+// });
+
+module.exports = connect(mapStateToProps, null)(ViroSample);

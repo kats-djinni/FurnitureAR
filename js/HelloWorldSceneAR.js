@@ -1,7 +1,7 @@
 "use strict";
 
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
 import { StyleSheet } from "react-native";
 
 import {
@@ -19,8 +19,8 @@ import {
 } from "react-viro";
 
 export default class HelloWorldSceneAR extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     // Set initial state here
     this.state = {
@@ -33,6 +33,8 @@ export default class HelloWorldSceneAR extends Component {
     this._onInitialized = this._onInitialized.bind(this);
     this._onRotate = this._onRotate.bind(this);
     this._onPinch = this._onPinch.bind(this);
+    this._render3DObj = this._render3DObj.bind(this)
+    this._defaultView = this._defaultView.bind(this)
   }
   _onInitialized(state, reason) {
     if (state == ViroConstants.TRACKING_NORMAL) {
@@ -76,7 +78,7 @@ export default class HelloWorldSceneAR extends Component {
     }
   }
 
-  render() {
+  _render3DObj(){
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized}>
         <ViroAmbientLight color={"#aaaaaa"} />
@@ -89,67 +91,52 @@ export default class HelloWorldSceneAR extends Component {
           color="#ffffff"
           castsShadow={true}
         />
-
-        <ViroNode>
-          {/* stool below */}
-          {/* <Viro3DObject
-            dragType="FixedDistance"
-            rotation={[10, 0, 0]}
-            onDrag={() => {}}
-            source={require("./res/stool/Stool_01(1).obj")}
-            resources={[require("./res/stool/Stool_01.mtl")]}
-            position={[-0.5, 0.5, -1]}
-            scale={[0.007, 0.007, 0.007]}
-            type="OBJ"
-            /> */}
-          <ViroARPlaneSelector>
-            <Viro3DObject
-              dragType="FixedToWorld"
-              onDrag={() => {}}
-              source={{
-                uri:
-                  "https://poly.googleapis.com/downloads/fp/1552556729377784/7Q_Ab2HLll1/c7YDClm08KI/model.obj"
-              }}
-              resources={[
-                {
-                  uri:
-                    "https://poly.googleapis.com/downloads/fp/1552556729377784/7Q_Ab2HLll1/c7YDClm08KI/materials.mtl"
-                }
-              ]}
-              position={[0, 0, 0]}
-              scale={this.state.scale}
-              rotation={this.state.rotation}
-              onPinch={this._onPinch}
-              onRotate={this._onRotate}
-              type="OBJ"
-            />
-          </ViroARPlaneSelector>
-        </ViroNode>
-
-        <ViroNode>
-          <ViroARPlaneSelector>
-            <Viro3DObject
-              source={{
-                uri:
-                  "https://poly.googleapis.com/downloads/fp/1551711596400293/3txPAhYeu-x/3DjXPukLzqV/model.obj"
-              }}
-              resources={[
-                {
-                  uri:
-                    "https://poly.googleapis.com/downloads/fp/1551711596400293/3txPAhYeu-x/3DjXPukLzqV/materials.mtl"
-                }
-              ]}
-              // position={[0, 0.5, 0]}
-              scale={this.state.scale}
-              rotation={this.state.rotation}
-              onPinch={this._onPinch}
-              onRotate={this._onRotate}
-              type="OBJ"
-            />
-          </ViroARPlaneSelector>
-        </ViroNode>
-      </ViroARScene>
-    );
+        {this.props.products.map(item => {
+          return (
+            <ViroNode key={item.name} onDrag={()=>{}}>
+              <ViroARPlaneSelector>
+                <Viro3DObject
+                  source={{
+                    uri:
+                      item.objurl
+                  }}
+                  resources={[
+                    {
+                      uri: item
+                    }
+                  ]}
+                  // position={[0, 0.5, 0]}
+                  scale={this.state.scale}
+                  rotation={this.state.rotation}
+                  onPinch={this._onPinch}
+                  onRotate={this._onRotate}
+                  type="OBJ"
+                  />
+                </ViroARPlaneSelector>
+            </ViroNode>
+          )
+        })}
+      </ViroARScene> 
+    )
+  }
+  
+  _defaultView(){
+    return (
+      <ViroARScene onTrackingUpdated={this._onInitialized}>
+        <ViroAmbientLight color={"#aaaaaa"} />
+      </ViroARScene> 
+    )
+  }
+  
+  render() {
+    const itemOne = this.props.products[0]
+    console.log('this.props.pickedProduct', itemOne)
+    
+    if (this.props.products.length > 0) {
+      return this._render3DObj()
+    } else {
+      return this._defaultView()
+    }
   }
 }
 
@@ -178,4 +165,13 @@ ViroAnimations.registerAnimations({
   }
 });
 
-module.exports = HelloWorldSceneAR;
+// module.exports = HelloWorldSceneAR;
+const mapStateToProps = state => ({
+  products: state.products.pickedProducts
+});
+
+// const mapDispatchToProps = dispatch => ({
+//   getProducts: () => dispatch(getAllProducts())
+// });
+
+module.exports = connect(mapStateToProps, null)(HelloWorldSceneAR);
