@@ -8,6 +8,7 @@
  */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   AppRegistry,
   Text,
@@ -52,7 +53,7 @@ export default class ViroSample extends Component {
     this.state = {
       sharedProps : sharedProps,
       isVisible: false,
-      pickedProducts: []
+      // pickedProducts: []
     }
   }
 
@@ -60,23 +61,20 @@ export default class ViroSample extends Component {
     this.setState({isVisible: true})
   }
   
-  handlePress = (event) =>{
-    // this.setState({
-    //    pickedProducts: event
-    // })
-    console.log(event)
-    
-  }
+  changeVisibility = () => {
+  this.setState({isVisible: !this.state.isVisible})
+}
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
-    console.log("do I see it?",this.state.pickedProducts)
+    console.log('do I have product, in App', this.props.pickedItem)
     return(
       <View style={localStyles.outer} >
 
         <ViroARSceneNavigator style={localStyles.arView} {...this.state.sharedProps}
-          initialScene={{scene: InitialARScene}} />
+          initialScene={{scene: InitialARScene}}
+          />
         <View style={{position: 'absolute',  left: 0, right: 0, bottom: 77, alignItems: 'center'}}>
           <TouchableHighlight underlayColor={'#00000000'} 
             onPress={this.testButton}>
@@ -95,7 +93,7 @@ export default class ViroSample extends Component {
           width="auto"
           height="auto"
           onBackdropPress={() => this.setState({ isVisible: false })}>
-            <AllProducts pickItem={this.handlePress} />
+            <AllProducts visibilityChange={this.changeVisibility} />
         </Overlay> 
 
       </View>
@@ -127,4 +125,14 @@ var localStyles = StyleSheet.create({
   }
 });
 
-module.exports = ViroSample
+// module.exports = ViroSample
+const mapStateToProps = state => ({
+  products: state.products.products,
+  pickedItem: state.products.pickedProducts
+});
+
+// const mapDispatchToProps = dispatch => ({
+//   getProducts: () => dispatch(getAllProducts())
+// });
+
+module.exports = connect(mapStateToProps, null)(ViroSample);

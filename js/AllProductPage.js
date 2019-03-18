@@ -1,27 +1,32 @@
-"use strict";
+'use strict';
 
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { StyleSheet, View, Text, Image, Button } from "react-native";
-// import console = require("console");
-import store from "./store";
-import { connect } from "react-redux";
-import { getAllProducts } from "./store/products";
+import { StyleSheet, View, Text, Image, TouchableHighlight } from 'react-native';
+// import store from "./store";
+import { connect } from 'react-redux';
+import { getAllProducts, pickProduct } from './store/products';
+
+
 
 class AllProductPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      products: []
-    };
+    // this.state = {
+    //   products: []
+    // };
   }
 
   componentDidMount() {
     this.props.getProducts();
   }
 
+  handlePress = (event) => {
+    this.props.addPickedItem(event)
+    this.props.visibilityChange()
+  }
+  
   render() {
-    
     return (
       <View style={styles.AllProductPage}>
         <Text style={styles.AllProductPage}>Choose Products</Text>
@@ -29,15 +34,15 @@ class AllProductPage extends Component {
           return (
             <View key={index}>
               <Text>Name: {item.displayName}</Text>
+              <TouchableHighlight
+              onPress={() => this.handlePress(item)}
+              style={{ width: 200, height: 200 }}
+              >
               <Image
                 style={{ width: 200, height: 200 }}
                 source={{ uri: item.thumbnail }}
-                // onPress ={(item) => this.props.pickItem(item)}
               />
-              <Button
-              onPress={(item) => this.props.pickItem(item)}
-            title="Press Me"
-          />
+              </TouchableHighlight> 
               
             </View>
           );
@@ -49,11 +54,11 @@ class AllProductPage extends Component {
 
 var styles = StyleSheet.create({
   AllProductPage: {
-    fontFamily: "Arial",
+    fontFamily: 'Arial',
     fontSize: 50,
-    color: "#000000",
-    textAlignVertical: "center",
-    textAlign: "center",
+    color: '#000000',
+    textAlignVertical: 'center',
+    textAlign: 'center',
     margin: 20
   },
   SingleItem: {
@@ -66,7 +71,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getProducts: () => dispatch(getAllProducts())
+  getProducts: () => dispatch(getAllProducts()),
+  addPickedItem: (item) => dispatch(pickProduct(item))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllProductPage);
