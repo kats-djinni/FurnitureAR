@@ -1,32 +1,49 @@
-'use strict';
+"use strict";
 
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { StyleSheet, View, Text, Image, TouchableHighlight } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableHighlight,
+  Button,
+  AsyncStorage
+} from "react-native";
 // import store from "./store";
-import { connect } from 'react-redux';
-import { getAllProducts, pickProduct } from './store/products';
-
-
+import { connect } from "react-redux";
+import { getAllProducts, pickProduct } from "./store/products";
+// import console = require("console");
 
 class AllProductPage extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   products: []
-    // };
+    this.state = {
+      favorites: []
+    };
   }
 
   componentDidMount() {
     this.props.getProducts();
   }
 
-  handlePress = (event) => {
-    this.props.addPickedItem(event)
-    this.props.visibilityChange()
-  }
-  
+  handlePress = event => {
+    this.props.addPickedItem(event);
+    this.props.visibilityChange();
+  };
+
+  _storeFavorite = async item => {
+    try {
+      await AsyncStorage.setItem("favorites", JSON.stringify(item));
+      this.setState({ favorites: item });
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
   render() {
+    console.log("working", this.state.favorites);
     return (
       <View style={styles.AllProductPage}>
         <Text style={styles.AllProductPage}>Choose Products</Text>
@@ -35,15 +52,20 @@ class AllProductPage extends Component {
             <View key={index}>
               <Text>Name: {item.displayName}</Text>
               <TouchableHighlight
-              onPress={() => this.handlePress(item)}
-              style={{ width: 200, height: 200 }}
-              >
-              <Image
+                onPress={() => this.handlePress(item)}
                 style={{ width: 200, height: 200 }}
-                source={{ uri: item.thumbnail }}
-              />
-              </TouchableHighlight> 
-              
+              >
+                <Image
+                  style={{ width: 200, height: 200 }}
+                  source={{ uri: item.thumbnail }}
+                />
+              </TouchableHighlight>
+              <View>
+                <Button
+                  title="Fave"
+                  onPress={() => this._storeFavorite(item)}
+                />
+              </View>
             </View>
           );
         })}
@@ -54,11 +76,11 @@ class AllProductPage extends Component {
 
 var styles = StyleSheet.create({
   AllProductPage: {
-    fontFamily: 'Arial',
+    fontFamily: "Arial",
     fontSize: 50,
-    color: '#000000',
-    textAlignVertical: 'center',
-    textAlign: 'center',
+    color: "#000000",
+    textAlignVertical: "center",
+    textAlign: "center",
     margin: 20
   },
   SingleItem: {
@@ -70,11 +92,12 @@ const mapStateToProps = state => ({
   products: state.products.products
 });
 
-
 const mapDispatchToProps = dispatch => ({
   getProducts: () => dispatch(getAllProducts()),
-  addPickedItem: (item) => dispatch(pickProduct(item))
+  addPickedItem: item => dispatch(pickProduct(item))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllProductPage);
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AllProductPage);
