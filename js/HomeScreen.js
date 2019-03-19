@@ -9,7 +9,10 @@ import {
   ViroARScene,
   ViroConstants,
   ViroAmbientLight,
-  ViroSpotLight
+  ViroSpotLight,
+  ViroNode,
+  Viro3DObject,
+  ViroARPlaneSelector
 } from "react-viro";
 
 export default class HelloWorldSceneAR extends Component {
@@ -56,6 +59,21 @@ export default class HelloWorldSceneAR extends Component {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized}>
         <ViroAmbientLight color={"#aaaaaa"} />
+        <ViroNode
+          position={[0, -1, -2]}
+          dragType="FixedDistance"
+          onDrag={() => {}}
+        >
+          <ViroARPlaneSelector>
+            <Viro3DObject
+              source={require("./res/ikeatable/models.obj")}
+              resources={[require("./res/ikeatable/materials.mtl")]}
+              position={[-0.5, 0.5, -1]}
+              scale={[0.1, 0.1, 0.1]}
+              type="OBJ"
+            />
+          </ViroARPlaneSelector>
+        </ViroNode>
       </ViroARScene>
     );
   }
