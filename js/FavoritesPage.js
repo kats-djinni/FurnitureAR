@@ -91,7 +91,7 @@ class FavoritesPage extends Component {
                   source={{ uri: item.thumbnail }}
                 />
               </Card>
-              <FavoriteButton />
+              {/* <FavoriteButton /> */}
               <Button
                 title="Remove From Favorites"
                 onPress={() => this._removeFavorite(index)}

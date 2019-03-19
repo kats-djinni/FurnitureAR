@@ -59,18 +59,18 @@ export default class ViroSample extends Component {
             underlayColor={"#00000000"}
             onPress={this.productsButton}
           >
-            <Image source={require("./js/res/btn_mode_objects.png")} />
+            <Image source={require("./js/res/icons/add-button.png")} />
           </TouchableHighlight>
 
           <TouchableHighlight
             underlayColor={"#00000000"}
             onPress={this.favoritesButton}
           >
-            <Image source={require("./js/res/btn_mode_objects.png")} />
+            <Image source={require("./js/res/icons/heart-button.png")} />
           </TouchableHighlight>
 
           <TouchableHighlight underlayColor={"#00000000"}>
-            <Image source={require("./js/res/btn_mode_objects.png")} />
+            <Image source={require("./js/res/icons/btn_mode_objects.png")} />
           </TouchableHighlight>
         </View>
 
