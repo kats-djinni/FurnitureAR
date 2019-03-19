@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, StyleSheet, TouchableHighlight, Image } from "react-native";
-
+import { deleteProduct } from './js/store/products'
 import { ViroARSceneNavigator } from "react-viro";
 
 import { Overlay } from "react-native-elements";
@@ -21,7 +21,9 @@ export default class ViroSample extends Component {
     this.state = {
       sharedProps: sharedProps,
       isVisible: false,
-      visibleFavorites: false
+      visibleFavorites: false,
+      visibleItemBar: false,
+      selectedItem: {}
     };
   }
 
@@ -32,6 +34,11 @@ export default class ViroSample extends Component {
   changeVisibility = () => {
     this.setState({ isVisible: !this.state.isVisible });
   };
+  
+  triggerItemBar = (item) => {
+    this.setState({selectedItem: item})
+    this.setState({ visibleItemBar: !this.state.visibleItemBar})
+  }
 
   favoritesButton = () => {
     this.setState({
@@ -39,13 +46,25 @@ export default class ViroSample extends Component {
     });
   };
 
-  render() {
+  deleteButton = () => {
+    console.log('I am inside App deleted??',this.state.selectedItem)
+    // this.props.deleteProduct(this.state.selectedItem).then(() => {
+    //   console.log('I am inside App after deleted??',this.props.pickedItem)
+    // })
+ }
+  
+  homeScreenButtons = () => {
     return (
+      
       <View style={localStyles.outer}>
         <ViroARSceneNavigator
           style={localStyles.arView}
           {...this.state.sharedProps}
-          initialScene={{ scene: InitialARScene }}
+          initialScene={{ 
+            scene: InitialARScene,
+            passProps: {trigger: this.triggerItemBar}
+          }}
+          
         />
 
         <View style={localStyles.navBar}>
@@ -90,6 +109,59 @@ export default class ViroSample extends Component {
       </View>
     );
   }
+  
+  itemButtons = () => {
+    console.log('im inside item Buttons', this.state.visibleItemBar)
+    return (
+      
+      <View style={localStyles.outer}>
+        <ViroARSceneNavigator
+          style={localStyles.arView}
+          {...this.state.sharedProps}
+          initialScene={{ scene: InitialARScene }}
+        />
+
+        <View style={localStyles.itemBar}>
+          <TouchableHighlight
+            underlayColor={"#00000000"}
+            onPress={this.deleteButton}
+          >
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            underlayColor={"#00000000"}
+            onPress={this.favoritesButton}
+          >
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+          </TouchableHighlight>
+
+          <TouchableHighlight underlayColor={"#00000000"}>
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+          </TouchableHighlight>
+        </View>
+
+        <Overlay
+          isVisible={this.state.visibleFavorites}
+          overlayBackgroundColor="#E5E8E9"
+          width="auto"
+          height={700}
+          onBackdropPress={() => this.setState({ visibleFavorites: false })}
+        >
+          <FavoritesPage />
+        </Overlay>
+      </View>
+    );
+  }
+  
+  
+  render() {
+    if (this.state.visibleItemBar) {
+      return this.itemButtons();
+    } else {
+      return this.homeScreenButtons();
+    }
+  }
 }
 
 var localStyles = StyleSheet.create({
@@ -122,6 +194,18 @@ var localStyles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 77
+  },
+  
+  itemBar: {
+    flex: 1,
+    // flexDirection: "column",
+    // justifyContent: "flex-end",
+    // alignItems: "flex-end",
+    alignSelf: "flex-end",
+    position: "absolute",
+    // left: 0,
+    // right: 0,
+    top: 100
   }
 });
 
@@ -130,7 +214,11 @@ const mapStateToProps = state => ({
   pickedItem: state.products.pickedProducts
 });
 
+const mapDispatchToProps = dispatch => ({
+  deleteProduct: (item) => dispatch(deleteProduct(item)),
+});
+
 module.exports = connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(ViroSample);

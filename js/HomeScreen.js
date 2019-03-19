@@ -46,7 +46,7 @@ export default class HelloWorldSceneAR extends Component {
           castsShadow={true}
         />
         {this.props.products.map((item, index) => {
-          return <SingleProduct item={item} key={index} />;
+          return <SingleProduct item={item} key={index} triggerItem={() => this.props.trigger(item)} />;
         })}
       </ViroARScene>
     );

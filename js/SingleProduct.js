@@ -37,6 +37,8 @@ export default class SingleProduct extends Component {
     }
   }
 
+  
+  
   render() {
     return (
       <ViroNode onDrag={() => {}}>
@@ -55,6 +57,7 @@ export default class SingleProduct extends Component {
             rotation={this.state.rotation}
             onPinch={this._onPinch}
             onRotate={this._onRotate}
+            onClick={() => this.props.triggerItem(this.props.item)}
             type="OBJ"
           />
         </ViroARPlaneSelector>
