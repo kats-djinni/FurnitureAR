@@ -11,6 +11,7 @@
     "react": "16.6.1",
     "react-native": "0.57.7",
     "react-native-elements": "^1.1.0",
+    "react-native-svg": "^9.3.5",
     "react-native-vector-icons": "^6.4.1",
     "react-redux": "^6.0.1",
     "react-viro": "2.13.0",
@@ -22,6 +23,8 @@
     "babel-jest": "24.5.0",
     "jest": "24.5.0",
     "metro-react-native-babel-preset": "0.53.0",
+    "react-native-debugger": "^1.1.0",
+    "react-native-svg-uri": "^1.2.3",
     "react-test-renderer": "16.6.1"
   },
   "jest": {

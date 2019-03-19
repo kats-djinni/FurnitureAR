@@ -9,19 +9,14 @@ import {
   Image,
   TouchableHighlight,
   Button,
-  AsyncStorage
+  AsyncStorage,
+  FlatList
 } from "react-native";
 import { connect } from "react-redux";
 import { getAllProducts, pickProduct } from "./store/products";
+import FavoriteButton from "./FavoriteButton";
 
 class AllProductPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      favorites: []
-    };
-  }
-
   componentDidMount() {
     this.props.getProducts();
   }
@@ -33,20 +28,29 @@ class AllProductPage extends Component {
 
   _storeFavorite = async item => {
     try {
-      await AsyncStorage.setItem("favorites", JSON.stringify(item));
-      this.setState({ favorites: item });
+      const faveStr = await AsyncStorage.getItem("favorites");
+
+      if (faveStr !== null) {
+        const favesArr = JSON.parse(faveStr);
+        const faves = [...favesArr, item];
+        await AsyncStorage.setItem("favorites", JSON.stringify(faves));
+      } else {
+        await AsyncStorage.setItem("favorites", JSON.stringify([item]));
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   render() {
+    console.log("this.props.children: ", this.props.children);
     return (
-      <View style={styles.AllProductPage}>
+      <View style={styles.listContainer}>
         <Text style={styles.AllProductPage}>Choose Products</Text>
-        {this.props.products.map((item, index) => {
-          return (
-            <View key={index}>
+        <FlatList
+          data={this.props.products}
+          renderItem={({ item }) => (
+            <View>
               <Text>Name: {item.displayName}</Text>
               <TouchableHighlight
                 onPress={() => this.handlePress(item)}
@@ -58,14 +62,12 @@ class AllProductPage extends Component {
                 />
               </TouchableHighlight>
               <View>
-                <Button
-                  title="Favorite"
-                  onPress={() => this._storeFavorite(item)}
-                />
+                <FavoriteButton faveItem={item} />
               </View>
             </View>
-          );
-        })}
+          )}
+          keyExtractor={(item, index) => index}
+        />
       </View>
     );
   }
@@ -73,6 +75,17 @@ class AllProductPage extends Component {
 
 var styles = StyleSheet.create({
   AllProductPage: {
+    fontFamily: "Arial",
+    fontSize: 50,
+    color: "#000000",
+    textAlignVertical: "center",
+    textAlign: "center",
+    margin: 5
+  },
+  listContainer: {
+    flex: 1,
+    flexDirection: "column",
+    flexWrap: "wrap",
     fontFamily: "Arial",
     fontSize: 50,
     color: "#000000",

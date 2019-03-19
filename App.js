@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, StyleSheet, TouchableHighlight, Image } from "react-native";
+
+import {
+  View,
+  StyleSheet,
+  TouchableHighlight,
+  Image,
+  Dimensions
+} from "react-native";
+
 import { deleteProduct, deleteAll } from './js/store/products'
 import { ViroARSceneNavigator } from "react-viro";
 
@@ -80,26 +88,26 @@ export default class ViroSample extends Component {
             underlayColor={"#00000000"}
             onPress={this.productsButton}
           >
-            <Image source={require("./js/res/btn_mode_objects.png")} />
+            <Image source={require("./js/res/icons/add-button.png")} />
           </TouchableHighlight>
 
           <TouchableHighlight
             underlayColor={"#00000000"}
             onPress={this.favoritesButton}
           >
-            <Image source={require("./js/res/btn_mode_objects.png")} />
+            <Image source={require("./js/res/icons/heart-button.png")} />
           </TouchableHighlight>
 
           <TouchableHighlight underlayColor={"#00000000"}>
-            <Image source={require("./js/res/btn_mode_objects.png")} />
+            <Image source={require("./js/res/icons/btn_mode_objects.png")} />
           </TouchableHighlight>
         </View>
 
         <Overlay
           isVisible={this.state.isVisible}
           overlayBackgroundColor="#ACC6C7"
-          width="auto"
-          height="auto"
+          width={Dimensions.get("window").width * 0.75}
+          height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ isVisible: false })}
         >
           <AllProducts visibilityChange={this.changeVisibility} />
@@ -108,8 +116,8 @@ export default class ViroSample extends Component {
         <Overlay
           isVisible={this.state.visibleFavorites}
           overlayBackgroundColor="#E5E8E9"
-          width="auto"
-          height={700}
+          width={Dimensions.get("window").width * 0.75}
+          height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ visibleFavorites: false })}
         >
           <FavoritesPage />
