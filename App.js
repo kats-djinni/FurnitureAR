@@ -82,7 +82,7 @@ export default class ViroSample extends Component {
           isVisible={this.state.visibleFavorites}
           overlayBackgroundColor="#E5E8E9"
           width="auto"
-          height={700}
+          height="auto"
           onBackdropPress={() => this.setState({ visibleFavorites: false })}
         >
           <FavoritesPage />

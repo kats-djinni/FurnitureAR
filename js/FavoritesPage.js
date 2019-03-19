@@ -9,7 +9,8 @@ import {
   FlatList,
   AsyncStorage
 } from "react-native";
-import { Card } from "react-native-elements";
+import { Card } from "react-native-elements"
+import FavoriteButton from "./FavoriteButton"
 
 class FavoritesPage extends Component {
   constructor() {
@@ -28,7 +29,7 @@ class FavoritesPage extends Component {
       const value = await AsyncStorage.getItem("favorites");
       if (value !== null) {
         const parsedValue = JSON.parse(value);
-        this.setState({ favorites: [parsedValue] });
+        this.setState({ favorites: parsedValue });
       }
     } catch (error) {
       console.log(error);
@@ -47,6 +48,7 @@ class FavoritesPage extends Component {
         <FlatList
           data={this.state.favorites}
           renderItem={({ item }) => (
+            // <View>
             <Card>
               <Text>Name: {item.displayName}</Text>
               <Image
@@ -54,9 +56,12 @@ class FavoritesPage extends Component {
                 source={{ uri: item.thumbnail }}
               />
             </Card>
+            // <FavoriteButton />
+            // </View> 
           )}
           keyExtractor={(item, index) => index}
         />
+        
       </View>
     );
   }
