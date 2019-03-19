@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, StyleSheet, TouchableHighlight, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableHighlight,
+  Image,
+  Dimensions
+} from "react-native";
 
 import { ViroARSceneNavigator } from "react-viro";
 
@@ -71,8 +77,8 @@ export default class ViroSample extends Component {
         <Overlay
           isVisible={this.state.isVisible}
           overlayBackgroundColor="#ACC6C7"
-          width="auto"
-          height="auto"
+          width={Dimensions.get("window").width * 0.75}
+          height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ isVisible: false })}
         >
           <AllProducts visibilityChange={this.changeVisibility} />
@@ -81,8 +87,8 @@ export default class ViroSample extends Component {
         <Overlay
           isVisible={this.state.visibleFavorites}
           overlayBackgroundColor="#E5E8E9"
-          width="auto"
-          height="auto"
+          width={Dimensions.get("window").width * 0.75}
+          height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ visibleFavorites: false })}
         >
           <FavoritesPage />
