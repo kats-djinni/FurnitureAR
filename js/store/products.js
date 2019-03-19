@@ -1,6 +1,7 @@
 const GOT_PRODUCTS = 'GOT_PRODUCTS';
 const PICKED_ITEM = 'PICKED_ITEM';
-const DELETE_ONE_ITEM = 'DELETE_ONE_ITEM'
+const DELETE_ONE_ITEM = 'DELETE_ONE_ITEM';
+const DELETE_ALL = 'DELETE_ALL'
 
 const initialState = {
   products: [],
@@ -20,6 +21,10 @@ const pickedProduct = item => ({
 const deletedProduct = item => ({
   type: DELETE_ONE_ITEM,
   item
+})
+
+const deletedAll = () => ({
+  type: DELETE_ALL
 })
 
 export const getAllProducts = () => {
@@ -46,6 +51,12 @@ export const deleteProduct = item => {
   }
 }
 
+export  const deleteAll = () => {
+  return dispatch => {
+    dispatch(deletedAll())
+  }
+}
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case GOT_PRODUCTS:
@@ -56,18 +67,17 @@ export default function(state = initialState, action) {
         pickedProducts: [...state.pickedProducts, action.item]
       };
     case DELETE_ONE_ITEM:
-    console.log('picked',state.pickedProducts.filter(x => {
-      //console.log('im inside reducer x name', x.name, 'action.item', action.item.name, x.name === action.item.name)
-      return (x.name !== action.item.name)
-    }))
-    return {
-      ...state,
-      pickedProdcuts: state.pickedProducts.filter(x => {
-        //console.log('im inside reducer x name', x.name, 'action.item', action.item.name, x.name === action.item.name)
-        return (x.name !== action.item.name)
-      })
-    }
-    
+      let newArr = state.pickedProducts.slice()
+      newArr[action.item] = null
+      return {
+        ...state,
+        pickedProducts: newArr 
+      }
+    case DELETE_ALL:
+      return {
+        ...state,
+        pickedProducts: []
+      }
     default:
       return state;
   }

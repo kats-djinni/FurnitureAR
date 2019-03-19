@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, StyleSheet, TouchableHighlight, Image } from "react-native";
-import { deleteProduct } from './js/store/products'
+import { deleteProduct, deleteAll } from './js/store/products'
 import { ViroARSceneNavigator } from "react-viro";
 
 import { Overlay } from "react-native-elements";
@@ -23,7 +23,8 @@ export default class ViroSample extends Component {
       isVisible: false,
       visibleFavorites: false,
       visibleItemBar: false,
-      selectedItem: {}
+      // selectedItem: {},
+      itemIndex: 0
     };
   }
 
@@ -35,9 +36,12 @@ export default class ViroSample extends Component {
     this.setState({ isVisible: !this.state.isVisible });
   };
   
-  triggerItemBar = (item) => {
-    this.setState({selectedItem: item})
-    this.setState({ visibleItemBar: !this.state.visibleItemBar})
+  triggerItemBar = (key) => {
+    this.setState({
+      visibleItemBar: !this.state.visibleItemBar,
+      itemIndex: key
+    })
+
   }
 
   favoritesButton = () => {
@@ -46,12 +50,16 @@ export default class ViroSample extends Component {
     });
   };
 
-  deleteButton = () => {
-    console.log('I am inside App deleted??',this.state.selectedItem)
-    // this.props.deleteProduct(this.state.selectedItem).then(() => {
-    //   console.log('I am inside App after deleted??',this.props.pickedItem)
-    // })
- }
+  deleteButton = async () => {
+    await this.props.deleteProduct(this.state.itemIndex)
+    this.setState({visibleItemBar: !this.state.visibleItemBar})
+    }
+
+  
+  deleteAllButton = () => {
+    this.props.deleteAll()
+    this.setState({visibleItemBar: !this.state.visibleItemBar})
+  }
   
   homeScreenButtons = () => {
     return (
@@ -111,7 +119,6 @@ export default class ViroSample extends Component {
   }
   
   itemButtons = () => {
-    console.log('im inside item Buttons', this.state.visibleItemBar)
     return (
       
       <View style={localStyles.outer}>
@@ -131,14 +138,18 @@ export default class ViroSample extends Component {
 
           <TouchableHighlight
             underlayColor={"#00000000"}
+            onPress={this.deleteAllButton}
+          >
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            underlayColor={"#00000000"}
             onPress={this.favoritesButton}
           >
             <Image source={require("./js/res/btn_mode_objects.png")} />
           </TouchableHighlight>
 
-          <TouchableHighlight underlayColor={"#00000000"}>
-            <Image source={require("./js/res/btn_mode_objects.png")} />
-          </TouchableHighlight>
         </View>
 
         <Overlay
@@ -198,13 +209,8 @@ var localStyles = StyleSheet.create({
   
   itemBar: {
     flex: 1,
-    // flexDirection: "column",
-    // justifyContent: "flex-end",
-    // alignItems: "flex-end",
     alignSelf: "flex-end",
     position: "absolute",
-    // left: 0,
-    // right: 0,
     top: 100
   }
 });
@@ -216,6 +222,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   deleteProduct: (item) => dispatch(deleteProduct(item)),
+  deleteAll: () => dispatch(deleteAll())
 });
 
 module.exports = connect(
