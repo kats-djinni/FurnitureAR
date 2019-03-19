@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, StyleSheet, TouchableHighlight, Image } from "react-native";
-
+import { deleteProduct, deleteAll } from './js/store/products'
 import { ViroARSceneNavigator } from "react-viro";
 
 import { Overlay } from "react-native-elements";
@@ -21,7 +21,10 @@ export default class ViroSample extends Component {
     this.state = {
       sharedProps: sharedProps,
       isVisible: false,
-      visibleFavorites: false
+      visibleFavorites: false,
+      visibleItemBar: false,
+      // selectedItem: {},
+      itemIndex: 0
     };
   }
 
@@ -32,6 +35,14 @@ export default class ViroSample extends Component {
   changeVisibility = () => {
     this.setState({ isVisible: !this.state.isVisible });
   };
+  
+  triggerItemBar = (key) => {
+    this.setState({
+      visibleItemBar: !this.state.visibleItemBar,
+      itemIndex: key
+    })
+
+  }
 
   favoritesButton = () => {
     this.setState({
@@ -39,13 +50,29 @@ export default class ViroSample extends Component {
     });
   };
 
-  render() {
+  deleteButton = async () => {
+    await this.props.deleteProduct(this.state.itemIndex)
+    this.setState({visibleItemBar: !this.state.visibleItemBar})
+    }
+
+  
+  deleteAllButton = () => {
+    this.props.deleteAll()
+    this.setState({visibleItemBar: !this.state.visibleItemBar})
+  }
+  
+  homeScreenButtons = () => {
     return (
+      
       <View style={localStyles.outer}>
         <ViroARSceneNavigator
           style={localStyles.arView}
           {...this.state.sharedProps}
-          initialScene={{ scene: InitialARScene }}
+          initialScene={{ 
+            scene: InitialARScene,
+            passProps: {trigger: this.triggerItemBar}
+          }}
+          
         />
 
         <View style={localStyles.navBar}>
@@ -90,6 +117,62 @@ export default class ViroSample extends Component {
       </View>
     );
   }
+  
+  itemButtons = () => {
+    return (
+      
+      <View style={localStyles.outer}>
+        <ViroARSceneNavigator
+          style={localStyles.arView}
+          {...this.state.sharedProps}
+          initialScene={{ scene: InitialARScene }}
+        />
+
+        <View style={localStyles.itemBar}>
+          <TouchableHighlight
+            underlayColor={"#00000000"}
+            onPress={this.deleteButton}
+          >
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            underlayColor={"#00000000"}
+            onPress={this.deleteAllButton}
+          >
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            underlayColor={"#00000000"}
+            onPress={this.favoritesButton}
+          >
+            <Image source={require("./js/res/btn_mode_objects.png")} />
+          </TouchableHighlight>
+
+        </View>
+
+        <Overlay
+          isVisible={this.state.visibleFavorites}
+          overlayBackgroundColor="#E5E8E9"
+          width="auto"
+          height={700}
+          onBackdropPress={() => this.setState({ visibleFavorites: false })}
+        >
+          <FavoritesPage />
+        </Overlay>
+      </View>
+    );
+  }
+  
+  
+  render() {
+    if (this.state.visibleItemBar) {
+      return this.itemButtons();
+    } else {
+      return this.homeScreenButtons();
+    }
+  }
 }
 
 var localStyles = StyleSheet.create({
@@ -122,6 +205,13 @@ var localStyles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 77
+  },
+  
+  itemBar: {
+    flex: 1,
+    alignSelf: "flex-end",
+    position: "absolute",
+    top: 100
   }
 });
 
@@ -130,7 +220,12 @@ const mapStateToProps = state => ({
   pickedItem: state.products.pickedProducts
 });
 
+const mapDispatchToProps = dispatch => ({
+  deleteProduct: (item) => dispatch(deleteProduct(item)),
+  deleteAll: () => dispatch(deleteAll())
+});
+
 module.exports = connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(ViroSample);
