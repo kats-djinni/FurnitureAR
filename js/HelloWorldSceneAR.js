@@ -16,7 +16,7 @@ import {
   ViroAmbientLight,
   ViroSpotLight,
   ViroAnimations,
-  ViroARPlaneSelector
+  ViroDirectionalLight
 } from "react-viro";
 
 export default class HelloWorldSceneAR extends Component {
@@ -68,8 +68,41 @@ export default class HelloWorldSceneAR extends Component {
   
   _defaultView(){
     return (
-      <ViroARScene onTrackingUpdated={this._onInitialized}>
-        <ViroAmbientLight color={"#aaaaaa"} />
+      <ViroARScene onTrackingUpdated={this._onInitialized} physicsWorld={{gravity:[0, -9.81, 0]}}>
+        {/* <ViroAmbientLight color="#ffffff" intensity={20}/> */}
+        {/* <ViroDirectionalLight color="#ffffff" direction={[0,-1,-.2]}/> */}
+          <ViroSpotLight
+              innerAngle={90}
+              outerAngle={90}
+              direction={[0, -1, -0.2]}
+              position={[0.05, 2, 0]}
+              color="#f441d0"
+              //color="#f44141"
+              // color="#f4ee41"
+              //color="#4149f4"
+              
+              castsShadow={true}
+              intensity={250}
+
+          />
+          <ViroNode dragType="FixedDistance" onDrag={() => {}}>
+            <Viro3DObject
+              source={require('./res/ikea_sofa/IKE020010.obj')}
+              resources={[require('./res/ikea_sofa/IKE020010.mtl')]}
+              position={[0.05, 0, -1]}
+              scale={[0.005, 0.005, 0.005]}
+              type="OBJ" /> 
+          </ViroNode> 
+          
+      <ViroNode dragType="FixedDistance" onDrag={() => {}}>
+            <Viro3DObject
+              source={require('./res/ikea_armchair/IKEA-Karlstad_Footstool_and_Armchair-3D.obj')}
+              resources={[require('./res/ikea_armchair/IKEA-Karlstad_Footstool_and_Armchair-3D.mtl')]}
+              position={[0.05, 0, -1]}
+              scale={[0.005, 0.005, 0.005]}
+              type="OBJ" /> 
+          </ViroNode>
+
       </ViroARScene> 
     )
   }
@@ -99,7 +132,7 @@ var styles = StyleSheet.create({
 ViroMaterials.createMaterials({
   grid: {
     diffuseTexture: require("./res/grid_bg.jpg")
-  }
+  },
 });
 
 ViroAnimations.registerAnimations({

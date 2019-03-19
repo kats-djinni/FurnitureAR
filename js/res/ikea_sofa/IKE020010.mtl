@@ -1,0 +1,28 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 17.10.2017 08:47:13
+
+newmtl 01___Default
+	Ns 5.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2157 0.2157 0.3098
+	Kd 0.8039 0.8039 0.8275
+	Ks 0.2184 0.2184 0.2184
+	Ke 0.0000 0.0000 0.0000
+	map_Ka texfleur.jpg
+	map_Kd texfleur.jpg
+
+newmtl Material__61
+	Ns 25.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.5451 0.5451 0.5451
+	Ks 1.0500 1.0500 1.0500
+	Ke 0.0000 0.0000 0.0000
