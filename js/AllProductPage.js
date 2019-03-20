@@ -11,14 +11,21 @@ import {
   AsyncStorage,
   FlatList
 } from "react-native";
-import { connect } from "react-redux"
-import { Text } from "react-native-elements"
+import { connect } from "react-redux";
+import { Text } from "react-native-elements";
 import { getAllProducts, pickProduct } from "./store/products";
 import FavoriteButton from "./FavoriteButton";
 
 class AllProductPage extends Component {
-  componentDidMount() {
+  constructor() {
+    super();
+    this.state = {
+      favorites: []
+    };
+  }
+  async componentDidMount() {
     this.props.getProducts();
+    await this._retrieveData();
   }
 
   handlePress = event => {
@@ -37,19 +44,70 @@ class AllProductPage extends Component {
       } else {
         await AsyncStorage.setItem("favorites", JSON.stringify([item]));
       }
+      const updatedFaves = await AsyncStorage.getItem("favorites");
+      this.setState({ favorites: updatedFaves });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("favorites");
+      if (value !== null) {
+        const parsedValue = JSON.parse(value);
+        this.setState({ favorites: parsedValue });
+      } else {
+        this.setState({ favorites: [] });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  _removeFavorite = async index => {
+    try {
+      const faveArr = await AsyncStorage.getItem("favorites");
+      if (faveArr !== null) {
+        const newFaveArr = JSON.parse(faveArr);
+        if (index > -1) {
+          newFaveArr.splice(index, 1);
+        }
+        AsyncStorage.setItem("favorites", JSON.stringify(newFaveArr));
+        this.setState({ favorites: newFaveArr });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  filterFave = async item => {
+    try {
+      const faveStr = await AsyncStorage.getItem("favorites");
+
+      if (faveStr !== null) {
+        const favesArr = JSON.parse(faveStr);
+        const duplicate = favesArr.filter(
+          products => products.displayName === item.displayName
+        );
+        if (duplicate.length) {
+          return true;
+        } else return false;
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   render() {
-    console.log("this.props.children: ", this.props.children);
     return (
       <View style={styles.listContainer}>
-        <Text h4 style={styles.AllProductPage}>Choose Products</Text>
+        <Text h4 style={styles.AllProductPage}>
+          Choose Products
+        </Text>
         <FlatList
           data={this.props.products}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <View>
               <Text>Name: {item.displayName}</Text>
               <TouchableHighlight
@@ -62,7 +120,11 @@ class AllProductPage extends Component {
                 />
               </TouchableHighlight>
               <View style={styles.imageContainer}>
-                <FavoriteButton faveItem={item} />
+                <FavoriteButton
+                  faveItem={item}
+                  active={this.filterFave(item)}
+                  remove={() => this._removeFavorite(index)}
+                />
               </View>
             </View>
           )}
@@ -98,8 +160,8 @@ var styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1
-  },
-})
+  }
+});
 
 const mapStateToProps = state => ({
   products: state.products.products
