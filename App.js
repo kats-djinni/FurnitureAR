@@ -133,24 +133,34 @@ export default class ViroSample extends Component {
           initialScene={{ scene: InitialARScene }}
         />
 
+        
+        
         <View style={localStyles.itemBar}>
           <TouchableHighlight
-            onPress={this.favoritesButton}
+            onPress={this.deleteButton}
           >
-            <Image source={require("./js/res/icons/heart-outline.png")} style={localStyles.itemButton}/>
+            <Image source={require("./js/res/icons/delete-outline.png")} style={localStyles.itemButton}/>
+          </TouchableHighlight>
+          
+          <TouchableHighlight
+            onPress={this.deleteButton}
+          >
+            <Image source={require("./js/res/icons/delete-outline.png")} style={localStyles.itemButton}/>
           </TouchableHighlight>
           
           <TouchableHighlight
             onPress={this.deleteAllButton}
           >
-            <Image source={require("./js/res/icons/delete-outline.png")} style={localStyles.itemButton}/>
+            <Image source={require("./js/res/icons/broom.png")} style={localStyles.itemButton}/>
           </TouchableHighlight>
 
           <TouchableHighlight
-            onPress={this.deleteButton}
+            onPress={this.favoritesButton}
           >
-            <Image source={require("./js/res/icons/delete-icon.png")} style={localStyles.itemButton}/>
+            <Image source={require("./js/res/icons/heart-outline.png")} style={localStyles.itemButton}/>
           </TouchableHighlight>
+     
+
         </View>
 
         <Overlay
@@ -213,7 +223,7 @@ var localStyles = StyleSheet.create({
     alignSelf: "flex-end",
     position: "absolute",
     top: 100,
-    paddingTop: 85,
+    // paddingTop: 85,
     paddingBottom: 85,
     padding: 20
   },
