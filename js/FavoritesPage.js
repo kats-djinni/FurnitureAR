@@ -4,13 +4,13 @@ import React, { Component } from "react";
 import {
   StyleSheet,
   View,
-  Text,
   Image,
   FlatList,
   AsyncStorage,
-  Button
+  TouchableHighlight,
+  Dimensions
 } from "react-native";
-import { Card } from "react-native-elements";
+import { Card, Text, Button } from "react-native-elements";
 import FavoriteButton from "./FavoriteButton";
 
 class FavoritesPage extends Component {
@@ -28,9 +28,7 @@ class FavoritesPage extends Component {
   _retrieveData = async () => {
     try {
       const value = await AsyncStorage.getItem("favorites");
-      console.log("looking for value", value);
       if (value !== null) {
-        console.log("inside if statement");
         const parsedValue = JSON.parse(value);
         this.setState({ favorites: parsedValue });
       } else {
@@ -52,14 +50,9 @@ class FavoritesPage extends Component {
 
   _removeFavorite = async index => {
     try {
-      console.log("hi");
       const faveArr = await AsyncStorage.getItem("favorites");
       if (faveArr !== null) {
         const newFaveArr = JSON.parse(faveArr);
-        // const index = newFaveArr.indexOf(item);
-        console.log("what", index);
-        console.log("looking for array", newFaveArr);
-        console.log("looking for index", index);
         if (index > -1) {
           newFaveArr.splice(index, 1);
         }
@@ -78,29 +71,33 @@ class FavoritesPage extends Component {
       </View>
     ) : (
       <View style={styles.listContainer}>
-        <Text style={styles.AllProductPage}>Favorites</Text>
+        <Text h4 style={styles.header}>Favorites</Text>
 
         <FlatList
           data={this.state.favorites}
           renderItem={({ item, index }) => (
             <View>
               <Card>
-                <Text>Name: {item.displayName}</Text>
+                <Text style={styles.itemName}>{item.displayName}</Text>
                 <Image
-                  style={{ width: 200, height: 200 }}
+                  style={styles.faveImage}
                   source={{ uri: item.thumbnail }}
                 />
               </Card>
               {/* <FavoriteButton /> */}
-              <Button
-                title="Remove From Favorites"
+              <TouchableHighlight
                 onPress={() => this._removeFavorite(index)}
-              />
+              >
+                <View style={styles.imageContainer}>
+                  <Image tintColor="red" source={require("./res/icons/clear-icon.png")}/>
+                </View>
+              </TouchableHighlight>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-        <Button title="Clear All" onPress={() => this._clearData()} />
+        <Button type="outline" raised="true" buttonStyle={styles.clearButton} title="Clear All" containerStyle={{width: Dimensions.get("window").width * 0.55}}
+        onPress={() => this._clearData()} />
       </View>
     );
   }
@@ -113,13 +110,38 @@ var styles = StyleSheet.create({
     flexWrap: "wrap",
     fontFamily: "Arial",
     fontSize: 50,
-    color: "#000000",
+    color: "#444B50",
     textAlignVertical: "center",
     textAlign: "center",
     margin: 20
   },
   SingleItem: {
     flex: 1
+  },
+  faveImage: {
+    resizeMode: "cover",
+    width: 150, 
+    height: 150
+  },
+
+  itemName: {
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 5
+  },
+
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  header: {
+    textAlign: "center",
+    color: "#444B50"
+  },
+
+  clearButton: {  
+    // width: Dimensions.get("window").width * 0.5
   }
 });
 

@@ -5,14 +5,14 @@ import React, { Component } from "react";
 import {
   StyleSheet,
   View,
-  Text,
   Image,
   TouchableHighlight,
   Button,
   AsyncStorage,
   FlatList
 } from "react-native";
-import { connect } from "react-redux";
+import { connect } from "react-redux"
+import { Text } from "react-native-elements"
 import { getAllProducts, pickProduct } from "./store/products";
 import FavoriteButton from "./FavoriteButton";
 
@@ -46,7 +46,7 @@ class AllProductPage extends Component {
     console.log("this.props.children: ", this.props.children);
     return (
       <View style={styles.listContainer}>
-        <Text style={styles.AllProductPage}>Choose Products</Text>
+        <Text h4 style={styles.AllProductPage}>Choose Products</Text>
         <FlatList
           data={this.props.products}
           renderItem={({ item }) => (
@@ -61,7 +61,7 @@ class AllProductPage extends Component {
                   source={{ uri: item.thumbnail }}
                 />
               </TouchableHighlight>
-              <View>
+              <View style={styles.imageContainer}>
                 <FavoriteButton faveItem={item} />
               </View>
             </View>
@@ -76,8 +76,8 @@ class AllProductPage extends Component {
 var styles = StyleSheet.create({
   AllProductPage: {
     fontFamily: "Arial",
-    fontSize: 50,
-    color: "#000000",
+    fontSize: 30,
+    color: "#444B50",
     textAlignVertical: "center",
     textAlign: "center",
     margin: 5
@@ -95,8 +95,11 @@ var styles = StyleSheet.create({
   },
   SingleItem: {
     flex: 1
-  }
-});
+  },
+  imageContainer: {
+    flex: 1
+  },
+})
 
 const mapStateToProps = state => ({
   products: state.products.products

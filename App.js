@@ -86,26 +86,23 @@ export default class ViroSample extends Component {
         <View style={localStyles.navBar}>
           <TouchableHighlight
             underlayColor={"#00000000"}
-            onPress={this.productsButton}
-          >
-            <Image source={require("./js/res/icons/add-button.png")} />
+            onPress={this.favoritesButton}>
+            <Image width="100" height="100" source={require("./js/res/icons/heart-outline.png")} accessibilityLabel="heart icon" />
           </TouchableHighlight>
 
           <TouchableHighlight
-            underlayColor={"#00000000"}
-            onPress={this.favoritesButton}
-          >
-            <Image source={require("./js/res/icons/heart-button.png")} />
+            onPress={this.productsButton}>
+            <Image source={require("./js/res/icons/add-circle.png")} accessibilityLabel="plus icon"/>
           </TouchableHighlight>
 
-          <TouchableHighlight underlayColor={"#00000000"}>
-            <Image source={require("./js/res/icons/btn_mode_objects.png")} />
+          <TouchableHighlight>
+            <Image source={require("./js/res/icons/camera.png")} accessibilityLabel="camera icon"/>
           </TouchableHighlight>
         </View>
 
         <Overlay
           isVisible={this.state.isVisible}
-          overlayBackgroundColor="#ACC6C7"
+          overlayBackgroundColor = "#E3E8E9"
           width={Dimensions.get("window").width * 0.75}
           height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ isVisible: false })}
@@ -115,7 +112,7 @@ export default class ViroSample extends Component {
 
         <Overlay
           isVisible={this.state.visibleFavorites}
-          overlayBackgroundColor="#E5E8E9"
+          overlayBackgroundColor="#E3E8E9"
           width={Dimensions.get("window").width * 0.75}
           height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ visibleFavorites: false })}
@@ -138,33 +135,29 @@ export default class ViroSample extends Component {
 
         <View style={localStyles.itemBar}>
           <TouchableHighlight
-            underlayColor={"#00000000"}
-            onPress={this.deleteButton}
-          >
-            <Image source={require("./js/res/btn_mode_objects.png")} />
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            underlayColor={"#00000000"}
-            onPress={this.deleteAllButton}
-          >
-            <Image source={require("./js/res/btn_mode_objects.png")} />
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            underlayColor={"#00000000"}
             onPress={this.favoritesButton}
           >
-            <Image source={require("./js/res/btn_mode_objects.png")} />
+            <Image source={require("./js/res/icons/heart-outline.png")} style={localStyles.itemButton}/>
+          </TouchableHighlight>
+          
+          <TouchableHighlight
+            onPress={this.deleteAllButton}
+          >
+            <Image source={require("./js/res/icons/delete-outline.png")} style={localStyles.itemButton}/>
           </TouchableHighlight>
 
+          <TouchableHighlight
+            onPress={this.deleteButton}
+          >
+            <Image source={require("./js/res/icons/delete-icon.png")} style={localStyles.itemButton}/>
+          </TouchableHighlight>
         </View>
 
         <Overlay
           isVisible={this.state.visibleFavorites}
           overlayBackgroundColor="#E5E8E9"
-          width="auto"
-          height={700}
+          width={Dimensions.get("window").width * 0.8}
+          height={Dimensions.get("window").height * 0.8}
           onBackdropPress={() => this.setState({ visibleFavorites: false })}
         >
           <FavoritesPage />
@@ -219,7 +212,16 @@ var localStyles = StyleSheet.create({
     flex: 1,
     alignSelf: "flex-end",
     position: "absolute",
-    top: 100
+    top: 100,
+    paddingTop: 85,
+    paddingBottom: 85,
+    padding: 20
+  },
+
+  itemButton: {
+    //Note: tintColor changes color of icon 
+    //(e.g. tintColor: "pink"
+    resizeMode: "cover",
   }
 });
 
