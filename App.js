@@ -37,6 +37,7 @@ export default class ViroSample extends Component {
       visibleItemBar: false,
       // selectedItem: {},
       itemIndex: 0,
+      isSaved: false, 
       screenshotCount: 0,
       cameraPermission: false,
       photoConfirmation: false,
@@ -76,10 +77,15 @@ export default class ViroSample extends Component {
     const test = await this.ARSceneNav.sceneNavigator.takeScreenshot("picture", true)
     console.log('im in the save camera roll', CameraRoll )
     // CameraRoll.saveToCameraRoll(url)
+    // this.setState({isSaved: !this.state.isSaved})
     this.setState({photoPreviewVisibility: !this.state.photoPreviewVisibility})
     
   }
-
+  
+  _deletePreview = () => {
+    this.setState({photoPreviewVisibility: !this.state.photoPreviewVisibility})
+  }
+  
   favoritesButton = () => {
     this.setState({
       visibleFavorites: true
@@ -158,16 +164,35 @@ export default class ViroSample extends Component {
           onBackdropPress={() => this.setState({ photoPreviewVisibility: false })}
          >
           <Image source={{uri: this.state.screenshotUrl}} style={localStyles.backgroundImage} />
-          <TouchableHighlight
+          
+          <View style={localStyles.cameraPreview}>
+              <TouchableHighlight
                 onPress={this._saveToCameraRoll}
-                style={{ width: 200, height: 200 }}
               >
                <Image
-                  style={{ width: 100, height: 100 }}
                   source={require("./js/res/icons/camera.png")}
                 />
               </TouchableHighlight>
+              
+              <TouchableHighlight
+                onPress={this._deletePreview}
+              >
+              <Image source={require("./js/res/icons/delete-outline.png")} />
+              </TouchableHighlight>
+          </View> 
+           
         </Overlay>
+        
+        {/* <Overlay
+          isVisible={this.state.isSaved}
+          overlayBackgroundColor="#00000000"
+          width={Dimensions.get("window").width * 0.5}
+          height={Dimensions.get("window").height * 0.25}
+          onBackdropPress={() => this.setState({ photoConfirmation: false })}
+        >
+         <Image source={require("./js/res/icons/check-icon.png")} />
+        </Overlay>
+         */}
         
         <Overlay
           isVisible={this.state.photoConfirmation}
@@ -290,6 +315,15 @@ var localStyles = StyleSheet.create({
     //Note: tintColor changes color of icon 
     //(e.g. tintColor: "pink"
     resizeMode: "cover",
+  },
+  cameraPreview: {
+    flex: 1,
+    // alignSelf: "flex-end",
+    position: "absolute",
+    top: 100,
+    // paddingTop: 85,
+    paddingBottom: 85,
+    padding: 20
   },
 
   backgroundImage: {
