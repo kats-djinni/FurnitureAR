@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   Image,
   Dimensions,
+  Text,
   CameraRoll
 } from "react-native";
 
@@ -36,7 +37,8 @@ export default class ViroSample extends Component {
       // selectedItem: {},
       itemIndex: 0,
       screenshotCount: 0,
-      cameraPermission: true
+      cameraPermission: true,
+      photoConfirmation: false
     };
   }
 
@@ -56,7 +58,8 @@ export default class ViroSample extends Component {
   }
   
   takeScreenShot = async () => {
-    const test = await this.ARSceneNav.sceneNavigator.takeScreenshot("picture", true)
+    const test = await this.ARSceneNav.sceneNavigator.takeScreenshot("picture", this.state.cameraPermission)
+    this.setState({ photoConfirmation: !this.state.photoConfirmation });
     console.log('camera testing', test)
   }
   
@@ -129,6 +132,17 @@ export default class ViroSample extends Component {
         >
           <FavoritesPage />
         </Overlay>
+        
+        <Overlay
+          isVisible={this.state.photoConfirmation}
+          overlayBackgroundColor="#E3E8E9"
+          width={Dimensions.get("window").width * 0.5}
+          height={Dimensions.get("window").height * 0.25}
+          onBackdropPress={() => this.setState({ photoConfirmation: false })}
+        >
+          <Text>Your photo has been saved. View it in your Camera Roll</Text>
+        </Overlay>
+        
       </View>
     );
   }
@@ -142,8 +156,6 @@ export default class ViroSample extends Component {
           {...this.state.sharedProps}
           initialScene={{ scene: InitialARScene }}
         />
-
-        
         
         <View style={localStyles.itemBar}>
           <TouchableHighlight
