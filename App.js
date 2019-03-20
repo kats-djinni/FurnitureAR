@@ -64,22 +64,19 @@ export default class ViroSample extends Component {
   takeScreenShot = async () => {
     const test = await this.ARSceneNav.sceneNavigator.takeScreenshot("picture", this.state.cameraPermission)
     this.setState({ 
-      // photoConfirmation: !this.state.photoConfirmation, 
       screenshotUrl: "file://" + test.url,
       photoPreviewVisibility: true  });
-    console.log('camera testing', test)
-    console.log('state after screenshot', this.state.screenshotUrl)
-    let url = "file://" + test.url
-    // this._saveToCameraRoll(url)
   }
   
   _saveToCameraRoll = async () => {
-    const test = await this.ARSceneNav.sceneNavigator.takeScreenshot("picture", true)
-    console.log('im in the save camera roll', CameraRoll )
-    // CameraRoll.saveToCameraRoll(url)
-    // this.setState({isSaved: !this.state.isSaved})
-    this.setState({photoPreviewVisibility: !this.state.photoPreviewVisibility})
-    
+    await this.ARSceneNav.sceneNavigator.takeScreenshot("picture", true)
+    this.setState({isSaved: !this.state.isSaved})
+    setTimeout(() => {
+      this.setState({
+        photoPreviewVisibility: !this.state.photoPreviewVisibility,
+        isSaved: !this.state.isSaved
+      })
+    }, 2000)
   }
   
   _deletePreview = () => {
@@ -165,6 +162,10 @@ export default class ViroSample extends Component {
          >
           <Image source={{uri: this.state.screenshotUrl}} style={localStyles.backgroundImage} />
           
+          <View style={localStyles.savingIcon} >
+            <Image source={require("./js/res/icons/check-icon.png")}  style={{opacity: this.state.isSaved ? 100 : 0}} />
+          </View>
+         
           <View style={localStyles.cameraPreview}>
               <TouchableHighlight
                 onPress={this._saveToCameraRoll}
@@ -325,7 +326,13 @@ var localStyles = StyleSheet.create({
     paddingBottom: 85,
     padding: 20
   },
-
+  savingIcon: {
+    flex: 1,
+    alignSelf: "center",
+    justifyContent: "center"
+    
+  },
+  
   backgroundImage: {
     position: 'absolute',
     top: 0,
