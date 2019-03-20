@@ -142,7 +142,6 @@ export default class ViroSample extends Component {
             <Image source={require("./js/res/icons/delete-outline.png")} style={localStyles.itemButton}/>
           </TouchableHighlight>
           
-          
           <TouchableHighlight
             onPress={this.deleteButton}
           >
@@ -154,13 +153,14 @@ export default class ViroSample extends Component {
           >
             <Image source={require("./js/res/icons/broom.png")} style={localStyles.itemButton}/>
           </TouchableHighlight>
-          
+
           <TouchableHighlight
             onPress={this.favoritesButton}
           >
             <Image source={require("./js/res/icons/heart-outline.png")} style={localStyles.itemButton}/>
           </TouchableHighlight>
-          
+     
+
         </View>
 
         <Overlay
