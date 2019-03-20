@@ -17,6 +17,7 @@ import { ViroARSceneNavigator } from "react-viro";
 import { Overlay } from "react-native-elements";
 import AllProducts from "./js/AllProductPage";
 import FavoritesPage from "./js/FavoritesPage";
+import { thisTypeAnnotation } from "@babel/types";
 
 
 var sharedProps = {
@@ -37,8 +38,10 @@ export default class ViroSample extends Component {
       // selectedItem: {},
       itemIndex: 0,
       screenshotCount: 0,
-      cameraPermission: true,
-      photoConfirmation: false
+      cameraPermission: false,
+      photoConfirmation: false,
+      screenshotUrl:'',
+      photoPreviewVisibility: false
     };
   }
 
@@ -59,10 +62,24 @@ export default class ViroSample extends Component {
   
   takeScreenShot = async () => {
     const test = await this.ARSceneNav.sceneNavigator.takeScreenshot("picture", this.state.cameraPermission)
-    this.setState({ photoConfirmation: !this.state.photoConfirmation });
+    this.setState({ 
+      // photoConfirmation: !this.state.photoConfirmation, 
+      screenshotUrl: "file://" + test.url,
+      photoPreviewVisibility: true  });
     console.log('camera testing', test)
+    console.log('state after screenshot', this.state.screenshotUrl)
+    let url = "file://" + test.url
+    // this._saveToCameraRoll(url)
   }
   
+  _saveToCameraRoll = async () => {
+    const test = await this.ARSceneNav.sceneNavigator.takeScreenshot("picture", true)
+    console.log('im in the save camera roll', CameraRoll )
+    // CameraRoll.saveToCameraRoll(url)
+    this.setState({photoPreviewVisibility: !this.state.photoPreviewVisibility})
+    
+  }
+
   favoritesButton = () => {
     this.setState({
       visibleFavorites: true
@@ -131,6 +148,25 @@ export default class ViroSample extends Component {
           onBackdropPress={() => this.setState({ visibleFavorites: false })}
         >
           <FavoritesPage />
+        </Overlay>
+        
+        <Overlay
+          isVisible={this.state.photoPreviewVisibility}
+          overlayBackgroundColor="#E3E8E9"
+          width={Dimensions.get("window").width}
+          height={Dimensions.get("window").height}
+          onBackdropPress={() => this.setState({ photoPreviewVisibility: false })}
+         >
+          <Image source={{uri: this.state.screenshotUrl}} style={localStyles.backgroundImage} />
+          <TouchableHighlight
+                onPress={this._saveToCameraRoll}
+                style={{ width: 200, height: 200 }}
+              >
+               <Image
+                  style={{ width: 100, height: 100 }}
+                  source={require("./js/res/icons/camera.png")}
+                />
+              </TouchableHighlight>
         </Overlay>
         
         <Overlay
@@ -254,6 +290,15 @@ var localStyles = StyleSheet.create({
     //Note: tintColor changes color of icon 
     //(e.g. tintColor: "pink"
     resizeMode: "cover",
+  },
+
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    resizeMode:'stretch',
   }
 });
 
