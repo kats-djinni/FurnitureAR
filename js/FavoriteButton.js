@@ -37,7 +37,7 @@ export default class FavoriteButton extends Component {
     return (
     <View style={{justifyContent: "center"}}>
       <TouchableHighlight onPress={() => this.handlePress()}   style={this.state.active ? styles.btnActive : styles.btn}>
-            <Image source={require("./res/icons/solid-heart.png")} />
+            <Image tintColor="red" source={require("./res/icons/solid-heart.png")} />
         </TouchableHighlight>
     </View>
     );

@@ -109,7 +109,7 @@ export default class ViroSample extends Component {
         >
           <AllProducts visibilityChange={this.changeVisibility} />
         </Overlay>
-        
+
         <Overlay
           isVisible={this.state.visibleFavorites}
           overlayBackgroundColor="#E3E8E9"
@@ -156,8 +156,8 @@ export default class ViroSample extends Component {
         <Overlay
           isVisible={this.state.visibleFavorites}
           overlayBackgroundColor="#E5E8E9"
-          width={Dimensions.get("window").width * 0.75}
-          height={Dimensions.get("window").height * 0.75}
+          width={Dimensions.get("window").width * 0.8}
+          height={Dimensions.get("window").height * 0.8}
           onBackdropPress={() => this.setState({ visibleFavorites: false })}
         >
           <FavoritesPage />
