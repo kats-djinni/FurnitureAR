@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, AsyncStorage } from "react-native";
+import { View, StyleSheet, AsyncStorage, Image, TouchableHighlight } from "react-native";
 import { Button } from "react-native-elements";
 
 export default class FavoriteButton extends Component {
@@ -35,12 +35,11 @@ export default class FavoriteButton extends Component {
 
   render() {
     return (
-      <Button
-        type="clear"
-        title="Faves"
-        style={this.state.active ? styles.btnActive : styles.btn}
-        onPress={() => this.handlePress()}
-      />
+    <View style={{justifyContent: "center"}}>
+      <TouchableHighlight onPress={() => this.handlePress()}   style={this.state.active ? styles.btnActive : styles.btn}>
+            <Image source={require("./res/icons/solid-heart.png")} />
+        </TouchableHighlight>
+    </View>
     );
   }
 }
@@ -52,10 +51,11 @@ var styles = StyleSheet.create({
     color: "#000000",
     textAlignVertical: "center",
     textAlign: "center",
-    margin: 20
+    // margin: 20
   },
 
   btn: {
-    flex: 1
+    flex: 1,
+    padding: 10
   }
 });
