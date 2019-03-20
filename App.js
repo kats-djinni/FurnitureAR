@@ -6,7 +6,8 @@ import {
   StyleSheet,
   TouchableHighlight,
   Image,
-  Dimensions
+  Dimensions,
+  CameraRoll
 } from "react-native";
 
 import { deleteProduct, deleteAll } from './js/store/products'
@@ -15,6 +16,7 @@ import { ViroARSceneNavigator } from "react-viro";
 import { Overlay } from "react-native-elements";
 import AllProducts from "./js/AllProductPage";
 import FavoritesPage from "./js/FavoritesPage";
+
 
 var sharedProps = {
   apiKey: "7C313AAF-F252-430D-9124-1B1DF5CE1CA2"
@@ -32,7 +34,9 @@ export default class ViroSample extends Component {
       visibleFavorites: false,
       visibleItemBar: false,
       // selectedItem: {},
-      itemIndex: 0
+      itemIndex: 0,
+      screenshotCount: 0,
+      cameraPermission: true
     };
   }
 
@@ -49,9 +53,13 @@ export default class ViroSample extends Component {
       visibleItemBar: !this.state.visibleItemBar,
       itemIndex: key
     })
-
   }
-
+  
+  takeScreenShot = async () => {
+    const test = await this.ARSceneNav.sceneNavigator.takeScreenshot("picture", true)
+    console.log('camera testing', test)
+  }
+  
   favoritesButton = () => {
     this.setState({
       visibleFavorites: true
@@ -80,6 +88,7 @@ export default class ViroSample extends Component {
             scene: InitialARScene,
             passProps: {trigger: this.triggerItemBar}
           }}
+          ref={ARSceneNav => (this.ARSceneNav = ARSceneNav)}
           
         />
 
@@ -95,7 +104,8 @@ export default class ViroSample extends Component {
             <Image source={require("./js/res/icons/add-circle.png")} accessibilityLabel="plus icon"/>
           </TouchableHighlight>
 
-          <TouchableHighlight>
+          <TouchableHighlight
+            onPress={this.takeScreenShot}>
             <Image source={require("./js/res/icons/camera.png")} accessibilityLabel="camera icon"/>
           </TouchableHighlight>
         </View>
