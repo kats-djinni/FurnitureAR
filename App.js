@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import {
   View,
   StyleSheet,
@@ -161,9 +160,10 @@ export default class ViroSample extends Component {
           onBackdropPress={() => this.setState({ photoPreviewVisibility: false })}
          >
           <Image source={{uri: this.state.screenshotUrl}} style={localStyles.backgroundImage} />
-          
-          <View style={localStyles.savingIcon} >
-            <Image source={require("./js/res/icons/check-icon.png")}  style={{opacity: this.state.isSaved ? 100 : 0}} />
+
+          <View style={localStyles.savingIcon} display={this.state.isSaved? "flex" : "none"}>
+            {/* <Image source={require("./js/res/icons/check-icon.png")}  style={{opacity: this.state.isSaved ? 100 : 0}} /> */}
+            <Image source={require("./js/res/animation/heart.gif")}  style={{opacity: this.state.isSaved ? 100 : 0}} />
           </View>
          
           <View style={localStyles.cameraPreview}>
@@ -183,17 +183,6 @@ export default class ViroSample extends Component {
           </View> 
            
         </Overlay>
-        
-        {/* <Overlay
-          isVisible={this.state.isSaved}
-          overlayBackgroundColor="#00000000"
-          width={Dimensions.get("window").width * 0.5}
-          height={Dimensions.get("window").height * 0.25}
-          onBackdropPress={() => this.setState({ photoConfirmation: false })}
-        >
-         <Image source={require("./js/res/icons/check-icon.png")} />
-        </Overlay>
-         */}
         
         <Overlay
           isVisible={this.state.photoConfirmation}
@@ -329,8 +318,7 @@ var localStyles = StyleSheet.create({
   savingIcon: {
     flex: 1,
     alignSelf: "center",
-    justifyContent: "center"
-    
+    justifyContent: "center",
   },
   
   backgroundImage: {
