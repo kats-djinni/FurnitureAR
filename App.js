@@ -34,12 +34,9 @@ export default class ViroSample extends Component {
       isVisible: false,
       visibleFavorites: false,
       visibleItemBar: false,
-      // selectedItem: {},
       itemIndex: 0,
       isSaved: false, 
-      screenshotCount: 0,
       cameraPermission: false,
-      photoConfirmation: false,
       screenshotUrl:'',
       photoPreviewVisibility: false
     };
@@ -75,7 +72,7 @@ export default class ViroSample extends Component {
         photoPreviewVisibility: !this.state.photoPreviewVisibility,
         isSaved: !this.state.isSaved
       })
-    }, 2000)
+    }, 1500)
   }
   
   _deletePreview = () => {
@@ -181,16 +178,6 @@ export default class ViroSample extends Component {
               </TouchableHighlight>
           </View> 
            
-        </Overlay>
-        
-        <Overlay
-          isVisible={this.state.photoConfirmation}
-          overlayBackgroundColor="#E3E8E9"
-          width={Dimensions.get("window").width * 0.5}
-          height={Dimensions.get("window").height * 0.25}
-          onBackdropPress={() => this.setState({ photoConfirmation: false })}
-        >
-          <Text>Your photo has been saved. View it in your Camera Roll</Text>
         </Overlay>
         
       </View>
