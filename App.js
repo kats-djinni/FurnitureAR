@@ -162,8 +162,7 @@ export default class ViroSample extends Component {
           <Image source={{uri: this.state.screenshotUrl}} style={localStyles.backgroundImage} />
 
           <View style={localStyles.savingIcon} display={this.state.isSaved? "flex" : "none"}>
-            {/* <Image source={require("./js/res/icons/check-icon.png")}  style={{opacity: this.state.isSaved ? 100 : 0}} /> */}
-            <Image source={require("./js/res/animation/heart.gif")}  style={{opacity: this.state.isSaved ? 100 : 0}} />
+            <Image source={require("./js/res/animation/progressBlocks.gif")}  style={{opacity: this.state.isSaved ? 100 : 0}} />
           </View>
          
           <View style={localStyles.cameraPreview}>
