@@ -71,7 +71,9 @@ class FavoritesPage extends Component {
       </View>
     ) : (
       <View style={styles.listContainer}>
-        <Text h4 style={styles.header}>Favorites</Text>
+        <Text h4 style={styles.header}>
+          Favorites
+        </Text>
 
         <FlatList
           data={this.state.favorites}
@@ -85,19 +87,26 @@ class FavoritesPage extends Component {
                 />
               </Card>
               {/* <FavoriteButton /> */}
-              <TouchableHighlight
-                onPress={() => this._removeFavorite(index)}
-              >
+              <TouchableHighlight onPress={() => this._removeFavorite(index)}>
                 <View style={styles.imageContainer}>
-                  <Image tintColor="red" source={require("./res/icons/clear-icon.png")}/>
+                  <Image
+                    tintColor="red"
+                    source={require("./res/icons/clear-icon.png")}
+                  />
                 </View>
               </TouchableHighlight>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-        <Button type="outline" raised="true" buttonStyle={styles.clearButton} title="Clear All" containerStyle={{width: Dimensions.get("window").width * 0.55}}
-        onPress={() => this._clearData()} />
+        <Button
+          type="outline"
+          raised="true"
+          buttonStyle={styles.clearButton}
+          title="Clear All"
+          containerStyle={{ width: Dimensions.get("window").width * 0.55 }}
+          onPress={() => this._clearData()}
+        />
       </View>
     );
   }
@@ -120,7 +129,7 @@ var styles = StyleSheet.create({
   },
   faveImage: {
     resizeMode: "cover",
-    width: 150, 
+    width: 150,
     height: 150
   },
 
@@ -131,8 +140,8 @@ var styles = StyleSheet.create({
   },
 
   imageContainer: {
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center"
   },
 
   header: {
@@ -140,7 +149,7 @@ var styles = StyleSheet.create({
     color: "#444B50"
   },
 
-  clearButton: {  
+  clearButton: {
     // width: Dimensions.get("window").width * 0.5
   }
 });
