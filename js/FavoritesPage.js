@@ -13,7 +13,7 @@ import {
 import { Card, Text, Button } from "react-native-elements";
 import FavoriteButton from "./FavoriteButton";
 
-class FavoritesPage extends Component {
+export class FavoritesPage extends Component {
   constructor() {
     super();
     this.state = {

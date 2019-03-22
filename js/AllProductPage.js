@@ -16,7 +16,7 @@ import { Text } from "react-native-elements";
 import { getAllProducts, pickProduct } from "./store/products";
 import FavoriteButton from "./FavoriteButton";
 
-class AllProductPage extends Component {
+export class AllProductPage extends Component {
   constructor() {
     super();
     this.state = {
