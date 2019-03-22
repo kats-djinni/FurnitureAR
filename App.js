@@ -15,6 +15,7 @@ import { ViroARSceneNavigator } from "react-viro";
 import { Overlay } from "react-native-elements";
 import AllProducts from "./js/AllProductPage";
 import FavoritesPage from "./js/FavoritesPage";
+import {getAllProducts} from "./js/store/products"
 
 var sharedProps = {
   apiKey: "7C313AAF-F252-430D-9124-1B1DF5CE1CA2"
@@ -22,6 +23,18 @@ var sharedProps = {
 
 var InitialARScene = require("./js/HomeScreen");
 
+class SplashScreen extends Component {
+  render() {
+    const viewStyles = [styles.container, { backgroundColor: 'white' }];
+    return (
+      <View style={viewStyles}>
+        <Image source={require('./js/res/HavenTest.png')}  style={{width: 250, height: 250}}/>
+      </View>
+    );
+  }
+}
+
+// eslint-disable-next-line react/no-multi-comp
 export default class ViroSample extends Component {
   constructor() {
     super();
@@ -34,10 +47,20 @@ export default class ViroSample extends Component {
       itemIndex: 0,
       cameraPermission: false,
       screenshotUrl:'',
-      photoPreviewVisibility: false
+      photoPreviewVisibility: false,
+      isLoading: true
     };
   
   }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        isLoading: false
+      })
+    }, 3000) 
+  }
+
 
   productsButton = () => {
     this.setState({ isVisible: true });
@@ -215,6 +238,9 @@ export default class ViroSample extends Component {
   
   
   render() {
+    if (this.state.isLoading) {
+      return <SplashScreen />;
+    }
     if (this.state.visibleItemBar) {
       return this.itemButtons();
     } else {
@@ -291,6 +317,25 @@ var localStyles = StyleSheet.create({
     bottom: 5,
     right: 5,
   }
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
 });
 
 const mapStateToProps = state => ({
