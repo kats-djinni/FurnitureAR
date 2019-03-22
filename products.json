@@ -71,6 +71,15 @@
       "formatType": "OBJ",
       "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-vika-manne-table/IKEA-Vika_Manne_Table-3D.png",
       "type": "table"
+    },
+    {
+      "name": "ikea_etagere_gray_small_shelf",
+      "displayName": "Kallax Shiny Gray Turquoise Shelf",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-etagere-shiny+gray-turquoise/kallax-etagere-shiny+gray-turquoise.obj",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-etagere-shiny+gray-turquoise/kallax-etagere-shiny+gray-turquoise.mtl",
+      "formatType": "OBJ",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-etagere-shiny+gray-turquoise/kallax_etagere_shiny_gray_small.png",
+      "type": "shelf"
     }
   ]
 }
