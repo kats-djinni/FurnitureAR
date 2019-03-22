@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import {
   View,
   StyleSheet,
   TouchableHighlight,
   Image,
-  Dimensions
+  Dimensions,
+  Text
 } from "react-native";
 
 import { deleteProduct, deleteAll } from './js/store/products'
@@ -31,9 +31,12 @@ export default class ViroSample extends Component {
       isVisible: false,
       visibleFavorites: false,
       visibleItemBar: false,
-      // selectedItem: {},
-      itemIndex: 0
+      itemIndex: 0,
+      cameraPermission: false,
+      screenshotUrl:'',
+      photoPreviewVisibility: false
     };
+  
   }
 
   productsButton = () => {
@@ -49,9 +52,27 @@ export default class ViroSample extends Component {
       visibleItemBar: !this.state.visibleItemBar,
       itemIndex: key
     })
-
   }
+  
+  takeScreenShot = async () => {
+    const test = await this.ARSceneNav.sceneNavigator.takeScreenshot(`picture`, true)
 
+    this.setState({ 
+      screenshotUrl: "file://" + test.url,
+      photoPreviewVisibility: true
+    });
+    
+    setTimeout(() => {
+      this.setState({
+        photoPreviewVisibility: !this.state.photoPreviewVisibility,
+      })
+    }, 3000) 
+  }
+  
+  _deletePreview = () => {
+    this.setState({photoPreviewVisibility: !this.state.photoPreviewVisibility})
+  }
+  
   favoritesButton = () => {
     this.setState({
       visibleFavorites: true
@@ -80,6 +101,7 @@ export default class ViroSample extends Component {
             scene: InitialARScene,
             passProps: {trigger: this.triggerItemBar}
           }}
+          ref={ARSceneNav => (this.ARSceneNav = ARSceneNav)}
           
         />
 
@@ -95,7 +117,8 @@ export default class ViroSample extends Component {
             <Image source={require("./js/res/icons/add-circle.png")} accessibilityLabel="plus icon"/>
           </TouchableHighlight>
 
-          <TouchableHighlight>
+          <TouchableHighlight
+            onPress={this.takeScreenShot}>
             <Image source={require("./js/res/icons/camera.png")} accessibilityLabel="camera icon"/>
           </TouchableHighlight>
         </View>
@@ -119,6 +142,22 @@ export default class ViroSample extends Component {
         >
           <FavoritesPage />
         </Overlay>
+        
+        <Overlay
+          isVisible={this.state.photoPreviewVisibility}
+          overlayBackgroundColor="#E3E8E9"
+          width={Dimensions.get("window").width * 0.75}
+          height={Dimensions.get("window").height * 0.75}
+          onBackdropPress={() => this.setState({ photoPreviewVisibility: false })}
+         >
+          <Image source={{uri: this.state.screenshotUrl}} style={localStyles.backgroundImage} />
+
+          <View style={localStyles.savingIcon} display={"flex"}>
+            <Text style={localStyles.savingMessage}>saving...</Text>
+            <Image source={require("./js/res/animation/progressBar.gif")} />
+          </View>         
+        </Overlay>
+        
       </View>
     );
   }
@@ -132,8 +171,6 @@ export default class ViroSample extends Component {
           {...this.state.sharedProps}
           initialScene={{ scene: InitialARScene }}
         />
-
-        
         
         <View style={localStyles.itemBar}>
           <TouchableHighlight
@@ -232,6 +269,27 @@ var localStyles = StyleSheet.create({
     //Note: tintColor changes color of icon 
     //(e.g. tintColor: "pink"
     resizeMode: "cover",
+  },
+  savingIcon: {
+    flex: 1,
+    alignSelf: "center",
+    justifyContent: "center",
+  },
+  savingMessage : {
+    textAlign: 'center',
+    fontFamily: "Arial",
+    fontWeight: 'bold',
+    fontSize: 30,
+    color: "#fff",
+    backgroundColor:  'rgba(62, 244, 95, 0.5)'
+  },
+  
+  backgroundImage: {
+    position: 'absolute',
+    top: 5,
+    left: 5,
+    bottom: 5,
+    right: 5,
   }
 });
 
