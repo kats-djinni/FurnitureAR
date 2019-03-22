@@ -7,7 +7,7 @@ export default class SingleProduct extends Component {
     super(props);
     this.state = {
       rotation: [0, 0, 0],
-      scale: [1, 1, 1]
+      scale: [0.75, 0.75, 0.75]
     };
     this._onRotate = this._onRotate.bind(this);
     this._onPinch = this._onPinch.bind(this);
