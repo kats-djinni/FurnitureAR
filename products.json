@@ -4,7 +4,7 @@
       "name": "ikea_corner_sofa",
       "displayName": "Ektorp Seat Corner Bed Sofa",
       "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-corner-sofa/corner_sofa.obj",
-      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-corner-sofa/corner_sofa.obj",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-corner-sofa/corner_sofa.mtl",
       "formatType": "OBJ",
       "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-corner-sofa/IKEA-Ektorp_Seat_Corner_Bed_Sofa-3D.png",
       "type": "couch"
@@ -35,6 +35,42 @@
       "formatType": "OBJ",
       "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-herman-chair/IKEA-IKEA_Herman_Chair-3D.png",
       "type": "chair"
+    },
+    {
+      "name": "ikea_bernhard_chair",
+      "displayName": "Bernhard Chair",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-bernhard-chair/coralchair.obj",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-bernhard-chair/coralchair.mtl",
+      "formatType": "OBJ",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-bernhard-chair/BERNHARD_Chair.png",
+      "type": "chair"
+    },
+    {
+      "name": "ikea_kallax_shelf",
+      "displayName": "Kallax Shelf",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-shelf-yellow/yellowshelf.obj",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-shelf-yellow/yellowshelf.mtl",
+      "formatType": "OBJ",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-shelf-yellow/KALLAX_Shelf_with_Doors_White_Yellow_Vertical.png",
+      "type": "shelf"
+    },
+    {
+      "name": "ikea_vika_dining_table",
+      "displayName": "Vika Dining Table",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-vika-dining-table/diningtable.obj",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-vika-dining-table/diningtable.mtl",
+      "formatType": "OBJ",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-vika-dining-table/IKEA-Vika_Dinning_Table-3d.png",
+      "type": "table"
+    },
+    {
+      "name": "ikea_vika_manne_table",
+      "displayName": "Vika Manne Table",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-vika-manne-table/greentable.obj",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-vika-manne-table/greentable.mtl",
+      "formatType": "OBJ",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-vika-manne-table/IKEA-Vika_Manne_Table-3D.png",
+      "type": "table"
     }
   ]
 }
