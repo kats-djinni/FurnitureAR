@@ -6,8 +6,7 @@ import {
   TouchableHighlight,
   Image,
   Dimensions,
-  Text,
-  CameraRoll
+  Text
 } from "react-native";
 
 import { deleteProduct, deleteAll } from './js/store/products'
@@ -16,8 +15,6 @@ import { ViroARSceneNavigator } from "react-viro";
 import { Overlay } from "react-native-elements";
 import AllProducts from "./js/AllProductPage";
 import FavoritesPage from "./js/FavoritesPage";
-import { thisTypeAnnotation } from "@babel/types";
-
 
 var sharedProps = {
   apiKey: "7C313AAF-F252-430D-9124-1B1DF5CE1CA2"
@@ -35,11 +32,11 @@ export default class ViroSample extends Component {
       visibleFavorites: false,
       visibleItemBar: false,
       itemIndex: 0,
-      isSaved: false, 
       cameraPermission: false,
       screenshotUrl:'',
       photoPreviewVisibility: false
     };
+  
   }
 
   productsButton = () => {
@@ -58,21 +55,18 @@ export default class ViroSample extends Component {
   }
   
   takeScreenShot = async () => {
-    const test = await this.ARSceneNav.sceneNavigator.takeScreenshot("picture", this.state.cameraPermission)
+    const test = await this.ARSceneNav.sceneNavigator.takeScreenshot(`picture`, true)
+
     this.setState({ 
       screenshotUrl: "file://" + test.url,
-      photoPreviewVisibility: true  });
-  }
-  
-  _saveToCameraRoll = async () => {
-    await this.ARSceneNav.sceneNavigator.takeScreenshot("picture", true)
-    this.setState({isSaved: !this.state.isSaved})
+      photoPreviewVisibility: true
+    });
+    
     setTimeout(() => {
       this.setState({
         photoPreviewVisibility: !this.state.photoPreviewVisibility,
-        isSaved: !this.state.isSaved
       })
-    }, 1500)
+    }, 3000) 
   }
   
   _deletePreview = () => {
@@ -152,32 +146,16 @@ export default class ViroSample extends Component {
         <Overlay
           isVisible={this.state.photoPreviewVisibility}
           overlayBackgroundColor="#E3E8E9"
-          width={Dimensions.get("window").width}
-          height={Dimensions.get("window").height}
+          width={Dimensions.get("window").width * 0.75}
+          height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ photoPreviewVisibility: false })}
          >
           <Image source={{uri: this.state.screenshotUrl}} style={localStyles.backgroundImage} />
 
-          <View style={localStyles.savingIcon} display={this.state.isSaved? "flex" : "none"}>
-            <Image source={require("./js/res/animation/progressBlocks.gif")}  style={{opacity: this.state.isSaved ? 100 : 0}} />
-          </View>
-         
-          <View style={localStyles.cameraPreview}>
-              <TouchableHighlight
-                onPress={this._saveToCameraRoll}
-              >
-               <Image
-                  source={require("./js/res/icons/camera.png")}
-                />
-              </TouchableHighlight>
-              
-              <TouchableHighlight
-                onPress={this._deletePreview}
-              >
-              <Image source={require("./js/res/icons/delete-outline.png")} />
-              </TouchableHighlight>
-          </View> 
-           
+          <View style={localStyles.savingIcon} display={"flex"}>
+            <Text style={localStyles.savingMessage}>saving...</Text>
+            <Image source={require("./js/res/animation/progressBar.gif")} />
+          </View>         
         </Overlay>
         
       </View>
@@ -292,28 +270,26 @@ var localStyles = StyleSheet.create({
     //(e.g. tintColor: "pink"
     resizeMode: "cover",
   },
-  cameraPreview: {
-    flex: 1,
-    // alignSelf: "flex-end",
-    position: "absolute",
-    top: 100,
-    // paddingTop: 85,
-    paddingBottom: 85,
-    padding: 20
-  },
   savingIcon: {
     flex: 1,
     alignSelf: "center",
     justifyContent: "center",
   },
+  savingMessage : {
+    textAlign: 'center',
+    fontFamily: "Arial",
+    fontWeight: 'bold',
+    fontSize: 30,
+    color: "#fff",
+    backgroundColor:  'rgba(62, 244, 95, 0.5)'
+  },
   
   backgroundImage: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    resizeMode:'stretch',
+    top: 5,
+    left: 5,
+    bottom: 5,
+    right: 5,
   }
 });
 
