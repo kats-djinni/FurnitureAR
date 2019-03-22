@@ -55,10 +55,10 @@ export default class ViroSample extends Component {
   }
   
   takeScreenShot = async () => {
-    const test = await this.ARSceneNav.sceneNavigator.takeScreenshot(`picture`, true)
+    const res = await this.ARSceneNav.sceneNavigator.takeScreenshot(`picture`, true)
 
     this.setState({ 
-      screenshotUrl: "file://" + test.url,
+      screenshotUrl: "file://" + res.url,
       photoPreviewVisibility: true
     });
     

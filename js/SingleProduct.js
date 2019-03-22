@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { ViroNode, Viro3DObject, ViroARPlaneSelector } from "react-viro";
+import { ViroNode, Viro3DObject, ViroARPlaneSelector, ViroARPlane } from "react-viro";
 
 export default class SingleProduct extends Component {
   constructor(props) {
@@ -52,7 +52,7 @@ export default class SingleProduct extends Component {
                 uri: this.props.item
               }
             ]}
-            position={[0, 0, 0]}
+            position={[0, -.5, 0]}
             scale={this.state.scale}
             rotation={this.state.rotation}
             onPinch={this._onPinch}
