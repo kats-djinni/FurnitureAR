@@ -43,7 +43,7 @@ export default class SingleProduct extends Component {
   render() {
     return (
       <ViroNode onDrag={() => {}}>
-   
+        <ViroARPlaneSelector>
           <Viro3DObject
             source={{
               uri: this.props.item.objurl
@@ -61,7 +61,7 @@ export default class SingleProduct extends Component {
             onClick={() => this.props.triggerItem(this.props.index)}
             type="OBJ"
           />
-  
+        </ViroARPlaneSelector>
       </ViroNode>
     );
   }
