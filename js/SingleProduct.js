@@ -33,7 +33,6 @@ export default class SingleProduct extends Component {
 
   _onPinch(pinchState, scaleFactor, source) {
     if (pinchState === 3) {
-      console.log("scale", this.state.scale);
       this.setState({
         scale: [
           this.state.scale[0] * scaleFactor,
