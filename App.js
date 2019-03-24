@@ -9,7 +9,7 @@ import {
   Text
 } from "react-native";
 
-import { deleteProduct, deleteAll } from './js/store/products'
+import { deleteProduct, deleteAll, changeY } from './js/store/products'
 import { ViroARSceneNavigator } from "react-viro";
 
 import { Overlay } from "react-native-elements";
@@ -88,6 +88,10 @@ export default class ViroSample extends Component {
   deleteAllButton = () => {
     this.props.deleteAll()
     this.setState({visibleItemBar: !this.state.visibleItemBar})
+  }
+  
+  changeY = () => {
+    this.props.changeYIdx(this.state.itemIndex, -1)  
   }
   
   homeScreenButtons = () => {
@@ -196,7 +200,13 @@ export default class ViroSample extends Component {
           >
             <Image source={require("./js/res/icons/heart-outline.png")} style={localStyles.itemButton}/>
           </TouchableHighlight>
-     
+          
+          
+          <TouchableHighlight
+            onPress={this.changeY}
+          >
+            <Image source={require("./js/res/icons/down-icon.png")} style={localStyles.itemButton}/>
+          </TouchableHighlight>
 
         </View>
 
@@ -300,7 +310,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   deleteProduct: (item) => dispatch(deleteProduct(item)),
-  deleteAll: () => dispatch(deleteAll())
+  deleteAll: () => dispatch(deleteAll()),
+  changeYIdx: (item, num) => dispatch(changeY(item, num))
 });
 
 module.exports = connect(

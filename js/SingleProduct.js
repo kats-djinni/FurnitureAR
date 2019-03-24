@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { ViroNode, Viro3DObject, ViroARPlaneSelector, ViroARPlane } from "react-viro";
 
+
 export default class SingleProduct extends Component {
   constructor(props) {
     super(props);
@@ -42,17 +43,17 @@ export default class SingleProduct extends Component {
   render() {
     return (
       <ViroNode onDrag={() => {}}>
-        <ViroARPlaneSelector>
+   
           <Viro3DObject
             source={{
               uri: this.props.item.objurl
             }}
             resources={[
               {
-                uri: this.props.item
+                uri: this.props.item.mtlurl
               }
             ]}
-            position={[0, -.5, 0]}
+            position={this.props.item.position}
             scale={this.state.scale}
             rotation={this.state.rotation}
             onPinch={this._onPinch}
@@ -60,7 +61,7 @@ export default class SingleProduct extends Component {
             onClick={() => this.props.triggerItem(this.props.index)}
             type="OBJ"
           />
-        </ViroARPlaneSelector>
+  
       </ViroNode>
     );
   }
