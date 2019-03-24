@@ -7,13 +7,12 @@ import {
   View,
   Image,
   TouchableHighlight,
-  Button,
-  AsyncStorage,
   FlatList
 } from "react-native";
 import { connect } from "react-redux";
 import { Text } from "react-native-elements";
-import { getAllProducts, pickProduct } from "./store/products";
+import { getAllProducts, pickProduct } from "./store/products"
+import { getAllFavorites, storeFavorite, removeFavorite } from "./store/favorites"
 import FavoriteButton from "./FavoriteButton";
 
 export class AllProductPage extends Component {
@@ -25,79 +24,34 @@ export class AllProductPage extends Component {
   }
   async componentDidMount() {
     this.props.getProducts();
-    await this._retrieveData();
+    this.props.getFavorites()
+    .then(faves => {
+      this.setState({favorites: faves})
+    })
   }
 
   handlePress = event => {
-    this.props.addPickedItem(event);
-    this.props.visibilityChange();
-  };
-
-  _storeFavorite = async item => {
-    try {
-      const faveStr = await AsyncStorage.getItem("favorites");
-
-      if (faveStr !== null) {
-        const favesArr = JSON.parse(faveStr);
-        const faves = [...favesArr, item];
-        await AsyncStorage.setItem("favorites", JSON.stringify(faves));
-      } else {
-        await AsyncStorage.setItem("favorites", JSON.stringify([item]));
-      }
-      const updatedFaves = await AsyncStorage.getItem("favorites");
-      this.setState({ favorites: updatedFaves });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("favorites");
-      if (value !== null) {
-        const parsedValue = JSON.parse(value);
-        this.setState({ favorites: parsedValue });
-      } else {
-        this.setState({ favorites: [] });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  _removeFavorite = async index => {
-    try {
-      const faveArr = await AsyncStorage.getItem("favorites");
-      if (faveArr !== null) {
-        const newFaveArr = JSON.parse(faveArr);
-        if (index > -1) {
-          newFaveArr.splice(index, 1);
-        }
-        AsyncStorage.setItem("favorites", JSON.stringify(newFaveArr));
-        this.setState({ favorites: newFaveArr });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    this.props.addPickedItem(event)
+    this.props.visibilityChange()
+  }
 
   filterFave = async item => {
     try {
-      const faveStr = await AsyncStorage.getItem("favorites");
-
-      if (faveStr !== null) {
-        const favesArr = JSON.parse(faveStr);
-        const duplicate = favesArr.filter(
+      const faveArr = this.props.favorites
+      if (faveArr !== null) {
+        const duplicate = faveArr.filter(
           products => products.displayName === item.displayName
-        );
+        )
         if (duplicate.length) {
           return true;
-        } else return false;
+        } else {return false}
+      } else {
+        return false
       }
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   render() {
     return (
@@ -122,8 +76,8 @@ export class AllProductPage extends Component {
               <View style={styles.imageContainer}>
                 <FavoriteButton
                   faveItem={item}
+                  itemIndex={index}
                   active={this.filterFave(item)}
-                  remove={() => this._removeFavorite(index)}
                 />
               </View>
             </View>
@@ -164,15 +118,16 @@ var styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  products: state.products.products
-});
+  products: state.products.products,
+  favorites: state.favorites.favorites
+})
 
 const mapDispatchToProps = dispatch => ({
   getProducts: () => dispatch(getAllProducts()),
-  addPickedItem: item => dispatch(pickProduct(item))
-});
+  addPickedItem: item => dispatch(pickProduct(item)),
+  getFavorites: () => dispatch(getAllFavorites()),
+  addFavorite: (item) => dispatch(storeFavorite(item)),
+  removeFavorite: (index) => dispatch(removeFavorite(index))
+})
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AllProductPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AllProductPage)

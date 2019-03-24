@@ -10,11 +10,13 @@ import {
 } from "react-native";
 
 import { deleteProduct, deleteAll } from './js/store/products'
+import { getAllFavorites } from './js/store/favorites'
 import { ViroARSceneNavigator } from "react-viro";
 
 import { Overlay } from "react-native-elements";
 import AllProducts from "./js/AllProductPage";
 import FavoritesPage from "./js/FavoritesPage";
+import FavoriteButton from "./js/FavoriteButton"
 
 var sharedProps = {
   apiKey: "7C313AAF-F252-430D-9124-1B1DF5CE1CA2"
@@ -74,17 +76,40 @@ export default class ViroSample extends Component {
   }
   
   favoritesButton = () => {
-    this.setState({
-      visibleFavorites: true
-    });
+    this.setState({visibleFavorites: true})
   };
+
+  singleItemFavoriteButton = () => {
+      this.setState({
+        visibleItemBar: !this.state.visibleItemBar
+      })
+  }
+
+  filterFave = async item => {
+    try {
+      const faveArr = this.props.favorites
+      if (faveArr !== null) {
+        const duplicate = faveArr.filter(
+          products => products.displayName === item.displayName
+        )
+        if (duplicate.length) {
+          return true;
+        } else {
+          return false
+        }
+      } else {
+        return false
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   deleteButton = async () => {
     await this.props.deleteProduct(this.state.itemIndex)
     this.setState({visibleItemBar: !this.state.visibleItemBar})
-    }
+  }
 
-  
   deleteAllButton = () => {
     this.props.deleteAll()
     this.setState({visibleItemBar: !this.state.visibleItemBar})
@@ -163,8 +188,11 @@ export default class ViroSample extends Component {
   }
   
   itemButtons = () => {
+    const item = this.props.pickedItem[this.state.itemIndex]
+    const itemIndex = this.props.products.indexOf(item)
+
     return (
-      
+
       <View style={localStyles.outer}>
         <ViroARSceneNavigator
           style={localStyles.arView}
@@ -191,13 +219,8 @@ export default class ViroSample extends Component {
             <Image source={require("./js/res/icons/broom.png")} style={localStyles.itemButton}/>
           </TouchableHighlight>
 
-          <TouchableHighlight
-            onPress={this.favoritesButton}
-          >
-            <Image source={require("./js/res/icons/heart-outline.png")} style={localStyles.itemButton}/>
-          </TouchableHighlight>
-     
-
+          <FavoriteButton faveItem={item} itemIndex={itemIndex} active={this.filterFave(item)} onPress={this.singleItemFavoriteButton} />
+    
         </View>
 
         <Overlay
@@ -295,15 +318,14 @@ var localStyles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   products: state.products.products,
-  pickedItem: state.products.pickedProducts
+  pickedItem: state.products.pickedProducts,
+  favorites: state.favorites.favorites
 });
 
 const mapDispatchToProps = dispatch => ({
   deleteProduct: (item) => dispatch(deleteProduct(item)),
-  deleteAll: () => dispatch(deleteAll())
+  deleteAll: () => dispatch(deleteAll()),
+  getFavorites: () => dispatch(getAllFavorites())
 });
 
-module.exports = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ViroSample);
+module.exports = connect(mapStateToProps,mapDispatchToProps)(ViroSample);
