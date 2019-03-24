@@ -74,7 +74,7 @@ class FavoritesPage extends Component {
         />
         <Button
           type="outline"
-          raised="true"
+          raised={true}
           buttonStyle={styles.clearButton}
           title="Clear All"
           containerStyle={{ width: Dimensions.get("window").width * 0.55 }}
