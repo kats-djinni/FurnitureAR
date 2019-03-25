@@ -262,7 +262,7 @@ export default class ViroSample extends Component {
           <TouchableHighlight
             onPress={this.deleteAllButton}
           >
-            <Image source={require("./js/res/icons/broom.png")} style={localStyles.itemButton}/>
+            <Image source={require("./js/res/icons/box-outline.png")} style={localStyles.itemButton}/>
           </TouchableHighlight>
 
           <FavoriteButton faveItem={item} itemIndex={itemIndex} active={this.filterFave(item)} onPress={this.singleItemFavoriteButton} />
