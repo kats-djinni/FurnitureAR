@@ -7,59 +7,92 @@ import {
   View,
   Image,
   TouchableHighlight,
-  FlatList
+  FlatList,
+  Picker
 } from "react-native";
 import { connect } from "react-redux";
 import { Text } from "react-native-elements";
-import { getAllProducts, pickProduct } from "./store/products"
-import { getAllFavorites, storeFavorite, removeFavorite } from "./store/favorites"
+import { getAllProducts, pickProduct, pickType } from "./store/products";
+import {
+  getAllFavorites,
+  storeFavorite,
+  removeFavorite
+} from "./store/favorites";
+import ProductList from "./ProductList";
 import FavoriteButton from "./FavoriteButton";
 
 export class AllProductPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      favorites: []
+      favorites: [],
+      currentProducts: [],
+      category: "all"
     };
   }
-  async componentDidMount() {
+
+  componentDidMount() {
     this.props.getProducts();
-    this.props.getFavorites()
-    .then(faves => {
-      this.setState({favorites: faves})
-    })
+    this.props.getFavorites().then(faves => {
+      this.setState({ favorites: faves });
+    });
   }
 
   handlePress = event => {
-    this.props.addPickedItem(event)
-    this.props.visibilityChange()
+    this.props.addPickedItem(event);
+    this.props.visibilityChange();
+  };
+
+  handleFilter(itemValue) {
+    this.setState({ category: itemValue });
+
+    this.props.filterProducts(itemValue);
   }
 
   filterFave = async item => {
     try {
-      const faveArr = this.props.favorites
+      const faveArr = this.props.favorites;
       if (faveArr !== null) {
         const duplicate = faveArr.filter(
           products => products.displayName === item.displayName
-        )
+        );
         if (duplicate.length) {
           return true;
-        } else {return false}
+        } else {
+          return false;
+        }
       } else {
-        return false
+        return false;
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   render() {
+    console.log("current", this.props.products);
+    const filter =
+      this.state.category === "all"
+        ? this.props.products
+        : this.props.filteredProducts;
+
     return (
       <View style={styles.listContainer}>
         <Text h4 style={styles.AllProductPage}>
           Choose Products
         </Text>
-        <FlatList
+        <Picker
+          selectedValue={this.state.category}
+          onValueChange={(itemValue, itemIndex) => this.handleFilter(itemValue)}
+        >
+          <Picker.Item label="All" value="all" />
+          <Picker.Item label="Chairs" value="chair" />
+          <Picker.Item label="Couches" value="couch" />
+        </Picker>
+
+        <ProductList data={filter} filterFave={filter} />
+
+        {/* <FlatList
           data={this.props.products}
           renderItem={({ item, index }) => (
             <View>
@@ -83,7 +116,7 @@ export class AllProductPage extends Component {
             </View>
           )}
           keyExtractor={(item, index) => index}
-        />
+        /> */}
       </View>
     );
   }
@@ -119,15 +152,20 @@ var styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   products: state.products.products,
-  favorites: state.favorites.favorites
-})
+  favorites: state.favorites.favorites,
+  filteredProducts: state.products.filteredProducts
+});
 
 const mapDispatchToProps = dispatch => ({
   getProducts: () => dispatch(getAllProducts()),
   addPickedItem: item => dispatch(pickProduct(item)),
   getFavorites: () => dispatch(getAllFavorites()),
-  addFavorite: (item) => dispatch(storeFavorite(item)),
-  removeFavorite: (index) => dispatch(removeFavorite(index))
-})
+  addFavorite: item => dispatch(storeFavorite(item)),
+  removeFavorite: index => dispatch(removeFavorite(index)),
+  filterProducts: type => dispatch(pickType(type))
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllProductPage)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AllProductPage);

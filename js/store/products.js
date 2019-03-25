@@ -1,13 +1,15 @@
-const GOT_PRODUCTS = 'GOT_PRODUCTS';
-const PICKED_ITEM = 'PICKED_ITEM';
-const DELETE_ONE_ITEM = 'DELETE_ONE_ITEM';
-const DELETE_ALL = 'DELETE_ALL'
+const GOT_PRODUCTS = "GOT_PRODUCTS";
+const PICKED_ITEM = "PICKED_ITEM";
+const DELETE_ONE_ITEM = "DELETE_ONE_ITEM";
+const DELETE_ALL = "DELETE_ALL";
+const GOT_TYPE = "GOT_TYPE";
 
 const initialState = {
   products: [],
   pickedProducts: [],
-  favoritedItem: {}
-}
+  favoritedItem: {},
+  filteredProducts: []
+};
 
 export const gotAllProducts = products => ({
   type: GOT_PRODUCTS,
@@ -22,15 +24,20 @@ const pickedProduct = item => ({
 const deletedProduct = item => ({
   type: DELETE_ONE_ITEM,
   item
-})
+});
 
 const deletedAll = () => ({
   type: DELETE_ALL
-})
+});
+
+const pickedType = category => ({
+  type: GOT_TYPE,
+  category
+});
 
 export const getAllProducts = () => {
   return dispatch => {
-    fetch('https://funiture-ar.firebaseio.com/products.json')
+    fetch("https://funiture-ar.firebaseio.com/products.json")
       .catch(err => console.log(err))
       .then(res => res.json())
       .then(parsedRes => {
@@ -48,15 +55,21 @@ export const pickProduct = item => {
 
 export const deleteProduct = item => {
   return dispatch => {
-    dispatch(deletedProduct(item))
-  }
-}
+    dispatch(deletedProduct(item));
+  };
+};
 
 export const deleteAll = () => {
   return dispatch => {
-    dispatch(deletedAll())
-  }
-}
+    dispatch(deletedAll());
+  };
+};
+
+export const pickType = type => {
+  return dispatch => {
+    dispatch(pickedType(type));
+  };
+};
 
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -68,17 +81,22 @@ export default function(state = initialState, action) {
         pickedProducts: [...state.pickedProducts, action.item]
       };
     case DELETE_ONE_ITEM:
-      let newArr = state.pickedProducts.slice()
-      newArr[action.item] = null
+      let newArr = state.pickedProducts.slice();
+      newArr[action.item] = null;
       return {
         ...state,
-        pickedProducts: newArr 
-      }
+        pickedProducts: newArr
+      };
     case DELETE_ALL:
       return {
         ...state,
         pickedProducts: []
-      }
+      };
+    case GOT_TYPE:
+      const filteredProducts = state.products.filter(
+        product => product.type === action.category
+      );
+      return { ...state, filteredProducts: filteredProducts };
     default:
       return state;
   }
