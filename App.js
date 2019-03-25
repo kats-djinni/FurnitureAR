@@ -9,12 +9,15 @@ import {
   Text
 } from "react-native";
 
+
 import { deleteProduct, deleteAll, changeY } from './js/store/products'
+import { getAllFavorites } from './js/store/favorites'
 import { ViroARSceneNavigator } from "react-viro";
 
 import { Overlay } from "react-native-elements";
 import AllProducts from "./js/AllProductPage";
 import FavoritesPage from "./js/FavoritesPage";
+import FavoriteButton from "./js/FavoriteButton"
 
 var sharedProps = {
   apiKey: "7C313AAF-F252-430D-9124-1B1DF5CE1CA2"
@@ -32,6 +35,9 @@ export default class ViroSample extends Component {
       visibleFavorites: false,
       visibleItemBar: false,
       itemIndex: 0,
+      downDisabled: false,
+      upDisabled: false,
+      itemPosition: 0,
       cameraPermission: false,
       screenshotUrl:'',
       photoPreviewVisibility: false
@@ -74,24 +80,67 @@ export default class ViroSample extends Component {
   }
   
   favoritesButton = () => {
-    this.setState({
-      visibleFavorites: true
-    });
+    this.setState({visibleFavorites: true})
   };
+
+  singleItemFavoriteButton = () => {
+      this.setState({
+        visibleItemBar: !this.state.visibleItemBar
+      })
+  }
+
+  filterFave = async item => {
+    try {
+      const faveArr = this.props.favorites
+      if (faveArr !== null) {
+        const duplicate = faveArr.filter(
+          products => products.displayName === item.displayName
+        )
+        if (duplicate.length) {
+          return true;
+        } else {
+          return false
+        }
+      } else {
+        return false
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   deleteButton = async () => {
     await this.props.deleteProduct(this.state.itemIndex)
     this.setState({visibleItemBar: !this.state.visibleItemBar})
-    }
+  }
 
-  
   deleteAllButton = () => {
     this.props.deleteAll()
     this.setState({visibleItemBar: !this.state.visibleItemBar})
   }
   
-  changeY = () => {
-    this.props.changeYIdx(this.state.itemIndex, -1)  
+  changeYDown = () => {
+    if (this.state.itemPosition < -1) {
+      this.setState({downDisabled: true})
+    } else {
+      this.setState({
+        downDisabled: false,
+        itemPosition: this.state.itemPosition -0.5
+      })
+      this.props.changeYIdx(this.state.itemIndex, -0.5)  
+    }
+  }
+  
+  changeYUp = () => {
+    if (this.state.itemPosition > 0.5) {
+      this.setState({upDisabled: true})
+    } else {
+      this.setState({
+        upDisabled: false,
+        itemPosition: this.state.itemPosition + 0.5
+      })
+      this.props.changeYIdx(this.state.itemIndex, 0.5)  
+    }
   }
   
   homeScreenButtons = () => {
@@ -167,8 +216,11 @@ export default class ViroSample extends Component {
   }
   
   itemButtons = () => {
+    const item = this.props.pickedItem[this.state.itemIndex]
+    const itemIndex = this.props.products.indexOf(item)
+
     return (
-      
+
       <View style={localStyles.outer}>
         <ViroARSceneNavigator
           style={localStyles.arView}
@@ -196,17 +248,20 @@ export default class ViroSample extends Component {
           </TouchableHighlight>
 
           <TouchableHighlight
-            onPress={this.favoritesButton}
+            onPress={this.changeYUp}
+            disabled={this.state.disabled}
           >
-            <Image source={require("./js/res/icons/heart-outline.png")} style={localStyles.itemButton}/>
+            <Image source={require("./js/res/icons/up-icon.png")} style={localStyles.itemButton}/>
           </TouchableHighlight>
           
-          
           <TouchableHighlight
-            onPress={this.changeY}
+            onPress={this.changeYDown}
+            disabled={this.state.disabled}
           >
             <Image source={require("./js/res/icons/down-icon.png")} style={localStyles.itemButton}/>
           </TouchableHighlight>
+
+          <FavoriteButton faveItem={item} itemIndex={itemIndex} active={this.filterFave(item)} onPress={this.singleItemFavoriteButton} />
 
         </View>
 
@@ -293,7 +348,6 @@ var localStyles = StyleSheet.create({
     color: "#fff",
     backgroundColor:  'rgba(62, 244, 95, 0.5)'
   },
-  
   backgroundImage: {
     position: 'absolute',
     top: 5,
@@ -305,16 +359,15 @@ var localStyles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   products: state.products.products,
-  pickedItem: state.products.pickedProducts
+  pickedItem: state.products.pickedProducts,
+  favorites: state.favorites.favorites
 });
 
 const mapDispatchToProps = dispatch => ({
   deleteProduct: (item) => dispatch(deleteProduct(item)),
   deleteAll: () => dispatch(deleteAll()),
-  changeYIdx: (item, num) => dispatch(changeY(item, num))
+  changeYIdx: (item, num) => dispatch(changeY(item, num)),
+  getFavorites: () => dispatch(getAllFavorites())
 });
 
-module.exports = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ViroSample);
+module.exports = connect(mapStateToProps,mapDispatchToProps)(ViroSample);

@@ -6,66 +6,40 @@ import {
   View,
   Image,
   FlatList,
-  AsyncStorage,
   TouchableHighlight,
   Dimensions
 } from "react-native";
+import { connect } from "react-redux"
 import { Card, Text, Button } from "react-native-elements";
+import { removeFavorite, getAllFavorites, removeAllFavorites } from "./store/favorites"
 import FavoriteButton from "./FavoriteButton";
 
-class FavoritesPage extends Component {
+export class FavoritesPage extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       favorites: []
-    };
+    }
   }
 
   async componentDidMount() {
-    await this._retrieveData();
+    await this.props.getFavorites()
+    .then(favorites => {
+      this.setState({favorites: this.props.favorites})
+    })
+    .catch(console.error)
   }
 
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("favorites");
-      if (value !== null) {
-        const parsedValue = JSON.parse(value);
-        this.setState({ favorites: parsedValue });
-      } else {
-        this.setState({ favorites: [] });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  _clearData = async () => {
-    try {
-      await AsyncStorage.clear();
-      this.setState({ favorites: [] });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  _removeFavorite = async index => {
-    try {
-      const faveArr = await AsyncStorage.getItem("favorites");
-      if (faveArr !== null) {
-        const newFaveArr = JSON.parse(faveArr);
-        if (index > -1) {
-          newFaveArr.splice(index, 1);
-        }
-        AsyncStorage.setItem("favorites", JSON.stringify(newFaveArr));
-        this.setState({ favorites: newFaveArr });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  _deleteFavorite = async (index) => {
+    await this.props.removeFavorite(index)
+    await this.props.getFavorites()
+    this.setState({
+      favorites: this.props.favorites
+    })
+  }
 
   render() {
-    return !this.state.favorites.length ? (
+    return !this.props.favorites.length ? (
       <View style={styles.listContainer}>
         <Text style={styles.AllProductPage}>No favorites</Text>
       </View>
@@ -86,8 +60,7 @@ class FavoritesPage extends Component {
                   source={{ uri: item.thumbnail }}
                 />
               </Card>
-              {/* <FavoriteButton /> */}
-              <TouchableHighlight onPress={() => this._removeFavorite(index)}>
+              <TouchableHighlight onPress={() => this._deleteFavorite(index)}>
                 <View style={styles.imageContainer}>
                   <Image
                     tintColor="red"
@@ -101,11 +74,11 @@ class FavoritesPage extends Component {
         />
         <Button
           type="outline"
-          raised="true"
+          raised={true}
           buttonStyle={styles.clearButton}
           title="Clear All"
           containerStyle={{ width: Dimensions.get("window").width * 0.55 }}
-          onPress={() => this._clearData()}
+          onPress={() => this.props.clearFavorites()}
         />
       </View>
     );
@@ -152,6 +125,20 @@ var styles = StyleSheet.create({
   clearButton: {
     // width: Dimensions.get("window").width * 0.5
   }
-});
+})
 
-export default FavoritesPage;
+const mapStateToProps = (state) => {
+    return {
+      favorites: state.favorites.favorites
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getFavorites: () => dispatch(getAllFavorites()),
+    removeFavorite: (index) => dispatch(removeFavorite(index)),
+    clearFavorites: () => dispatch(removeAllFavorites())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FavoritesPage)

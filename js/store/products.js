@@ -6,8 +6,9 @@ const CHANGE_Y_INDEX = 'CHANGE_Y_INDEX'
 
 const initialState = {
   products: [],
-  pickedProducts: []
-};
+  pickedProducts: [],
+  favoritedItem: {}
+}
 
 export const gotAllProducts = products => ({
   type: GOT_PRODUCTS,
@@ -59,7 +60,7 @@ export const deleteProduct = item => {
   }
 }
 
-export  const deleteAll = () => {
+export const deleteAll = () => {
   return dispatch => {
     dispatch(deletedAll())
   }

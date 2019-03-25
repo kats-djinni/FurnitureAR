@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 
-import { ViroNode, Viro3DObject, ViroARPlaneSelector, ViroARPlane } from "react-viro";
+import {
+  ViroNode,
+  Viro3DObject,
+  ViroARPlaneSelector,
+  ViroARPlane,
+  ViroText
+} from "react-viro";
 
 
 export default class SingleProduct extends Component {
@@ -38,12 +44,32 @@ export default class SingleProduct extends Component {
     }
   }
 
-  
-  
   render() {
+    //placeholder:
+    // const initialScale = this.props.initialScale
+    //divisor should be initialScale of object
+    const pinchScale = (this.state.scale[0] / 0.75) * 100;
     return (
       <ViroNode onDrag={() => {}}>
         <ViroARPlaneSelector>
+          <ViroText
+            text={Math.round(pinchScale).toString() + "%"}
+            textAlign="center"
+            textAlignVertical="top"
+            textLineBreakMode="justify"
+            textClipMode="clipToBounds"
+            color="#ff0000"
+            width={2}
+            height={2}
+            style={{
+              fontFamily: "Arial",
+              fontSize: 20,
+              fontWeight: "400",
+              fontStyle: "italic",
+              color: "#fff"
+            }}
+            position={this.props.item.position}
+          />
           <Viro3DObject
             source={{
               uri: this.props.item.objurl
