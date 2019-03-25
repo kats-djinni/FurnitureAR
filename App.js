@@ -17,6 +17,7 @@ import { Overlay } from "react-native-elements";
 import AllProducts from "./js/AllProductPage";
 import FavoritesPage from "./js/FavoritesPage";
 import FavoriteButton from "./js/FavoriteButton"
+import IntroductionsPage from "./js/InstructionsPage"
 
 var sharedProps = {
   apiKey: "7C313AAF-F252-430D-9124-1B1DF5CE1CA2"
@@ -149,6 +150,16 @@ export default class ViroSample extends Component {
         </View>
 
         <Overlay
+          isVisible={this.state.visibleFavorites}
+          overlayBackgroundColor = "transparent"
+          width={Dimensions.get("window").width * 0.87}
+          height={Dimensions.get("window").height * 0.75}
+          onBackdropPress={() => this.setState({ visibleFavorites: false })}
+        >
+          <IntroductionsPage />
+        </Overlay>
+        
+        <Overlay
           isVisible={this.state.isVisible}
           overlayBackgroundColor = "#E3E8E9"
           width={Dimensions.get("window").width * 0.75}
@@ -161,7 +172,7 @@ export default class ViroSample extends Component {
         <Overlay
           isVisible={this.state.visibleFavorites}
           overlayBackgroundColor="#E3E8E9"
-          width={Dimensions.get("window").width * 0.75}
+          width={Dimensions.get("window").width * 0.87}
           height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ visibleFavorites: false })}
         >
