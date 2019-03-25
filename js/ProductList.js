@@ -13,6 +13,7 @@ export default class ProductList extends Component {
   state = {};
   render() {
     console.log("com", this.props.data);
+    console.log(this.props);
     return (
       <FlatList
         data={this.props.data}
@@ -20,7 +21,7 @@ export default class ProductList extends Component {
           <View>
             <Text>Name: {item.displayName}</Text>
             <TouchableHighlight
-              onPress={() => this.handlePress(item)}
+              onPress={() => this.props.handlePress(item)}
               style={{ width: 200, height: 200 }}
             >
               <Image
