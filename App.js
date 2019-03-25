@@ -76,7 +76,6 @@ export default class ViroSample extends Component {
       })
     }, 10000)
   }
-}
 
   productsButton = () => {
     this.setState({ isVisible: true });
@@ -224,9 +223,9 @@ export default class ViroSample extends Component {
          >
           <Image source={{uri: this.state.screenshotUrl}} style={localStyles.backgroundImage} />
 
-          <View style={localStyles.savingIcon} display={"flex"}>
-            <Text style={localStyles.savingMessage}>saving...</Text>
-            <Image source={require("./js/res/animation/progressBar.gif")} />
+          <View style={localStyles.savingIcon}>
+            <Text style={localStyles.savingMessage}>saving</Text>
+            <Image style={{marginTop: -10}} source={require("./js/res/animation/progressBar.gif")} />
           </View>         
         </Overlay>
         
@@ -286,7 +285,7 @@ export default class ViroSample extends Component {
   
   render() {
     if (this.state.isLoading) {
-      return <SplashScreen />;
+      return <SplashScreen />
     }
     if (this.state.visibleItemBar) {
       return this.itemButtons();
@@ -346,15 +345,14 @@ var localStyles = StyleSheet.create({
   savingIcon: {
     flex: 1,
     alignSelf: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end"
   },
   savingMessage : {
     textAlign: 'center',
     fontFamily: "Arial",
     fontWeight: 'bold',
-    fontSize: 30,
-    color: "#fff",
-    backgroundColor:  'rgba(62, 244, 95, 0.5)'
+    fontSize: 20,
+    color: "#fff"
   },
   
   backgroundImage: {
