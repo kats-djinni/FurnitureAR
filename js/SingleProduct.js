@@ -1,6 +1,12 @@
 import React, { Component } from "react";
-
-import { ViroNode, Viro3DObject, ViroARPlaneSelector, ViroARPlane, ViroSpotLight } from "react-viro";
+import {
+  ViroNode,
+  Viro3DObject,
+  ViroARPlaneSelector,
+  ViroARPlane,
+  ViroSpotLight,
+  ViroText
+} from "react-viro";
 
 export default class SingleProduct extends Component {
   constructor(props) {
@@ -37,13 +43,33 @@ export default class SingleProduct extends Component {
     }
   }
 
-  
-  
   render() {
-    console.log('CLASS OF PLANE SELECTOR', ViroARPlaneSelector.prototype)
+
+    //placeholder:
+    // const initialScale = this.props.initialScale
+    //divisor should be initialScale of object
+    const pinchScale = (this.state.scale[0] / 0.75) * 100;
     return (
       <ViroNode onDrag={() => {}}>
-          <ViroARPlaneSelector>
+        <ViroARPlaneSelector>
+          <ViroText
+            text={Math.round(pinchScale).toString() + "%"}
+            textAlign="center"
+            textAlignVertical="top"
+            textLineBreakMode="justify"
+            textClipMode="clipToBounds"
+            color="#ff0000"
+            width={2}
+            height={2}
+            style={{
+              fontFamily: "Arial",
+              fontSize: 20,
+              fontWeight: "400",
+              fontStyle: "italic",
+              color: "#fff"
+            }}
+            position={[0, -1.5, -2]}
+          />
           <Viro3DObject
             source={{
               uri: this.props.item.objurl
@@ -53,7 +79,7 @@ export default class SingleProduct extends Component {
                 uri: this.props.item
               }
             ]}
-            position={[0, -.5, -.5]}
+            position={[0, -0.5, -2]}
             scale={this.state.scale}
             rotation={this.state.rotation}
             onPinch={this._onPinch}

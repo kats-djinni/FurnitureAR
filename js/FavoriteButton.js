@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import {
   View,
   StyleSheet,
-  AsyncStorage,
   Image,
   TouchableHighlight
-} from "react-native";
-import { Button } from "react-native-elements";
+} from "react-native"
+import { connect } from "react-redux"
+import { storeFavorite, removeFavorite } from "./store/favorites"
 
-export default class FavoriteButton extends Component {
+export class FavoriteButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,37 +17,20 @@ export default class FavoriteButton extends Component {
   }
 
   async componentDidMount() {
-    const bool = await this.props.active;
-    this.setState({ active: bool });
+    const bool = this.props.active
+    .then(data => {
+      this.setState({ active: data });
+    })
   }
 
-  handlePress = () => {
+  handlePress = async () => {
     this.setState({ active: !this.state.active });
-    this._storeFavorite(this.props.faveItem);
-  };
-
-  _storeFavorite = async item => {
-    try {
-      const faveStr = await AsyncStorage.getItem("favorites");
-
-      if (faveStr !== null) {
-        const favesArr = JSON.parse(faveStr);
-        const duplicate = favesArr.filter(
-          products => products.displayName === item.displayName
-        );
-        if (duplicate.length) {
-          const check = await this.props.remove();
-        } else {
-          const faves = [...favesArr, item];
-          await AsyncStorage.setItem("favorites", JSON.stringify(faves));
-        }
-      } else {
-        await AsyncStorage.setItem("favorites", JSON.stringify([item]));
-      }
-    } catch (error) {
-      console.log(error);
+    if (this.state.active === false) {
+      await this.props.addFavorite(this.props.faveItem)
+    } else if (this.state.active === true) {
+      await this.props.removeFavorite(this.props.itemIndex)
     }
-  };
+  }
 
   render() {
     return (
@@ -66,9 +49,18 @@ export default class FavoriteButton extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addFavorite: (item) => dispatch(storeFavorite(item)),
+    removeFavorite: (index) => dispatch(removeFavorite(index))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(FavoriteButton)
+
 var styles = StyleSheet.create({
   btnActive: {
-    color: "#000000"
+
   },
 
   btn: {
