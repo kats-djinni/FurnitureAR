@@ -26,7 +26,6 @@ export class AllProductPage extends Component {
     super(props);
     this.state = {
       favorites: [],
-      currentProducts: [],
       category: "all"
     };
   }
@@ -70,7 +69,6 @@ export class AllProductPage extends Component {
   };
 
   render() {
-    console.log("current", this.props.products);
     const filter =
       this.state.category === "all"
         ? this.props.products
@@ -92,7 +90,11 @@ export class AllProductPage extends Component {
           <Picker.Item label="Tables" value="table" />
         </Picker>
 
-        <ProductList data={filter} filterFave={item => this.filterFave(item)} />
+        <ProductList
+          data={filter}
+          filterFave={item => this.filterFave(item)}
+          handlePress={event => this.handlePress(event)}
+        />
       </View>
     );
   }
