@@ -70,7 +70,6 @@ export class AllProductPage extends Component {
   };
 
   render() {
-    console.log("current", this.props.products);
     const filter =
       this.state.category === "all"
         ? this.props.products
