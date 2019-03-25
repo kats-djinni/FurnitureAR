@@ -14,17 +14,18 @@ import { getAllFavorites } from './js/store/favorites'
 import { ViroARSceneNavigator } from "react-viro";
 
 import { Overlay } from "react-native-elements";
-import AllProducts from "./js/AllProductPage";
-import FavoritesPage from "./js/FavoritesPage";
-import FavoriteButton from "./js/FavoriteButton"
-import IntroductionsPage from "./js/InstructionsPage"
+import AllProducts from "./js/components/AllProductPage";
+import FavoritesPage from "./js/components/FavoritesPage";
+import FavoriteButton from "./js/components/FavoriteButton"
+import IntroductionsPage from "./js/components/InstructionsPage"
+import { InstructionsOverlay } from "./js/components/Overlays"
 
 
 var sharedProps = {
   apiKey: "7C313AAF-F252-430D-9124-1B1DF5CE1CA2"
 };
 
-var InitialARScene = require("./js/HomeScreen");
+var InitialARScene = require("./js/components/HomeScreen");
 
 class SplashScreen extends Component {
   render() {
@@ -76,7 +77,19 @@ export default class ViroSample extends Component {
       })
     }, 10000)
   }
-}
+
+  overlayBool = (stateToggle) => {
+    if (stateToggle === true) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  changeState = (stateChange) => {
+    this.setState({ stateChange : false})
+  }
+
 
   productsButton = () => {
     this.setState({ isVisible: true });
@@ -185,7 +198,7 @@ export default class ViroSample extends Component {
           </TouchableHighlight>
         </View>
 
-        <Overlay
+        {/* <Overlay
           isVisible={this.state.visibleInstructions}
           overlayBackgroundColor = "transparent"
           width={Dimensions.get("window").width * 0.87}
@@ -193,7 +206,9 @@ export default class ViroSample extends Component {
           onBackdropPress={() => this.setState({ visibleInstructions: false })}
         >
           <IntroductionsPage />
-        </Overlay>
+        </Overlay> */}
+
+        <InstructionsOverlay toggle={this.overlayBool(this.state.visibleInstructions)} />
         
         <Overlay
           isVisible={this.state.isVisible}

@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux"
 import { Card, Text, Button } from "react-native-elements";
-import { removeFavorite, getAllFavorites, removeAllFavorites } from "./store/favorites"
+import { removeFavorite, getAllFavorites, removeAllFavorites } from ".././store/favorites"
 import FavoriteButton from "./FavoriteButton";
 
 export class FavoritesPage extends Component {
@@ -64,7 +64,7 @@ export class FavoritesPage extends Component {
                 <View style={styles.imageContainer}>
                   <Image
                     tintColor="red"
-                    source={require("./res/icons/clear-icon.png")}
+                    source={require(".././res/icons/clear-icon.png")}
                   />
                 </View>
               </TouchableHighlight>

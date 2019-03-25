@@ -16,15 +16,15 @@ const InstructionsPage = () => {
         <View style={styles.container}>
             <View style={styles.buttonOption}>
                 < Text style = {styles.optionText}> check favorite products </Text>
-                <Image style={styles.arrow} source={require("./res/left-arrow.png")} />
+                <Image style={styles.arrow} source={require(".././res/left-arrow.png")} />
             </View>
             <View style={styles.buttonOption}>
                 <Text style={styles.optionText}>add a product</Text>
-                <Image style={styles.arrow} source={require("./res/straight-arrow.png")} />
+                <Image style={styles.arrow} source={require(".././res/straight-arrow.png")} />
             </View>
             <View style={styles.buttonOption}>
                 <Text style={styles.optionText}>take a screenshot</Text>
-                <Image style={styles.arrow} source={require("./res/right-arrow.png")} />
+                <Image style={styles.arrow} source={require(".././res/right-arrow.png")} />
             </View>
         </View>
     )

@@ -11,8 +11,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Text } from "react-native-elements";
-import { getAllProducts, pickProduct } from "./store/products"
-import { getAllFavorites, storeFavorite, removeFavorite } from "./store/favorites"
+import { getAllProducts, pickProduct } from ".././store/favorites"
+import { getAllFavorites, storeFavorite, removeFavorite } from ".././store/favorites"
 import FavoriteButton from "./FavoriteButton";
 
 export class AllProductPage extends Component {
