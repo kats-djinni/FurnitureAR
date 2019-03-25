@@ -3,14 +3,14 @@ import { Overlay } from "react-native-elements"
 import { Dimensions } from "react-native"
 import { IntroductionsPage } from "./InstructionsPage"
 
-export const InstructionsOverlay = (props) => {
+export const InstructionsOverlay = (isVisible, onBackdropPress) => {
     return (
         <Overlay
-        isVisible={props.toggle}
+        isVisible={isVisible}
         overlayBackgroundColor= "transparent"
         width= {Dimensions.get("window").width * 0.87}
         height = { Dimensions.get("window").height * 0.75}
-        // onBackdropPress = {props.backgroundPress}>
+        onBackdropPress = {onBackdropPress}>
         >
             <IntroductionsPage />
         </Overlay>

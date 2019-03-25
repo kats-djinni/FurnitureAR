@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   View,
-  StyleSheet,
   TouchableHighlight,
   Image,
   Dimensions,
@@ -18,7 +17,7 @@ import AllProducts from "./js/components/AllProductPage";
 import FavoritesPage from "./js/components/FavoritesPage";
 import FavoriteButton from "./js/components/FavoriteButton"
 import IntroductionsPage from "./js/components/InstructionsPage"
-import { InstructionsOverlay } from "./js/components/Overlays"
+import styles from "./styles"
 
 
 var sharedProps = {
@@ -85,11 +84,6 @@ export default class ViroSample extends Component {
       return false
     }
   }
-
-  changeState = (stateChange) => {
-    this.setState({ stateChange : false})
-  }
-
 
   productsButton = () => {
     this.setState({ isVisible: true });
@@ -168,9 +162,9 @@ export default class ViroSample extends Component {
   homeScreenButtons = () => {
     return (
       
-      <View style={localStyles.outer}>
+      <View style={styles.outer}>
         <ViroARSceneNavigator
-          style={localStyles.arView}
+          style={styles.arView}
           {...this.state.sharedProps}
           initialScene={{ 
             scene: InitialARScene,
@@ -180,7 +174,7 @@ export default class ViroSample extends Component {
           
         />
 
-        <View style={localStyles.navBar}>
+        <View style={styles.navBar}>
           <TouchableHighlight
             underlayColor={"#00000000"}
             onPress={this.favoritesButton}>
@@ -198,7 +192,7 @@ export default class ViroSample extends Component {
           </TouchableHighlight>
         </View>
 
-        {/* <Overlay
+        <Overlay
           isVisible={this.state.visibleInstructions}
           overlayBackgroundColor = "transparent"
           width={Dimensions.get("window").width * 0.87}
@@ -206,10 +200,8 @@ export default class ViroSample extends Component {
           onBackdropPress={() => this.setState({ visibleInstructions: false })}
         >
           <IntroductionsPage />
-        </Overlay> */}
+        </Overlay>
 
-        <InstructionsOverlay toggle={this.overlayBool(this.state.visibleInstructions)} />
-        
         <Overlay
           isVisible={this.state.isVisible}
           overlayBackgroundColor = "#E3E8E9"
@@ -237,10 +229,10 @@ export default class ViroSample extends Component {
           height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ photoPreviewVisibility: false })}
          >
-          <Image source={{uri: this.state.screenshotUrl}} style={localStyles.backgroundImage} />
+          <Image source={{uri: this.state.screenshotUrl}} style={styles.backgroundImage} />
 
-          <View style={localStyles.savingIcon} display={"flex"}>
-            <Text style={localStyles.savingMessage}>saving...</Text>
+          <View style={styles.savingIcon} display={"flex"}>
+            <Text style={styles.savingMessage}>saving...</Text>
             <Image source={require("./js/res/animation/progressBar.gif")} />
           </View>         
         </Overlay>
@@ -255,30 +247,30 @@ export default class ViroSample extends Component {
 
     return (
 
-      <View style={localStyles.outer}>
+      <View style={styles.outer}>
         <ViroARSceneNavigator
-          style={localStyles.arView}
+          style={styles.arView}
           {...this.state.sharedProps}
           initialScene={{ scene: InitialARScene }}
         />
         
-        <View style={localStyles.itemBar}>
+        <View style={styles.itemBar}>
           <TouchableHighlight
             onPress={this.deleteButton}
           >
-            <Image source={require("./js/res/icons/delete-outline.png")} style={localStyles.itemButton}/>
+            <Image source={require("./js/res/icons/delete-outline.png")} style={styles.itemButton}/>
           </TouchableHighlight>
           
           <TouchableHighlight
             onPress={this.deleteButton}
           >
-            <Image source={require("./js/res/icons/delete-outline.png")} style={localStyles.itemButton}/>
+            <Image source={require("./js/res/icons/delete-outline.png")} style={styles.itemButton}/>
           </TouchableHighlight>
           
           <TouchableHighlight
             onPress={this.deleteAllButton}
           >
-            <Image source={require("./js/res/icons/broom.png")} style={localStyles.itemButton}/>
+            <Image source={require("./js/res/icons/box-outline.png")} style={styles.itemButton}/>
           </TouchableHighlight>
 
           <FavoriteButton faveItem={item} itemIndex={itemIndex} active={this.filterFave(item)} onPress={this.singleItemFavoriteButton} />
@@ -298,7 +290,6 @@ export default class ViroSample extends Component {
     );
   }
   
-  
   render() {
     if (this.state.isLoading) {
       return <SplashScreen />;
@@ -310,95 +301,6 @@ export default class ViroSample extends Component {
     }
   }
 }
-
-var localStyles = StyleSheet.create({
-  outer: {
-    flex: 1
-  },
-
-  arView: {
-    flex: 1
-  },
-
-  buttons: {
-    height: 80,
-    width: 80,
-    paddingTop: 20,
-    paddingBottom: 20,
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: "#f0f8ff",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#00000000"
-  },
-
-  navBar: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 77
-  },
-  
-  itemBar: {
-    flex: 1,
-    alignSelf: "flex-end",
-    position: "absolute",
-    top: 100,
-    // paddingTop: 85,
-    paddingBottom: 85,
-    padding: 20
-  },
-
-  itemButton: {
-    //Note: tintColor changes color of icon 
-    //(e.g. tintColor: "pink"
-    resizeMode: "cover",
-  },
-  savingIcon: {
-    flex: 1,
-    alignSelf: "center",
-    justifyContent: "center",
-  },
-  savingMessage : {
-    textAlign: 'center',
-    fontFamily: "Arial",
-    fontWeight: 'bold',
-    fontSize: 30,
-    color: "#fff",
-    backgroundColor:  'rgba(62, 244, 95, 0.5)'
-  },
-  
-  backgroundImage: {
-    position: 'absolute',
-    top: 5,
-    left: 5,
-    bottom: 5,
-    right: 5,
-  }
-});
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 const mapStateToProps = state => ({
   products: state.products.products,

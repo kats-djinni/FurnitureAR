@@ -25,7 +25,7 @@ describe('<FavoritesPage /> component', () => {
     let wrapperInstance
 
     beforeEach(() => {
-       const wrapper = shallow(<FavoritesPage />)
+       const wrapper = shallow(<FavoritesPage favorites={[]} />)
        //wrapperInstance = wrapper.instance() 
 
        wrapper.setState({ favorites: faves}, () => {
