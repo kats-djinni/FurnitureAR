@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-
 import {
   ViroNode,
   Viro3DObject,
   ViroARPlaneSelector,
   ViroARPlane,
+  ViroSpotLight,
   ViroText
 } from "react-viro";
 
@@ -44,6 +44,7 @@ export default class SingleProduct extends Component {
   }
 
   render() {
+
     //placeholder:
     // const initialScale = this.props.initialScale
     //divisor should be initialScale of object
@@ -86,7 +87,7 @@ export default class SingleProduct extends Component {
             onClick={() => this.props.triggerItem(this.props.index)}
             type="OBJ"
           />
-        </ViroARPlaneSelector>
+          </ViroARPlaneSelector>
       </ViroNode>
     );
   }
