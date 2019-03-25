@@ -29,11 +29,11 @@ export default class ProductList extends Component {
               />
             </TouchableHighlight>
             <View style={styles.imageContainer}>
-              {/* <FavoriteButton
+              <FavoriteButton
                 faveItem={item}
                 itemIndex={index}
                 active={this.props.filterFave(item)}
-              /> */}
+              />
             </View>
           </View>
         )}

@@ -88,35 +88,11 @@ export class AllProductPage extends Component {
           <Picker.Item label="All" value="all" />
           <Picker.Item label="Chairs" value="chair" />
           <Picker.Item label="Couches" value="couch" />
+          <Picker.Item label="Shelves" value="shelf" />
+          <Picker.Item label="Tables" value="table" />
         </Picker>
 
-        <ProductList data={filter} filterFave={filter} />
-
-        {/* <FlatList
-          data={this.props.products}
-          renderItem={({ item, index }) => (
-            <View>
-              <Text>Name: {item.displayName}</Text>
-              <TouchableHighlight
-                onPress={() => this.handlePress(item)}
-                style={{ width: 200, height: 200 }}
-              >
-                <Image
-                  style={{ width: 200, height: 200 }}
-                  source={{ uri: item.thumbnail }}
-                />
-              </TouchableHighlight>
-              <View style={styles.imageContainer}>
-                <FavoriteButton
-                  faveItem={item}
-                  itemIndex={index}
-                  active={this.filterFave(item)}
-                />
-              </View>
-            </View>
-          )}
-          keyExtractor={(item, index) => index}
-        /> */}
+        <ProductList data={filter} filterFave={item => this.filterFave(item)} />
       </View>
     );
   }
