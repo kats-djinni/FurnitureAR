@@ -37,9 +37,34 @@ export default class ViroSample extends Component {
       itemIndex: 0,
       cameraPermission: false,
       screenshotUrl:'',
-      photoPreviewVisibility: false
+      photoPreviewVisibility: false,
+      isLoading: false,
+      visibleInstructions: false
     };
   
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        isLoading: false
+      })
+      console.log("splash screen finished")
+    }, 3000)
+
+    setTimeout(() => {
+      this.setState({
+        visibleInstructions: true
+      })
+      console.log("instructions screen is starting")
+    }, 6000)
+
+    setTimeout(() => {
+      this.setState({
+        visibleInstructions: false
+      })
+      console.log("instructions screen is over now")
+    }, 10000)
   }
 
   productsButton = () => {
@@ -150,11 +175,11 @@ export default class ViroSample extends Component {
         </View>
 
         <Overlay
-          isVisible={this.state.visibleFavorites}
+          isVisible={this.state.visibleInstructions}
           overlayBackgroundColor = "transparent"
           width={Dimensions.get("window").width * 0.87}
           height={Dimensions.get("window").height * 0.75}
-          onBackdropPress={() => this.setState({ visibleFavorites: false })}
+          onBackdropPress={() => this.setState({ visibleInstructions: false })}
         >
           <IntroductionsPage />
         </Overlay>
