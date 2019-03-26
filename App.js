@@ -5,10 +5,8 @@ import {
   TouchableHighlight,
   Image,
   Dimensions,
-  Text,
-  ImageBackground
+  Text
 } from "react-native";
-import util from 'util'
 import { deleteProduct, deleteAll } from './js/store/products'
 import { getAllFavorites } from './js/store/favorites'
 import { ViroARSceneNavigator } from "react-viro";
