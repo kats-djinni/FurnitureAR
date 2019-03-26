@@ -13,7 +13,7 @@ import {
   getAllFavorites,
   storeFavorite,
   removeFavorite
-} from "./store/favorites";
+} from "../store/favorites";
 
 class ProductList extends Component {
   state = {
