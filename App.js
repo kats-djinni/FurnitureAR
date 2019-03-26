@@ -24,18 +24,7 @@ var sharedProps = {
 };
 
 
-var InitialARScene = require("./js/HomeScreen");
-
-class SplashScreen extends Component {
-  render() {
-    const viewStyles = [styles.container, { backgroundColor: 'white' }];
-    return (
-      <View style={viewStyles}>
-        <Image source={require('./js/res/splashscreen.png')}  style={{width: '100%', height: '100%'}}/>
-      </View>
-    );
-  }
-}
+var InitialARScene = require("./js/components/HomeScreen");
 
 
 // eslint-disable-next-line react/no-multi-comp
@@ -226,8 +215,8 @@ export default class ViroSample extends Component {
           width={Dimensions.get("window").width * 0.75}
           height={Dimensions.get("window").height * 0.75}
         >
-          <View style={localStyles.searchingPage}>
-            <Text style={localStyles.savingMessage}>Scan the room and select placement!</Text>
+          <View style={styles.searchingPage}>
+            <Text style={styles.savingMessage}>Scan the room and select placement!</Text>
           </View>
         </Overlay>
 

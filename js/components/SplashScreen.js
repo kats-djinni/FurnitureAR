@@ -7,8 +7,9 @@ export default class SplashScreen extends Component {
     const viewStyles = [styles.container, { backgroundColor: 'white' }];
     return (
       <View style={viewStyles}>
-        <Image source={require('../res/HavenTest.png')}  style={{width: 250, height: 250}}/>
+        <Image source={require('../res/splashscreen.png')}  style={{width: '100%', height: '100%'}}/>
       </View>
     );
   }
 }
+
