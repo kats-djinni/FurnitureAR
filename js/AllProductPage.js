@@ -44,7 +44,6 @@ export class AllProductPage extends Component {
 
   handleFilter(itemValue) {
     this.setState({ category: itemValue });
-
     this.props.filterProducts(itemValue);
   }
 
@@ -69,6 +68,8 @@ export class AllProductPage extends Component {
   };
 
   render() {
+    console.log("favorites", this.props.favorites);
+
     const filter =
       this.state.category === "all"
         ? this.props.products
