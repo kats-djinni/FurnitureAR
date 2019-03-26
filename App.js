@@ -7,16 +7,16 @@ import {
   Dimensions,
   Text
 } from "react-native";
-
+import util from 'util'
 import { deleteProduct, deleteAll } from './js/store/products'
 import { getAllFavorites } from './js/store/favorites'
 import { ViroARSceneNavigator } from "react-viro";
-
 import { Overlay } from "react-native-elements";
 import AllProducts from "./js/components/AllProductPage";
 import FavoritesPage from "./js/components/FavoritesPage";
 import FavoriteButton from "./js/components/FavoriteButton"
 import IntroductionsPage from "./js/components/InstructionsPage"
+import SplashScreen from "./js/components/SplashScreen"
 import styles from "./styles"
 
 
@@ -25,17 +25,6 @@ var sharedProps = {
 };
 
 var InitialARScene = require("./js/components/HomeScreen");
-
-class SplashScreen extends Component {
-  render() {
-    const viewStyles = [styles.container, { backgroundColor: 'white' }];
-    return (
-      <View style={viewStyles}>
-        <Image source={require('./js/res/HavenTest.png')}  style={{width: 250, height: 250}}/>
-      </View>
-    );
-  }
-}
 
 // eslint-disable-next-line react/no-multi-comp
 export default class ViroSample extends Component {
@@ -57,32 +46,46 @@ export default class ViroSample extends Component {
   
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        isLoading: false
+  startSplashScreen = (time, value) => {
+      return new Promise(function (resolve) {
+        setTimeout(resolve.bind(null, value), time)
       })
-    }, 3000)
 
-    setTimeout(() => {
+    // return new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     this.setState({
+    //     isLoading: false
+    //     })(3000);
+    //   }, 3000);
+    // });
+  };
+
+    //   this.setState({
+    //     isLoading: false
+    //   })
+    // }, 3000))
+  // }
+
+  startInstructionsOverlay = () => {
+     setTimeout(() => {
       this.setState({
         visibleInstructions: true
       })
-    }, 6000)
+    }, 3000)
+  }
 
-    setTimeout(() => {
+  stopInstructionsOverlay = () => {
+      setTimeout(() => {
       this.setState({
         visibleInstructions: false
       })
     }, 10000)
   }
 
-  overlayBool = (stateToggle) => {
-    if (stateToggle === true) {
-      return true
-    } else {
-      return false
-    }
+  componentDidMount = async () => {
+    await startSplashScreen(3000, this.setState({isLoading: false}))
+    await startInstructionsOverlay()
+    await stopInstructionsOverlay()
   }
 
   productsButton = () => {
@@ -192,7 +195,7 @@ export default class ViroSample extends Component {
           </TouchableHighlight>
         </View>
 
-        <Overlay
+        {/* <Overlay
           isVisible={this.state.visibleInstructions}
           overlayBackgroundColor = "transparent"
           width={Dimensions.get("window").width * 0.87}
@@ -200,7 +203,7 @@ export default class ViroSample extends Component {
           onBackdropPress={() => this.setState({ visibleInstructions: false })}
         >
           <IntroductionsPage />
-        </Overlay>
+        </Overlay> */}
 
         <Overlay
           isVisible={this.state.isVisible}
@@ -292,7 +295,7 @@ export default class ViroSample extends Component {
   
   render() {
     if (this.state.isLoading) {
-      return <SplashScreen />;
+      return <SplashScreen />
     }
     if (this.state.visibleItemBar) {
       return this.itemButtons();
