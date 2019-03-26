@@ -46,42 +46,6 @@ export default class ViroSample extends Component {
   
   }
 
-  startSplashScreen = (time, value) => {
-      return new Promise(function (resolve) {
-        setTimeout(resolve.bind(null, value), time)
-      })
-
-    // return new Promise((resolve, reject) => {
-    //   setTimeout(() => {
-    //     this.setState({
-    //     isLoading: false
-    //     })(3000);
-    //   }, 3000);
-    // });
-  };
-
-    //   this.setState({
-    //     isLoading: false
-    //   })
-    // }, 3000))
-  // }
-
-  startInstructionsOverlay = () => {
-     setTimeout(() => {
-      this.setState({
-        visibleInstructions: true
-      })
-    }, 3000)
-  }
-
-  stopInstructionsOverlay = () => {
-      setTimeout(() => {
-      this.setState({
-        visibleInstructions: false
-      })
-    }, 10000)
-  }
-
   productsButton = () => {
     this.setState({ isVisible: true });
   };
@@ -192,7 +156,7 @@ export default class ViroSample extends Component {
           </TouchableHighlight>
         </View>
 
-        {/* <Overlay
+        <Overlay
           isVisible={this.state.visibleInstructions}
           overlayBackgroundColor = "transparent"
           width={Dimensions.get("window").width * 0.87}
@@ -200,7 +164,7 @@ export default class ViroSample extends Component {
           onBackdropPress={() => this.setState({ visibleInstructions: false })}
         >
           <IntroductionsPage />
-        </Overlay> */}
+        </Overlay>
 
         <Overlay
           isVisible={this.state.isVisible}
@@ -230,7 +194,7 @@ export default class ViroSample extends Component {
           onBackdropPress={() => this.setState({ photoPreviewVisibility: false })}
          >
           <Image source={{uri: this.state.screenshotUrl}} style={styles.backgroundImage} />
-
+          
           <View style={styles.savingIcon}>
             <Text style={styles.savingMessage}>saving</Text>
             <Image style={{marginTop: -10}} source={require("./js/res/animation/progressBar.gif")} />
