@@ -36,7 +36,8 @@ export default class ViroSample extends Component {
       itemIndex: 0,
       cameraPermission: false,
       screenshotUrl:'',
-      photoPreviewVisibility: false
+      photoPreviewVisibility: false,
+      searchingPlaneIcon: false
     };
   
   }
@@ -48,6 +49,15 @@ export default class ViroSample extends Component {
   changeVisibility = () => {
     this.setState({ isVisible: !this.state.isVisible });
   };
+
+  searchingPlanIconVisibility = () => {
+    this.setState({searchingPlaneIcon: !this.state.searchingPlaneIcon})
+    setTimeout(() => {
+      this.setState({
+        searchingPlaneIcon: !this.state.searchingPlaneIcon
+      })
+    }, 4000)
+  }
   
   triggerItemBar = (key) => {
     this.setState({
@@ -155,7 +165,17 @@ export default class ViroSample extends Component {
           height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ isVisible: false })}
         >
-          <AllProducts visibilityChange={this.changeVisibility} />
+          <AllProducts visibilityChange={this.changeVisibility} searchingPlaneIcon={this.searchingPlanIconVisibility} />
+        </Overlay>
+
+          {/* Searching for plan icon after choosing a product from All products page */}
+        <Overlay
+          isVisible={this.state.searchingPlaneIcon}
+          overlayBackgroundColor = "#00000000"
+          width={Dimensions.get("window").width * 0.75}
+          height={Dimensions.get("window").height * 0.75}
+        >
+          <Text style={localStyles.savingMessage}>Scan the room and select placement!</Text>
         </Overlay>
 
         <Overlay
