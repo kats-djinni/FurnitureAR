@@ -12,12 +12,12 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Text } from "react-native-elements";
-import { getAllProducts, pickProduct, pickType } from "./store/products";
+import { getAllProducts, pickProduct, pickType } from ".././store/favorites";
 import {
   getAllFavorites,
   storeFavorite,
   removeFavorite
-} from "./store/favorites";
+} from ".././store/favorites";
 import ProductList from "./ProductList";
 import FavoriteButton from "./FavoriteButton";
 

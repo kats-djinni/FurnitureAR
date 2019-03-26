@@ -6,7 +6,7 @@ import {
   TouchableHighlight
 } from "react-native"
 import { connect } from "react-redux"
-import { storeFavorite, removeFavorite } from "./store/favorites"
+import { storeFavorite, removeFavorite } from ".././store/favorites"
 
 export class FavoriteButton extends Component {
   constructor(props) {
@@ -41,7 +41,7 @@ export class FavoriteButton extends Component {
         >
           <Image
             style={this.state.active ? styles.imageActive : styles.image}
-            source={require("./res/icons/heart-outline.png")}
+            source={require(".././res/icons/heart-outline.png")}
           />
         </TouchableHighlight>
       </View>
