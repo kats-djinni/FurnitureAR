@@ -40,6 +40,7 @@ export class AllProductPage extends Component {
   handlePress = event => {
     this.props.addPickedItem(event);
     this.props.visibilityChange();
+    this.props.searchingPlaneIcon()
   };
 
   handleFilter(itemValue) {

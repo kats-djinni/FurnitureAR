@@ -68,7 +68,7 @@ export default class SingleProduct extends Component {
               fontStyle: "italic",
               color: "#fff"
             }}
-            position={[0, -1.5, -2]}
+            position={[0, -1.5, -1]}
           />
           <Viro3DObject
             source={{
