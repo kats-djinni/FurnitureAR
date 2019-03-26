@@ -5,7 +5,8 @@ import {
   ViroARPlaneSelector,
   ViroARPlane,
   ViroSpotLight,
-  ViroText
+  ViroText,
+  ViroMaterials
 } from "react-viro";
 
 export default class SingleProduct extends Component {
@@ -49,6 +50,12 @@ export default class SingleProduct extends Component {
     // const initialScale = this.props.initialScale
     //divisor should be initialScale of object
     const pinchScale = (this.state.scale[0] / 0.75) * 100;
+    ViroMaterials.createMaterials({
+      ViroARPlaneSelector_Translucent: {
+        lightingModel: "Constant",
+        diffuseColor: "rgba(0, 128, 0, 0.3)"
+      },
+    });
     return (
       <ViroNode onDrag={() => {}}>
         <ViroARPlaneSelector>
@@ -68,7 +75,7 @@ export default class SingleProduct extends Component {
               fontStyle: "italic",
               color: "#fff"
             }}
-            position={[0, -1.5, -1]}
+            position={[0, -1.5, 0]}
           />
           <Viro3DObject
             source={{
@@ -79,7 +86,7 @@ export default class SingleProduct extends Component {
                 uri: this.props.item
               }
             ]}
-            position={[0, -0.5, -2]}
+            // position={[0, -0.5, -2]}
             scale={this.state.scale}
             rotation={this.state.rotation}
             onPinch={this._onPinch}
