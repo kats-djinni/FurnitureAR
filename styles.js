@@ -69,16 +69,15 @@ const styles = StyleSheet.create({
     savingIcon: {
         flex: 1,
         alignSelf: "center",
-        justifyContent: "center",
+        justifyContent: "flex-end"
     },
 
     savingMessage : {
         textAlign: 'center',
         fontFamily: "Arial",
         fontWeight: 'bold',
-        fontSize: 30,
-        color: "#fff",
-        backgroundColor:  'rgba(62, 244, 95, 0.5)'
+        fontSize: 20,
+        color: "#fff"
     },
     
     backgroundImage: {
