@@ -45,6 +45,27 @@ export default class ViroSample extends Component {
     };
   
   }
+  
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        isLoading: false
+      })
+    }, 3000)
+
+    setTimeout(() => {
+      this.setState({
+        visibleInstructions: true
+      })
+    }, 6000)
+
+    setTimeout(() => {
+      this.setState({
+        visibleInstructions: false
+      })
+    }, 10000)
+  }
+  
 
   productsButton = () => {
     this.setState({ isVisible: true });
