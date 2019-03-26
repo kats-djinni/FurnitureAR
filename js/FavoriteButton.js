@@ -20,12 +20,10 @@ export class FavoriteButton extends Component {
     if (prevProps.category !== this.props.category) {
       const bool = this.props.active;
       this.setState({ active: bool });
-      console.log("component did update", this.state);
     }
   }
 
   handlePress = () => {
-    console.log("activity press button", this.props.active);
     this.setState({ active: !this.state.active });
     if (this.state.active === false) {
       this.props.addFavorite(this.props.faveItem);

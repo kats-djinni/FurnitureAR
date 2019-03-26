@@ -26,13 +26,11 @@ class ProductList extends Component {
 
   filterFave = item => {
     const faveArr = this.props.favorites;
-    console.log("in filterfave", faveArr);
     if (faveArr !== null || faveArr !== undefined) {
       const foundItem = faveArr.filter(
         products => products.displayName == item.displayName
       );
       if (foundItem.length) {
-        console.log("found item", foundItem);
         return true;
       } else {
         return false;
@@ -61,8 +59,6 @@ class ProductList extends Component {
             <View style={styles.imageContainer}>
               <FavoriteButton
                 faveItem={item}
-                // itemIndex={index}
-
                 category={this.props.category}
                 active={this.filterFave(item)}
               />
