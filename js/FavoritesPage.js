@@ -39,8 +39,8 @@ export class FavoritesPage extends Component {
     })
   }
   
-  _handlePress = (item) => {
-    this.props.addPickedItem(item);
+  _handlePress = async (item) => {
+    await this.props.addPickedItem(item);
     this.props.favVisibility();
   }
 
@@ -61,9 +61,7 @@ export class FavoritesPage extends Component {
             <View>
               <Card>
                 <Text style={styles.itemName}>{item.displayName}</Text>
-                  <TouchableHighlight
-                    onPress={() => this.handlePress(item)}
-                  >
+                  <TouchableHighlight onPress={() => this._handlePress(item)}>
                     <Image
                       style={styles.faveImage}
                       source={{ uri: item.thumbnail }}
