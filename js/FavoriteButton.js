@@ -13,16 +13,28 @@ export class FavoriteButton extends Component {
 
   async componentDidMount() {
     const bool = await this.props.active;
-
-    await this.setState({ active: bool });
+    this.setState({ active: bool });
+    // await this.setState(prevState => ({
+    //   ...prevState,
+    //   active: this.props.active
+    // }));
   }
 
-  handlePress = async () => {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.category !== this.props.category) {
+      const bool = this.props.active;
+      this.setState({ active: bool });
+      console.log("component did update", this.state);
+    }
+  }
+
+  handlePress = () => {
+    console.log("activity press button", this.props.active);
     this.setState({ active: !this.state.active });
     if (this.state.active === false) {
-      await this.props.addFavorite(this.props.faveItem);
+      this.props.addFavorite(this.props.faveItem);
     } else if (this.state.active === true) {
-      await this.props.removeFavorite(this.props.faveItem);
+      this.props.removeFavorite(this.props.faveItem);
     }
   };
 
@@ -46,7 +58,7 @@ export class FavoriteButton extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     addFavorite: item => dispatch(storeFavorite(item)),
-    removeFavorite: index => dispatch(removeFavorite(index))
+    removeFavorite: item => dispatch(removeFavorite(item))
   };
 };
 

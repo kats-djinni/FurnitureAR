@@ -64,8 +64,6 @@ export const storeFavorite = item => {
         const duplicate = favesArr.filter(
           products => products.displayName === item.displayName
         );
-
-        console.log("seeing double", duplicate);
         if (!duplicate.length) {
           const faves = [...favesArr, item];
           await AsyncStorage.setItem("favorites", JSON.stringify(faves));

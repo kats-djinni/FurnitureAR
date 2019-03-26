@@ -7,12 +7,54 @@ import {
   Text,
   StyleSheet
 } from "react-native";
+import { connect } from "react-redux";
 import FavoriteButton from "./FavoriteButton";
+import {
+  getAllFavorites,
+  storeFavorite,
+  removeFavorite
+} from "./store/favorites";
 
-export default class ProductList extends Component {
-  state = {};
+class ProductList extends Component {
+  state = {
+    favorites: [],
+    updated: true
+  };
+
+  componentDidMount() {
+    this.props.getFavorites();
+    this.setState();
+    console.log("component did mount ran", this.props.favorites);
+  }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevProps.category !== this.props.category) {
+  //     this.props.getFavorites();
+  //     console.log("component did update", this.props.favorites);
+  //   }
+  // }
+
+  filterFave = item => {
+    const faveArr = this.props.favorites;
+    console.log("in filterfave", faveArr);
+    if (faveArr !== null) {
+      const foundItem = faveArr.filter(
+        products => products.displayName == item.displayName
+      );
+      if (foundItem.length) {
+        console.log("found item", foundItem);
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
 
   render() {
+    console.log("state", this.state);
+    console.log("props", this.props);
     return (
       <FlatList
         data={this.props.data}
@@ -31,8 +73,10 @@ export default class ProductList extends Component {
             <View style={styles.imageContainer}>
               <FavoriteButton
                 faveItem={item}
-                itemIndex={index}
-                active={this.props.filterFave(item)}
+                // itemIndex={index}
+
+                category={this.props.category}
+                active={this.filterFave(item)}
               />
             </View>
           </View>
@@ -70,3 +114,18 @@ var styles = StyleSheet.create({
     flex: 1
   }
 });
+
+const mapStateToProps = state => ({
+  products: state.products.products,
+  favorites: state.favorites.favorites
+});
+
+const mapDispatchToProps = dispatch => ({
+  // getProducts: () => dispatch(getAllProducts()),
+  getFavorites: () => dispatch(getAllFavorites())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProductList);
