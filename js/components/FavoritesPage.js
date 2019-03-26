@@ -9,33 +9,44 @@ import {
   TouchableHighlight,
   Dimensions
 } from "react-native";
-import { connect } from "react-redux"
+import { connect } from "react-redux";
 import { Card, Text, Button } from "react-native-elements";
-import { removeFavorite, getAllFavorites, removeAllFavorites } from "./store/favorites"
+import {
+  removeFavorite,
+  getAllFavorites,
+  removeAllFavorites
+} from ".././store/favorites"
+import { pickProduct } from ".././store/products";
 import FavoriteButton from "./FavoriteButton";
 
 export class FavoritesPage extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       favorites: []
-    }
+    };
   }
 
   async componentDidMount() {
-    await this.props.getFavorites()
-    .then(favorites => {
-      this.setState({favorites: this.props.favorites})
-    })
-    .catch(console.error)
+    await this.props
+      .getFavorites()
+      .then(favorites => {
+        this.setState({ favorites: this.props.favorites });
+      })
+      .catch(console.error);
   }
 
-  _deleteFavorite = async (index) => {
-    await this.props.removeFavorite(index)
-    await this.props.getFavorites()
+  _deleteFavorite = async item => {
+    await this.props.removeFavorite(item);
+    await this.props.getFavorites();
     this.setState({
       favorites: this.props.favorites
     })
+  }
+  
+  _handlePress = async (item) => {
+    await this.props.addPickedItem(item);
+    this.props.favVisibility();
   }
 
   render() {
@@ -55,16 +66,18 @@ export class FavoritesPage extends Component {
             <View>
               <Card>
                 <Text style={styles.itemName}>{item.displayName}</Text>
-                <Image
-                  style={styles.faveImage}
-                  source={{ uri: item.thumbnail }}
-                />
+                  <TouchableHighlight onPress={() => this._handlePress(item)}>
+                    <Image
+                      style={styles.faveImage}
+                      source={{ uri: item.thumbnail }}
+                    />
+                  </TouchableHighlight>
               </Card>
-              <TouchableHighlight onPress={() => this._deleteFavorite(index)}>
+              <TouchableHighlight onPress={() => this._deleteFavorite(item)}>
                 <View style={styles.imageContainer}>
                   <Image
                     tintColor="red"
-                    source={require("./res/icons/clear-icon.png")}
+                    source={require(".././res/icons/clear-icon.png")}
                   />
                 </View>
               </TouchableHighlight>
@@ -125,20 +138,24 @@ var styles = StyleSheet.create({
   clearButton: {
     // width: Dimensions.get("window").width * 0.5
   }
-})
+});
 
-const mapStateToProps = (state) => {
-    return {
-      favorites: state.favorites.favorites
-  }
-}
+const mapStateToProps = state => {
+  return {
+    favorites: state.favorites.favorites
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     getFavorites: () => dispatch(getAllFavorites()),
     removeFavorite: (index) => dispatch(removeFavorite(index)),
-    clearFavorites: () => dispatch(removeAllFavorites())
+    clearFavorites: () => dispatch(removeAllFavorites()),
+    addPickedItem: item => dispatch(pickProduct(item)),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FavoritesPage)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FavoritesPage);

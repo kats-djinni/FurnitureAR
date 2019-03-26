@@ -12,12 +12,12 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Text } from "react-native-elements";
-import { getAllProducts, pickProduct, pickType } from "./store/products";
+import { getAllProducts, pickProduct, pickType } from "../store/products";
 import {
   getAllFavorites,
   storeFavorite,
   removeFavorite
-} from "./store/favorites";
+} from "../store/favorites";
 import ProductList from "./ProductList";
 import FavoriteButton from "./FavoriteButton";
 
@@ -44,29 +44,28 @@ export class AllProductPage extends Component {
 
   handleFilter(itemValue) {
     this.setState({ category: itemValue });
-
     this.props.filterProducts(itemValue);
   }
 
-  filterFave = async item => {
-    try {
-      const faveArr = this.props.favorites;
-      if (faveArr !== null) {
-        const duplicate = faveArr.filter(
-          products => products.displayName === item.displayName
-        );
-        if (duplicate.length) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // filterFave = item => {
+  //   try {
+  //     const faveArr = this.props.favorites;
+  //     if (faveArr !== null) {
+  //       const duplicate = faveArr.filter(
+  //         products => products.displayName === item.displayName
+  //       );
+  //       if (duplicate.length) {
+  //         return true;
+  //       } else {
+  //         return false;
+  //       }
+  //     } else {
+  //       return false;
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   render() {
     const filter =
@@ -92,8 +91,10 @@ export class AllProductPage extends Component {
 
         <ProductList
           data={filter}
-          filterFave={item => this.filterFave(item)}
+          category={this.state.category}
+          // filterFave={item => this.filterFave(item)}
           handlePress={event => this.handlePress(event)}
+          // favorites={this.props.favorites}
         />
       </View>
     );
