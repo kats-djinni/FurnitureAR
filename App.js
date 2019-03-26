@@ -77,14 +77,6 @@ export default class ViroSample extends Component {
     }, 10000)
   }
 
-  overlayBool = (stateToggle) => {
-    if (stateToggle === true) {
-      return true
-    } else {
-      return false
-    }
-  }
-
   productsButton = () => {
     this.setState({ isVisible: true });
   };
@@ -230,10 +222,10 @@ export default class ViroSample extends Component {
           onBackdropPress={() => this.setState({ photoPreviewVisibility: false })}
          >
           <Image source={{uri: this.state.screenshotUrl}} style={styles.backgroundImage} />
-
-          <View style={styles.savingIcon} display={"flex"}>
-            <Text style={styles.savingMessage}>saving...</Text>
-            <Image source={require("./js/res/animation/progressBar.gif")} />
+          
+          <View style={styles.savingIcon}>
+            <Text style={styles.savingMessage}>saving</Text>
+            <Image style={{marginTop: -10}} source={require("./js/res/animation/progressBar.gif")} />
           </View>         
         </Overlay>
         
@@ -292,7 +284,7 @@ export default class ViroSample extends Component {
   
   render() {
     if (this.state.isLoading) {
-      return <SplashScreen />;
+      return <SplashScreen />
     }
     if (this.state.visibleItemBar) {
       return this.itemButtons();
