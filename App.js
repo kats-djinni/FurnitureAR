@@ -82,12 +82,6 @@ export default class ViroSample extends Component {
     }, 10000)
   }
 
-  componentDidMount = async () => {
-    await startSplashScreen(3000, this.setState({isLoading: false}))
-    await startInstructionsOverlay()
-    await stopInstructionsOverlay()
-  }
-
   productsButton = () => {
     this.setState({ isVisible: true });
   };
@@ -96,6 +90,9 @@ export default class ViroSample extends Component {
     this.setState({ isVisible: !this.state.isVisible });
   };
   
+  changeFavVisibility = () => {
+    this.setState({ visibleFavorites: !this.state.visibleFavorites})
+  }
   triggerItemBar = (key) => {
     this.setState({
       visibleItemBar: !this.state.visibleItemBar,
@@ -222,7 +219,7 @@ export default class ViroSample extends Component {
           height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ visibleFavorites: false })}
         >
-          <FavoritesPage />
+          <FavoritesPage favVisibility={this.changeFavVisibility}/>
         </Overlay>
         
         <Overlay
@@ -234,9 +231,9 @@ export default class ViroSample extends Component {
          >
           <Image source={{uri: this.state.screenshotUrl}} style={styles.backgroundImage} />
 
-          <View style={styles.savingIcon} display={"flex"}>
-            <Text style={styles.savingMessage}>saving...</Text>
-            <Image source={require("./js/res/animation/progressBar.gif")} />
+          <View style={styles.savingIcon}>
+            <Text style={styles.savingMessage}>saving</Text>
+            <Image style={{marginTop: -10}} source={require("./js/res/animation/progressBar.gif")} />
           </View>         
         </Overlay>
         
