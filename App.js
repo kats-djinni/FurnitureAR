@@ -26,17 +26,6 @@ var sharedProps = {
 
 var InitialARScene = require("./js/components/HomeScreen");
 
-// class SplashScreen extends Component {
-//   render() {
-//     const viewStyles = [styles.container, { backgroundColor: 'white' }];
-//     return (
-//       <View style={viewStyles}>
-//         <Image source={require('./js/res/splashscreen.png')}  style={{width: '100%', height: '100%'}}/>
-//       </View>
-//     );
-//   }
-// }
-
 
 // eslint-disable-next-line react/no-multi-comp
 export default class ViroSample extends Component {
