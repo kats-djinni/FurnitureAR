@@ -17,27 +17,17 @@ import {
 
 class ProductList extends Component {
   state = {
-    favorites: [],
-    updated: true
+    favorites: []
   };
 
   componentDidMount() {
     this.props.getFavorites();
-    this.setState();
-    console.log("component did mount ran", this.props.favorites);
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevProps.category !== this.props.category) {
-  //     this.props.getFavorites();
-  //     console.log("component did update", this.props.favorites);
-  //   }
-  // }
 
   filterFave = item => {
     const faveArr = this.props.favorites;
     console.log("in filterfave", faveArr);
-    if (faveArr !== null) {
+    if (faveArr !== null || faveArr !== undefined) {
       const foundItem = faveArr.filter(
         products => products.displayName == item.displayName
       );
@@ -53,8 +43,6 @@ class ProductList extends Component {
   };
 
   render() {
-    console.log("state", this.state);
-    console.log("props", this.props);
     return (
       <FlatList
         data={this.props.data}

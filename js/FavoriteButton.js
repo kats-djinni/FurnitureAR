@@ -14,10 +14,6 @@ export class FavoriteButton extends Component {
   async componentDidMount() {
     const bool = await this.props.active;
     this.setState({ active: bool });
-    // await this.setState(prevState => ({
-    //   ...prevState,
-    //   active: this.props.active
-    // }));
   }
 
   componentDidUpdate(prevProps, prevState) {
