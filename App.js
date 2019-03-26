@@ -2,40 +2,29 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   View,
-  StyleSheet,
   TouchableHighlight,
   Image,
   Dimensions,
   Text
 } from "react-native";
-
+import util from 'util'
 import { deleteProduct, deleteAll } from './js/store/products'
 import { getAllFavorites } from './js/store/favorites'
 import { ViroARSceneNavigator } from "react-viro";
-
 import { Overlay } from "react-native-elements";
-import AllProducts from "./js/AllProductPage";
-import FavoritesPage from "./js/FavoritesPage";
-import FavoriteButton from "./js/FavoriteButton"
-import IntroductionsPage from "./js/InstructionsPage"
+import AllProducts from "./js/components/AllProductPage";
+import FavoritesPage from "./js/components/FavoritesPage";
+import FavoriteButton from "./js/components/FavoriteButton"
+import IntroductionsPage from "./js/components/InstructionsPage"
+import SplashScreen from "./js/components/SplashScreen"
+import styles from "./styles"
 
 
 var sharedProps = {
   apiKey: "7C313AAF-F252-430D-9124-1B1DF5CE1CA2"
 };
 
-var InitialARScene = require("./js/HomeScreen");
-
-class SplashScreen extends Component {
-  render() {
-    const viewStyles = [styles.container, { backgroundColor: 'white' }];
-    return (
-      <View style={viewStyles}>
-        <Image source={require('./js/res/HavenTest.png')}  style={{width: 250, height: 250}}/>
-      </View>
-    );
-  }
-}
+var InitialARScene = require("./js/components/HomeScreen");
 
 // eslint-disable-next-line react/no-multi-comp
 export default class ViroSample extends Component {
@@ -57,7 +46,7 @@ export default class ViroSample extends Component {
     };
   
   }
-
+  
   componentDidMount() {
     setTimeout(() => {
       this.setState({
@@ -77,6 +66,7 @@ export default class ViroSample extends Component {
       })
     }, 10000)
   }
+  
 
   productsButton = () => {
     this.setState({ isVisible: true });
@@ -95,6 +85,9 @@ export default class ViroSample extends Component {
     }, 3000)
   }
   
+  changeFavVisibility = () => {
+    this.setState({ visibleFavorites: !this.state.visibleFavorites})
+  }
   triggerItemBar = (key) => {
     this.setState({
       visibleItemBar: !this.state.visibleItemBar,
@@ -164,9 +157,9 @@ export default class ViroSample extends Component {
   homeScreenButtons = () => {
     return (
       
-      <View style={localStyles.outer}>
+      <View style={styles.outer}>
         <ViroARSceneNavigator
-          style={localStyles.arView}
+          style={styles.arView}
           {...this.state.sharedProps}
           initialScene={{ 
             scene: InitialARScene,
@@ -176,7 +169,7 @@ export default class ViroSample extends Component {
           
         />
 
-        <View style={localStyles.navBar}>
+        <View style={styles.navBar}>
           <TouchableHighlight
             underlayColor={"#00000000"}
             onPress={this.favoritesButton}>
@@ -203,7 +196,7 @@ export default class ViroSample extends Component {
         >
           <IntroductionsPage />
         </Overlay>
-        
+
         <Overlay
           isVisible={this.state.isVisible}
           overlayBackgroundColor = "#E3E8E9"
@@ -233,7 +226,7 @@ export default class ViroSample extends Component {
           height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ visibleFavorites: false })}
         >
-          <FavoritesPage />
+          <FavoritesPage favVisibility={this.changeFavVisibility}/>
         </Overlay>
         
         <Overlay
@@ -243,10 +236,10 @@ export default class ViroSample extends Component {
           height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ photoPreviewVisibility: false })}
          >
-          <Image source={{uri: this.state.screenshotUrl}} style={localStyles.backgroundImage} />
-
-          <View style={localStyles.savingIcon}>
-            <Text style={localStyles.savingMessage}>saving</Text>
+          <Image source={{uri: this.state.screenshotUrl}} style={styles.backgroundImage} />
+          
+          <View style={styles.savingIcon}>
+            <Text style={styles.savingMessage}>saving</Text>
             <Image style={{marginTop: -10}} source={require("./js/res/animation/progressBar.gif")} />
           </View>         
         </Overlay>
@@ -261,30 +254,30 @@ export default class ViroSample extends Component {
 
     return (
 
-      <View style={localStyles.outer}>
+      <View style={styles.outer}>
         <ViroARSceneNavigator
-          style={localStyles.arView}
+          style={styles.arView}
           {...this.state.sharedProps}
           initialScene={{ scene: InitialARScene }}
         />
         
-        <View style={localStyles.itemBar}>
+        <View style={styles.itemBar}>
           <TouchableHighlight
             onPress={this.deleteButton}
           >
-            <Image source={require("./js/res/icons/delete-outline.png")} style={localStyles.itemButton}/>
+            <Image source={require("./js/res/icons/delete-outline.png")} style={styles.itemButton}/>
           </TouchableHighlight>
           
           <TouchableHighlight
             onPress={this.deleteButton}
           >
-            <Image source={require("./js/res/icons/delete-outline.png")} style={localStyles.itemButton}/>
+            <Image source={require("./js/res/icons/delete-outline.png")} style={styles.itemButton}/>
           </TouchableHighlight>
           
           <TouchableHighlight
             onPress={this.deleteAllButton}
           >
-            <Image source={require("./js/res/icons/broom.png")} style={localStyles.itemButton}/>
+            <Image source={require("./js/res/icons/box-outline.png")} style={styles.itemButton}/>
           </TouchableHighlight>
 
           <FavoriteButton faveItem={item} itemIndex={itemIndex} active={this.filterFave(item)} onPress={this.singleItemFavoriteButton} />
@@ -304,7 +297,6 @@ export default class ViroSample extends Component {
     );
   }
   
-  
   render() {
     if (this.state.isLoading) {
       return <SplashScreen />
@@ -316,100 +308,6 @@ export default class ViroSample extends Component {
     }
   }
 }
-
-var localStyles = StyleSheet.create({
-  outer: {
-    flex: 1
-  },
-
-  arView: {
-    flex: 1
-  },
-
-  buttons: {
-    height: 80,
-    width: 80,
-    paddingTop: 20,
-    paddingBottom: 20,
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: "#f0f8ff",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#00000000"
-  },
-
-  navBar: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 77
-  },
-  
-  itemBar: {
-    flex: 1,
-    alignSelf: "flex-end",
-    position: "absolute",
-    top: 100,
-    // paddingTop: 85,
-    paddingBottom: 85,
-    padding: 20
-  },
-
-  itemButton: {
-    //Note: tintColor changes color of icon 
-    //(e.g. tintColor: "pink"
-    resizeMode: "cover",
-  },
-  savingIcon: {
-    flex: 1,
-    alignSelf: "center",
-    justifyContent: "flex-end"
-  },
-  savingMessage: {
-    textAlign: 'center',
-    fontFamily: "Arial",
-    fontWeight: 'bold',
-    fontSize: 20,
-    color: "#fff"
-  },
-
-  searchingPage: {
-    flex: 1,
-    alignSelf: "center",
-    justifyContent: "center"
-  },
-
-  backgroundImage: {
-    position: 'absolute',
-    top: 5,
-    left: 5,
-    bottom: 5,
-    right: 5,
-  }
-});
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 const mapStateToProps = state => ({
   products: state.products.products,

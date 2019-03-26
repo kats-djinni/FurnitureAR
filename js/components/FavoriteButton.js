@@ -6,7 +6,7 @@ import {
   TouchableHighlight
 } from "react-native"
 import { connect } from "react-redux"
-import { storeFavorite, removeFavorite } from "./store/favorites"
+import { storeFavorite, removeFavorite } from ".././store/favorites"
 
 export class FavoriteButton extends Component {
   constructor(props) {
@@ -17,20 +17,25 @@ export class FavoriteButton extends Component {
   }
 
   async componentDidMount() {
-    const bool = this.props.active
-    .then(data => {
-      this.setState({ active: data });
-    })
+    const bool = await this.props.active;
+    this.setState({ active: bool });
   }
 
-  handlePress = async () => {
-    this.setState({ active: !this.state.active });
-    if (this.state.active === false) {
-      await this.props.addFavorite(this.props.faveItem)
-    } else if (this.state.active === true) {
-      await this.props.removeFavorite(this.props.itemIndex)
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.category !== this.props.category) {
+      const bool = this.props.active;
+      this.setState({ active: bool });
     }
   }
+
+  handlePress = () => {
+    this.setState({ active: !this.state.active });
+    if (this.state.active === false) {
+      this.props.addFavorite(this.props.faveItem);
+    } else if (this.state.active === true) {
+      this.props.removeFavorite(this.props.faveItem);
+    }
+  };
 
   render() {
     return (
@@ -41,7 +46,7 @@ export class FavoriteButton extends Component {
         >
           <Image
             style={this.state.active ? styles.imageActive : styles.image}
-            source={require("./res/icons/heart-outline.png")}
+            source={require(".././res/icons/heart-outline.png")}
           />
         </TouchableHighlight>
       </View>
@@ -49,19 +54,20 @@ export class FavoriteButton extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    addFavorite: (item) => dispatch(storeFavorite(item)),
-    removeFavorite: (index) => dispatch(removeFavorite(index))
-  }
-}
+    addFavorite: item => dispatch(storeFavorite(item)),
+    removeFavorite: item => dispatch(removeFavorite(item))
+  };
+};
 
-export default connect(null, mapDispatchToProps)(FavoriteButton)
+export default connect(
+  null,
+  mapDispatchToProps
+)(FavoriteButton);
 
 var styles = StyleSheet.create({
-  btnActive: {
-
-  },
+  btnActive: {},
 
   btn: {
     flex: 1,
