@@ -15,7 +15,8 @@ import {
   removeFavorite,
   getAllFavorites,
   removeAllFavorites
-} from "./store/favorites";
+} from ".././store/favorites"
+import { pickProduct } from ".././store/products";
 import FavoriteButton from "./FavoriteButton";
 
 export class FavoritesPage extends Component {
@@ -40,8 +41,13 @@ export class FavoritesPage extends Component {
     await this.props.getFavorites();
     this.setState({
       favorites: this.props.favorites
-    });
-  };
+    })
+  }
+  
+  _handlePress = async (item) => {
+    await this.props.addPickedItem(item);
+    this.props.favVisibility();
+  }
 
   render() {
     return !this.props.favorites.length ? (
@@ -60,16 +66,18 @@ export class FavoritesPage extends Component {
             <View>
               <Card>
                 <Text style={styles.itemName}>{item.displayName}</Text>
-                <Image
-                  style={styles.faveImage}
-                  source={{ uri: item.thumbnail }}
-                />
+                  <TouchableHighlight onPress={() => this._handlePress(item)}>
+                    <Image
+                      style={styles.faveImage}
+                      source={{ uri: item.thumbnail }}
+                    />
+                  </TouchableHighlight>
               </Card>
               <TouchableHighlight onPress={() => this._deleteFavorite(item)}>
                 <View style={styles.imageContainer}>
                   <Image
                     tintColor="red"
-                    source={require("./res/icons/clear-icon.png")}
+                    source={require(".././res/icons/clear-icon.png")}
                   />
                 </View>
               </TouchableHighlight>
@@ -141,10 +149,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getFavorites: () => dispatch(getAllFavorites()),
-    removeFavorite: index => dispatch(removeFavorite(index)),
-    clearFavorites: () => dispatch(removeAllFavorites())
-  };
-};
+    removeFavorite: (index) => dispatch(removeFavorite(index)),
+    clearFavorites: () => dispatch(removeAllFavorites()),
+    addPickedItem: item => dispatch(pickProduct(item)),
+  }
+}
 
 export default connect(
   mapStateToProps,

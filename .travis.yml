@@ -1,0 +1,29 @@
+language: node_js
+node_js:
+  - node # uses most recent stable node version
+services:
+  - postgresql # starts up postgres
+addons:
+  postgresql: '9.6' # highest available postgres version on Travis
+dist: trusty # uses trusty environment
+sudo: false # when on trusty, uses Docker containers for speed
+notifications:
+  email:
+    on_success: change # default: change (only when going from broken to fixed)
+    on_failure: always # default: always (which is annoying, as it should be)
+install:
+  - npm ci # faster, goes only from package-lock
+before_script:
+  - psql -c 'create database "life-drama-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: life-drama # see README
+  api_key:
+    secure: p3eggMXZqvVrCwJO42uY5FS2IFTJrOvCyR5pipYypDaepQNi6bWMNgqbSTZnaMGImdya9C8X0fnVa2lQUjSjRmBRtJ6NR344VSuw5Jj0L7rsjcu1YY00Re+wRtzSy1y1eDl78bdZny88sUDgcY+5Wg6EacVgSjTv37XHRIuYICEtbphqgmMCIt+d5aZBFBYK2tfz3a9xnK7tEJyy1+1IDygVNQAp4BX7k8LGrE1ZKMIJJtLtFsRT/bs5tf8hjsVpO6OEzlZoAPOsxn0Feb27xc3XZWDjs9t3W2jinJGg1Iz7mmGLC6XKmcifx0TgnozxqR3SyJL9m1F6Ly9smfy8F4XY+1AMgTpvRPySHQhRhyVUlmDsoRSE0vv+6qvMJVX1C3V9xuxYu5kaEt30uMlnHG5UaWbyUqCWOpJu2hlaTiXAns8QEGXqQeQaU+LYXojcw5rwLgfPxs/mUN5O8mc2Xql2Q9kv1HtCuIyA4/5Nv2kecU4WKrIX/71laEpuQg+THi3EJsnXSXakYYhFFuaGMkzjQUzDmoJ1Y/OtAxZCHGytV5bu8bDyNlCaGqTtrCYKxZ6vxMOFYKROQ1o7d656IcwaksQGFcVICiwxaU1oD783QHP5eMFnCRaITd+BqgkRBjed577KHjQplN9Qx9903FlHlS0N8CnYqiiM8l8WbXg=
+     # see README
+
