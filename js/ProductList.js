@@ -105,7 +105,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // getProducts: () => dispatch(getAllProducts()),
   getFavorites: () => dispatch(getAllFavorites())
 });
 
