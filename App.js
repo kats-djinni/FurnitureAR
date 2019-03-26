@@ -92,7 +92,7 @@ export default class ViroSample extends Component {
       this.setState({
         searchingPlaneIcon: !this.state.searchingPlaneIcon
       })
-    }, 4000)
+    }, 3000)
   }
   
   triggerItemBar = (key) => {
@@ -217,11 +217,13 @@ export default class ViroSample extends Component {
        {/* Searching for plan icon after choosing a product from All products page */}
         <Overlay
           isVisible={this.state.searchingPlaneIcon}
-          overlayBackgroundColor = "#00000000"
+          overlayBackgroundColor = "#transparent"
           width={Dimensions.get("window").width * 0.75}
           height={Dimensions.get("window").height * 0.75}
         >
-          <Text style={localStyles.savingMessage}>Scan the room and select placement!</Text>
+          <View style={localStyles.searchingPage}>
+            <Text style={localStyles.savingMessage}>Scan the room and select placement!</Text>
+          </View>
         </Overlay>
 
         <Overlay
@@ -367,14 +369,20 @@ var localStyles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "flex-end"
   },
-  savingMessage : {
+  savingMessage: {
     textAlign: 'center',
     fontFamily: "Arial",
     fontWeight: 'bold',
     fontSize: 20,
     color: "#fff"
   },
-  
+
+  searchingPage: {
+    flex: 1,
+    alignSelf: "center",
+    justifyContent: "center"
+  },
+
   backgroundImage: {
     position: 'absolute',
     top: 5,
