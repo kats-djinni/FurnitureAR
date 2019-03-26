@@ -23,7 +23,9 @@ var sharedProps = {
   apiKey: "7C313AAF-F252-430D-9124-1B1DF5CE1CA2"
 };
 
+
 var InitialARScene = require("./js/components/HomeScreen");
+
 
 // eslint-disable-next-line react/no-multi-comp
 export default class ViroSample extends Component {
@@ -40,7 +42,8 @@ export default class ViroSample extends Component {
       screenshotUrl:'',
       photoPreviewVisibility: false,
       isLoading: true,
-      visibleInstructions: false
+      visibleInstructions: false,
+      searchingPlaneIcon: false
     };
   
   }
@@ -50,7 +53,7 @@ export default class ViroSample extends Component {
       this.setState({
         isLoading: false
       })
-    }, 3000)
+    }, 5000)
 
     setTimeout(() => {
       this.setState({
@@ -73,6 +76,15 @@ export default class ViroSample extends Component {
   changeVisibility = () => {
     this.setState({ isVisible: !this.state.isVisible });
   };
+
+  searchingPlaneIconVisibility = () => {
+    this.setState({searchingPlaneIcon: !this.state.searchingPlaneIcon})
+    setTimeout(() => {
+      this.setState({
+        searchingPlaneIcon: !this.state.searchingPlaneIcon
+      })
+    }, 3000)
+  }
   
   changeFavVisibility = () => {
     this.setState({ visibleFavorites: !this.state.visibleFavorites})
@@ -193,7 +205,19 @@ export default class ViroSample extends Component {
           height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ isVisible: false })}
         >
-          <AllProducts visibilityChange={this.changeVisibility} />
+          <AllProducts visibilityChange={this.changeVisibility} searchingPlaneIcon={this.searchingPlaneIconVisibility} />
+        </Overlay>
+
+       {/* Searching for plan icon after choosing a product from All products page */}
+        <Overlay
+          isVisible={this.state.searchingPlaneIcon}
+          overlayBackgroundColor = "#transparent"
+          width={Dimensions.get("window").width * 0.75}
+          height={Dimensions.get("window").height * 0.75}
+        >
+          <View style={styles.searchingPage}>
+            <Text style={styles.savingMessage}>Scan the room and select placement!</Text>
+          </View>
         </Overlay>
 
         <Overlay
