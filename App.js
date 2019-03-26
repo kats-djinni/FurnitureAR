@@ -7,7 +7,6 @@ import {
   Dimensions,
   Text
 } from "react-native";
-import util from 'util'
 import { deleteProduct, deleteAll } from './js/store/products'
 import { getAllFavorites } from './js/store/favorites'
 import { ViroARSceneNavigator } from "react-viro";
@@ -24,7 +23,20 @@ var sharedProps = {
   apiKey: "7C313AAF-F252-430D-9124-1B1DF5CE1CA2"
 };
 
-var InitialARScene = require("./js/components/HomeScreen");
+
+var InitialARScene = require("./js/HomeScreen");
+
+class SplashScreen extends Component {
+  render() {
+    const viewStyles = [styles.container, { backgroundColor: 'white' }];
+    return (
+      <View style={viewStyles}>
+        <Image source={require('./js/res/splashscreen.png')}  style={{width: '100%', height: '100%'}}/>
+      </View>
+    );
+  }
+}
+
 
 // eslint-disable-next-line react/no-multi-comp
 export default class ViroSample extends Component {
@@ -52,7 +64,7 @@ export default class ViroSample extends Component {
       this.setState({
         isLoading: false
       })
-    }, 3000)
+    }, 5000)
 
     setTimeout(() => {
       this.setState({

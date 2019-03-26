@@ -63,7 +63,7 @@ export default class SingleProduct extends Component {
             height={2}
             style={{
               fontFamily: "Arial",
-              fontSize: 20,
+              fontSize: 8,
               fontWeight: "400",
               fontStyle: "italic",
               color: "#fff"
