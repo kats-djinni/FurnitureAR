@@ -80,6 +80,12 @@ const styles = StyleSheet.create({
         color: "#fff"
     },
     
+    searchingIcon: {
+        flex: 1,
+        alignSelf: "center",
+        justifyContent: "center"
+    },
+
     backgroundImage: {
         position: 'absolute',
         top: 5,

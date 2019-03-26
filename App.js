@@ -215,7 +215,7 @@ export default class ViroSample extends Component {
           width={Dimensions.get("window").width * 0.75}
           height={Dimensions.get("window").height * 0.75}
         >
-          <View style={styles.searchingPage}>
+          <View style={styles.searchingIcon}>
             <Text style={styles.savingMessage}>Scan the room and select placement!</Text>
           </View>
         </Overlay>

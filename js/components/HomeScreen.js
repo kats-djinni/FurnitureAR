@@ -35,7 +35,7 @@ export default class HelloWorldSceneAR extends Component {
   _render3DObj() {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized}>
-        <ViroAmbientLight color={"#aaaaaa"} />
+        <ViroAmbientLight color={"#ffffff"} />
 
         <ViroSpotLight
           innerAngle={5}
