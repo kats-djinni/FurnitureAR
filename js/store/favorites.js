@@ -81,12 +81,18 @@ export const storeFavorite = item => {
   };
 };
 
-export const removeFavorite = index => {
+export const removeFavorite = faveItem => {
   return async dispatch => {
     try {
       const faveArr = await AsyncStorage.getItem("favorites");
       if (faveArr !== null) {
         const newFaveArr = JSON.parse(faveArr);
+
+        const indexFinder = element => {
+          return element.name == faveItem.name;
+        };
+        const index = newFaveArr.findIndex(indexFinder);
+
         if (index > -1) {
           newFaveArr.splice(index, 1);
         }
@@ -98,32 +104,6 @@ export const removeFavorite = index => {
     }
   };
 };
-
-// export const addFavoriteTest = item => {
-//   return async dispatch => {
-//     try {
-//       const faveArr = await AsyncStorage.getItem("favorites");
-//       if (faveArr !== null) {
-//         const duplicate = faveArr.filter(
-//           products => products.displayName === item.displayName
-//         );
-//         if (duplicate.length) {
-//           return true;
-//         } else {
-//           return false;
-//         }
-//       } else {
-//         return false;
-//       }
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   // const duplicate = state.favorites.filter(
-//   //     favorite => favorite.displayName === item.displayName
-//   //   );
-// };
 
 export const removeAllFavorites = () => {
   return async dispatch => {

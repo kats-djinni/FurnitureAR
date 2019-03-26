@@ -47,7 +47,7 @@ export class AllProductPage extends Component {
     this.props.filterProducts(itemValue);
   }
 
-  filterFave = async item => {
+  filterFave = item => {
     try {
       const faveArr = this.props.favorites;
       if (faveArr !== null) {

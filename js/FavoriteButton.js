@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableHighlight
-} from "react-native"
-import { connect } from "react-redux"
-import { storeFavorite, removeFavorite } from "./store/favorites"
+import { View, StyleSheet, Image, TouchableHighlight } from "react-native";
+import { connect } from "react-redux";
+import { storeFavorite, removeFavorite } from "./store/favorites";
 
 export class FavoriteButton extends Component {
   constructor(props) {
@@ -17,20 +12,19 @@ export class FavoriteButton extends Component {
   }
 
   async componentDidMount() {
-    const bool = this.props.active
-    .then(data => {
-      this.setState({ active: data });
-    })
+    const bool = await this.props.active;
+
+    await this.setState({ active: bool });
   }
 
   handlePress = async () => {
     this.setState({ active: !this.state.active });
     if (this.state.active === false) {
-      await this.props.addFavorite(this.props.faveItem)
+      await this.props.addFavorite(this.props.faveItem);
     } else if (this.state.active === true) {
-      await this.props.removeFavorite(this.props.itemIndex)
+      await this.props.removeFavorite(this.props.faveItem);
     }
-  }
+  };
 
   render() {
     return (
@@ -49,19 +43,20 @@ export class FavoriteButton extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    addFavorite: (item) => dispatch(storeFavorite(item)),
-    removeFavorite: (index) => dispatch(removeFavorite(index))
-  }
-}
+    addFavorite: item => dispatch(storeFavorite(item)),
+    removeFavorite: index => dispatch(removeFavorite(index))
+  };
+};
 
-export default connect(null, mapDispatchToProps)(FavoriteButton)
+export default connect(
+  null,
+  mapDispatchToProps
+)(FavoriteButton);
 
 var styles = StyleSheet.create({
-  btnActive: {
-
-  },
+  btnActive: {},
 
   btn: {
     flex: 1,

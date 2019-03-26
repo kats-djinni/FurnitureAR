@@ -9,34 +9,39 @@ import {
   TouchableHighlight,
   Dimensions
 } from "react-native";
-import { connect } from "react-redux"
+import { connect } from "react-redux";
 import { Card, Text, Button } from "react-native-elements";
-import { removeFavorite, getAllFavorites, removeAllFavorites } from "./store/favorites"
+import {
+  removeFavorite,
+  getAllFavorites,
+  removeAllFavorites
+} from "./store/favorites";
 import FavoriteButton from "./FavoriteButton";
 
 export class FavoritesPage extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       favorites: []
-    }
+    };
   }
 
   async componentDidMount() {
-    await this.props.getFavorites()
-    .then(favorites => {
-      this.setState({favorites: this.props.favorites})
-    })
-    .catch(console.error)
+    await this.props
+      .getFavorites()
+      .then(favorites => {
+        this.setState({ favorites: this.props.favorites });
+      })
+      .catch(console.error);
   }
 
-  _deleteFavorite = async (index) => {
-    await this.props.removeFavorite(index)
-    await this.props.getFavorites()
+  _deleteFavorite = async item => {
+    await this.props.removeFavorite(item);
+    await this.props.getFavorites();
     this.setState({
       favorites: this.props.favorites
-    })
-  }
+    });
+  };
 
   render() {
     return !this.props.favorites.length ? (
@@ -60,7 +65,7 @@ export class FavoritesPage extends Component {
                   source={{ uri: item.thumbnail }}
                 />
               </Card>
-              <TouchableHighlight onPress={() => this._deleteFavorite(index)}>
+              <TouchableHighlight onPress={() => this._deleteFavorite(item)}>
                 <View style={styles.imageContainer}>
                   <Image
                     tintColor="red"
@@ -125,20 +130,23 @@ var styles = StyleSheet.create({
   clearButton: {
     // width: Dimensions.get("window").width * 0.5
   }
-})
+});
 
-const mapStateToProps = (state) => {
-    return {
-      favorites: state.favorites.favorites
-  }
-}
+const mapStateToProps = state => {
+  return {
+    favorites: state.favorites.favorites
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     getFavorites: () => dispatch(getAllFavorites()),
-    removeFavorite: (index) => dispatch(removeFavorite(index)),
+    removeFavorite: index => dispatch(removeFavorite(index)),
     clearFavorites: () => dispatch(removeAllFavorites())
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(FavoritesPage)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FavoritesPage);

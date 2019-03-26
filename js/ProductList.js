@@ -11,9 +11,8 @@ import FavoriteButton from "./FavoriteButton";
 
 export default class ProductList extends Component {
   state = {};
+
   render() {
-    console.log("com", this.props.data);
-    console.log(this.props);
     return (
       <FlatList
         data={this.props.data}
