@@ -6,7 +6,8 @@ import {
   TouchableHighlight,
   Image,
   Dimensions,
-  Text
+  Text,
+  ImageBackground
 } from "react-native";
 
 import { deleteProduct, deleteAll } from './js/store/products'
@@ -31,7 +32,7 @@ class SplashScreen extends Component {
     const viewStyles = [styles.container, { backgroundColor: 'white' }];
     return (
       <View style={viewStyles}>
-        <Image source={require('./js/res/HavenTest.png')}  style={{width: 250, height: 250}}/>
+        <Image source={require('./js/res/splashscreen.png')}  style={{width: '100%', height: '100%'}}/>
       </View>
     );
   }
@@ -62,7 +63,7 @@ export default class ViroSample extends Component {
       this.setState({
         isLoading: false
       })
-    }, 3000)
+    }, 5000)
 
     setTimeout(() => {
       this.setState({
