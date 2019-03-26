@@ -85,6 +85,9 @@ export default class ViroSample extends Component {
     this.setState({ isVisible: !this.state.isVisible });
   };
   
+  changeFavVisibility = () => {
+    this.setState({ visibleFavorites: !this.state.visibleFavorites})
+  }
   triggerItemBar = (key) => {
     this.setState({
       visibleItemBar: !this.state.visibleItemBar,
@@ -211,7 +214,7 @@ export default class ViroSample extends Component {
           height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ visibleFavorites: false })}
         >
-          <FavoritesPage />
+          <FavoritesPage favVisibility={this.changeFavVisibility}/>
         </Overlay>
         
         <Overlay
