@@ -5,9 +5,6 @@ import React, { Component } from "react";
 import {
   StyleSheet,
   View,
-  Image,
-  TouchableHighlight,
-  FlatList,
   Picker
 } from "react-native";
 import { connect } from "react-redux";
@@ -19,7 +16,6 @@ import {
   removeFavorite
 } from "../store/favorites";
 import ProductList from "./ProductList";
-import FavoriteButton from "./FavoriteButton";
 
 export class AllProductPage extends Component {
   constructor(props) {
@@ -48,26 +44,6 @@ export class AllProductPage extends Component {
     this.props.filterProducts(itemValue);
   }
 
-  // filterFave = item => {
-  //   try {
-  //     const faveArr = this.props.favorites;
-  //     if (faveArr !== null) {
-  //       const duplicate = faveArr.filter(
-  //         products => products.displayName === item.displayName
-  //       );
-  //       if (duplicate.length) {
-  //         return true;
-  //       } else {
-  //         return false;
-  //       }
-  //     } else {
-  //       return false;
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   render() {
     const filter =
       this.state.category === "all"
@@ -76,7 +52,7 @@ export class AllProductPage extends Component {
 
     return (
       <View style={styles.listContainer}>
-        <Text h4 style={styles.AllProductPage}>
+        <Text h3 style={styles.header}>
           Choose Products
         </Text>
         <Picker
@@ -93,9 +69,7 @@ export class AllProductPage extends Component {
         <ProductList
           data={filter}
           category={this.state.category}
-          // filterFave={item => this.filterFave(item)}
           handlePress={event => this.handlePress(event)}
-          // favorites={this.props.favorites}
         />
       </View>
     );
@@ -104,27 +78,32 @@ export class AllProductPage extends Component {
 
 var styles = StyleSheet.create({
   AllProductPage: {
-    fontFamily: "Arial",
+    fontFamily: "Didot",
     fontSize: 30,
     color: "#444B50",
     textAlignVertical: "center",
     textAlign: "center",
     margin: 5
   },
+
+  header: {
+    textAlign: "center",
+    color: "#394730",
+    fontFamily: "Didot-Bold"
+  },
+
   listContainer: {
     flex: 1,
     flexDirection: "column",
     flexWrap: "wrap",
-    fontFamily: "Arial",
+    fontFamily: "Didot",
     fontSize: 50,
     color: "#000000",
     textAlignVertical: "center",
     textAlign: "center",
     margin: 20
   },
-  SingleItem: {
-    flex: 1
-  },
+
   imageContainer: {
     flex: 1
   }

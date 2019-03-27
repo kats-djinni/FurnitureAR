@@ -7,12 +7,11 @@ import {
   Text,
   StyleSheet
 } from "react-native";
+import { Card } from "react-native-elements"
 import { connect } from "react-redux";
 import FavoriteButton from "./FavoriteButton";
 import {
   getAllFavorites,
-  storeFavorite,
-  removeFavorite
 } from "../store/favorites";
 
 class ProductList extends Component {
@@ -44,9 +43,9 @@ class ProductList extends Component {
     return (
       <FlatList
         data={this.props.data}
-        renderItem={({ item, index }) => (
+        renderItem={({ item}) => (
           <View>
-            <Text>Name: {item.displayName}</Text>
+            <Card title={<Text style={styles.header}>{item.displayName}</Text>}>
             <TouchableHighlight
               onPress={() => this.props.handlePress(item)}
               style={{ width: 200, height: 200 }}
@@ -63,6 +62,7 @@ class ProductList extends Component {
                 active={this.filterFave(item)}
               />
             </View>
+            </Card>
           </View>
         )}
         keyExtractor={(item, index) => index}
@@ -73,7 +73,7 @@ class ProductList extends Component {
 
 var styles = StyleSheet.create({
   AllProductPage: {
-    fontFamily: "Arial",
+    fontFamily: "Didot",
     fontSize: 30,
     color: "#444B50",
     textAlignVertical: "center",
@@ -84,18 +84,24 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     flexWrap: "wrap",
-    fontFamily: "Arial",
+    fontFamily: "Didot",
     fontSize: 50,
     color: "#000000",
     textAlignVertical: "center",
     textAlign: "center",
     margin: 20
   },
-  SingleItem: {
-    flex: 1
+  header: {
+    color: "#394730",
+    textAlign: "center",
+    fontWeight: "300",
+    fontFamily: "Didot",
+    fontSize: 20
   },
+
   imageContainer: {
-    flex: 1
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
