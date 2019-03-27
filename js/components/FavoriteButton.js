@@ -67,16 +67,19 @@ export default connect(
 )(FavoriteButton);
 
 var styles = StyleSheet.create({
-  btnActive: {},
+  btnActive: {
+    backgroundColor: "transparent"
+  },
 
   btn: {
-    flex: 1,
-    padding: 10
+    // flex: 1,
+    // padding: 10,
+    backgroundColor: "transparent"
   },
   imageActive: {
-    tintColor: "red"
+    tintColor: "#D85A60"
   },
   image: {
-    tintColor: "white"
+    tintColor: "#CBCDCB"
   }
 });

@@ -51,46 +51,55 @@ export class FavoritesPage extends Component {
 
   render() {
     return !this.props.favorites.length ? (
-      <View style={styles.listContainer}>
-        <Text style={styles.AllProductPage}>No favorites</Text>
+      <View style={styles.container}>
+        <Card
+        >
+        <Text style={styles.noFavesText}>Looks like you don't have any favorites yet. Time to go browsing!</Text>
+        </Card>
       </View>
     ) : (
-      <View style={styles.listContainer}>
-        <Text h4 style={styles.header}>
+      <View style={styles.container}>
+        <Text h3 style={styles.header}>
           Favorites
         </Text>
 
         <FlatList
+          
           data={this.state.favorites}
           renderItem={({ item, index }) => (
-            <View>
-              <Card>
-                <Text style={styles.itemName}>{item.displayName}</Text>
+            <View style={styles.container}>
+              <Card
+                title={<Text style={styles.itemName}>{item.displayName}</Text>}
+              >
                   <TouchableHighlight onPress={() => this._handlePress(item)}>
                     <Image
                       style={styles.faveImage}
                       source={{ uri: item.thumbnail }}
                     />
                   </TouchableHighlight>
-              </Card>
               <TouchableHighlight onPress={() => this._deleteFavorite(item)}>
                 <View style={styles.imageContainer}>
                   <Image
-                    tintColor="red"
-                    source={require(".././res/icons/clear-icon.png")}
+                    style={styles.deleteButton}
+                    source={require(".././res/icons/clear-circle.png")}
                   />
                 </View>
               </TouchableHighlight>
+              </Card>
+              
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
-        />
+        >
+        
+        </FlatList>
         <Button
-          type="outline"
+          type="solid"
           raised={true}
           buttonStyle={styles.clearButton}
           title="Clear All"
-          containerStyle={{ width: Dimensions.get("window").width * 0.55 }}
+          titleProps={styles.buttonText}
+          // containerStyle={{ width: Dimensions.get("window").width * 0.55 }}
           onPress={() => this.props.clearFavorites()}
         />
       </View>
@@ -99,30 +108,27 @@ export class FavoritesPage extends Component {
 }
 
 var styles = StyleSheet.create({
-  listContainer: {
-    flex: 1,
-    flexDirection: "column",
-    flexWrap: "wrap",
-    fontFamily: "Arial",
-    fontSize: 50,
-    color: "#444B50",
+
+  container: {
     textAlignVertical: "center",
     textAlign: "center",
-    margin: 20
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center"
   },
-  SingleItem: {
-    flex: 1
-  },
+
   faveImage: {
-    resizeMode: "cover",
     width: 150,
-    height: 150
+    height: 150,
+    alignSelf: "center"
   },
 
   itemName: {
     fontWeight: "bold",
     textAlign: "center",
-    padding: 5
+    padding: 5,
+    fontFamily: "Didot",
+    fontSize: 15
   },
 
   imageContainer: {
@@ -132,11 +138,28 @@ var styles = StyleSheet.create({
 
   header: {
     textAlign: "center",
-    color: "#444B50"
+    color: "#394730",
+    fontFamily: "Didot-Bold"
+  },
+
+  noFavesText: {
+    color: "#394730",
+    fontWeight: "bold",
+    fontFamily: "Didot"
+  },
+
+  deleteButton: {
+    tintColor: "#D85A60"
   },
 
   clearButton: {
-    // width: Dimensions.get("window").width * 0.5
+    backgroundColor: "#394730"
+  },
+
+  buttonText: {
+    color: "#F8FBF5",
+    fontWeight:"bold",
+    fontFamily: "Didot"
   }
 });
 

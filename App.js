@@ -200,8 +200,8 @@ export default class ViroSample extends Component {
 
         <Overlay
           isVisible={this.state.isVisible}
-          overlayBackgroundColor = "#E3E8E9"
-          width={Dimensions.get("window").width * 0.75}
+          overlayBackgroundColor = "#F8FBF5"
+          width={Dimensions.get("window").width * 0.87}
           height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ isVisible: false })}
         >
@@ -222,7 +222,7 @@ export default class ViroSample extends Component {
 
         <Overlay
           isVisible={this.state.visibleFavorites}
-          overlayBackgroundColor="#E3E8E9"
+          overlayBackgroundColor="#F8FBF5"
           width={Dimensions.get("window").width * 0.87}
           height={Dimensions.get("window").height * 0.75}
           onBackdropPress={() => this.setState({ visibleFavorites: false })}
