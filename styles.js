@@ -61,7 +61,10 @@ const styles = StyleSheet.create({
         paddingBottom: 85,
         padding: 20
     },
-
+    eachButton: {
+        padding: 5    
+    },
+    
     itemButton: {
         resizeMode: "cover",
     },
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
 
     savingMessage : {
         textAlign: 'center',
-        fontFamily: "Arial",
+        fontFamily: "Didot-Bold",
         fontWeight: 'bold',
         fontSize: 20,
         color: "#fff"

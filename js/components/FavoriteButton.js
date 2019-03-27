@@ -73,7 +73,7 @@ var styles = StyleSheet.create({
 
   btn: {
     // flex: 1,
-    // padding: 10,
+    padding: 5,   
     backgroundColor: "transparent"
   },
   imageActive: {
