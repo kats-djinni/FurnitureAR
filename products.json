@@ -1,85 +1,191 @@
 {
   "products": [
     {
-      "name": "ikea_corner_sofa",
       "displayName": "Ektorp Seat Corner Bed Sofa",
-      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-corner-sofa/corner_sofa.obj",
+      "formatType": "OBJ",
       "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-corner-sofa/corner_sofa.mtl",
-      "formatType": "OBJ",
-      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-corner-sofa/IKEA-Ektorp_Seat_Corner_Bed_Sofa-3D.png",
-      "type": "couch"
+      "name": "ikea_corner_sofa",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-corner-sofa/corner_sofa.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-corner-sofa/imageedit_8_4056184865.png",
+      "type": "couch",
+      "dimensions": "95.7in x 34.6in x 34.6",
+      "scale": [0.3, 0.3, 0.3]
     },
     {
-      "name": "ikea_hemnes_bed",
       "displayName": "Hemnes Day Bed",
-      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-hemnes-bed/hemnes_bed.obj",
+      "formatType": "OBJ",
       "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-hemnes-bed/hemnes_bed.mtl",
-      "formatType": "OBJ",
-      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-hemnes-bed/IKEA-Hemnes_Day_Bed_Frame-3D.png",
-      "type": "bed"
+      "name": "ikea_hemnes_bed",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-hemnes-bed/hemnes_bed.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-hemnes-bed/imageedit_12_7280977535.png",
+      "type": "bed",
+      "dimensions": "41.0in x 32.6in x 78.2in",
+      "scale": [0.3, 0.3, 0.3]
     },
     {
-      "name": "ikea_hemnes_shelf",
       "displayName": "Hemnes Shelf",
-      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-hemnes-shelf/hemnes_shelf.obj",
+      "formatType": "OBJ",
       "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-hemnes-shelf/hemnes_shelf.mtl",
-      "formatType": "OBJ",
-      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-hemnes-shelf/HEMNES_Console.png",
-      "type": "shelf"
+      "name": "ikea_hemnes_shelf",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-hemnes-shelf/hemnes_shelf.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-hemnes-shelf/HEMNES_Console_small.png",
+      "type": "shelf",
+      "dimensions": "54.3in x 32.1in x 21.3in",
+      "scale": [0.5, 0.5, 0.5]
     },
     {
-      "name": "ikea_herman_chair",
       "displayName": "Herman Chair",
-      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-herman-chair/herman_chair.obj",
+      "formatType": "OBJ",
       "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-herman-chair/herman_chair.mtl",
-      "formatType": "OBJ",
-      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-herman-chair/IKEA-IKEA_Herman_Chair-3D.png",
-      "type": "chair"
+      "name": "ikea_herman_chair",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-herman-chair/herman_chair.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-herman-chair/imageedit_5_2379350304.png",
+      "type": "chair",
+      "dimensions": "20.1in x 29.5in x 20.2in",
+      "scale": [0.5, 0.5, 0.5]
     },
     {
-      "name": "ikea_bernhard_chair",
       "displayName": "Bernhard Chair",
-      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-bernhard-chair/coralchair.obj",
+      "formatType": "OBJ",
       "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-bernhard-chair/coralchair.mtl",
-      "formatType": "OBJ",
-      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-bernhard-chair/BERNHARD_Chair.png",
-      "type": "chair"
+      "name": "ikea_bernhard_chair",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-bernhard-chair/coralchair.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-bernhard-chair/BERNHARD_Chair_small.png",
+      "type": "chair",
+      "dimensions": "19.3in x 30.1in x 19.7in",
+      "scale": [0.7, 0.7, 0.7]
     },
     {
-      "name": "ikea_kallax_shelf",
       "displayName": "Kallax Shelf",
-      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-shelf-yellow/yellowshelf.obj",
+      "formatType": "OBJ",
       "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-shelf-yellow/yellowshelf.mtl",
-      "formatType": "OBJ",
-      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-shelf-yellow/KALLAX_Shelf_with_Doors_White_Yellow_Vertical.png",
-      "type": "shelf"
+      "name": "ikea_kallax_shelf",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-shelf-yellow/yellowshelf.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-shelf-yellow/KALLAX_Shelf_small.png",
+      "type": "shelf",
+      "dimensions": "70.2in x 70.8in x 24.3in",
+      "scale": [0.4, 0.4, 0.4]
     },
     {
-      "name": "ikea_vika_dining_table",
       "displayName": "Vika Dining Table",
-      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-vika-dining-table/diningtable.obj",
+      "formatType": "OBJ",
       "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-vika-dining-table/diningtable.mtl",
-      "formatType": "OBJ",
-      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-vika-dining-table/IKEA-Vika_Dinning_Table-3d.png",
-      "type": "table"
+      "name": "ikea_vika_dining_table",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-vika-dining-table/diningtable.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-vika-dining-table/imageedit_1_3324340268.png",
+      "type": "table",
+      "dimensions": "62.9in x 20.5in x 31.1in",
+      "scale": [0.3, 0.3, 0.3]
     },
     {
-      "name": "ikea_vika_manne_table",
       "displayName": "Vika Manne Table",
-      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-vika-manne-table/greentable.obj",
-      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-vika-manne-table/greentable.mtl",
       "formatType": "OBJ",
-      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-vika-manne-table/IKEA-Vika_Manne_Table-3D.png",
-      "type": "table"
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-vika-manne-table/greentable.mtl",
+      "name": "ikea_vika_manne_table",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-vika-manne-table/greentable.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-vika-manne-table/imageedit_15_5868318248.png",
+      "type": "table",
+      "dimensions": "42.5in x  29.5 x 42.5in",
+      "scale": [0.3, 0.3, 0.3]
     },
     {
-      "name": "ikea_etagere_gray_small_shelf",
       "displayName": "Kallax Shiny Gray Turquoise Shelf",
-      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-etagere-shiny+gray-turquoise/kallax-etagere-shiny+gray-turquoise.obj",
-      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-etagere-shiny+gray-turquoise/kallax-etagere-shiny+gray-turquoise.mtl",
       "formatType": "OBJ",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-etagere-shiny+gray-turquoise/kallax-etagere-shiny+gray-turquoise.mtl",
+      "name": "ikea_etagere_gray_small_shelf",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-etagere-shiny+gray-turquoise/kallax-etagere-shiny+gray-turquoise.obj",
       "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-kallax-etagere-shiny+gray-turquoise/kallax_etagere_shiny_gray_small.png",
-      "type": "shelf"
+      "type": "shelf",
+      "dimensions": "57.9in x 57.9in x 23.3in",
+      "scale": [0.3, 0.3, 0.3]
+    },
+    {
+      "displayName": "Kvart Floor Lamp",
+      "formatType": "OBJ",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-kvart-floor-lamp/kvartfloorlamp.mtl",
+      "name": "ikea_kvart_floor_lamp",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-kvart-floor-lamp/kvartfloorlamp.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-kvart-floor-lamp/imageedit_18_5027059584.png",
+      "type": "lamp",
+      "dimensions": "69.3in x 9.8in x 3.2in",
+      "scale": [0.3, 0.3, 0.3]
+    },
+    {
+      "displayName": "Marek Floor Lamp",
+      "formatType": "OBJ",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-marek-floor-lamp/marekfloorlamp.mtl",
+      "name": "ikea_marek_floor_lamp",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-marek-floor-lamp/marekfloorlamp.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-marek-floor-lamp/IKEA-Marek_Floor_Lamp_small.png",
+      "type": "lamp",
+      "dimensions": "10.0in x 38.0in x 8.0in",
+      "scale": [0.4, 0.4, 0.4]
+    },
+    {
+      "displayName": "Norraker Cart",
+      "formatType": "OBJ",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-norraker-cart/norrakercart.mtl",
+      "name": "ikea_norraker_cart",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-norraker-cart/norrakercart.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-norraker-cart/NORRAKER_RASKOG_Service.png",
+      "type": "cart",
+      "dimensions": "17.7in x 30.7in x 12.4in",
+      "scale": [0.5, 0.5, 0.5]
+    },
+    {
+      "displayName": "Liatorp TV Storage",
+      "formatType": "OBJ",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-liatorp-tv-storage/liatorptvstorage.mtl",
+      "name": "ikea_liatorp_storage",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-liatorp-tv-storage/liatorptvstorage.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-liatorp-tv-storage/LIATORP_TV_Storage.png",
+      "type": "storage",
+      "dimensions": "70.2in x 70.8in x 24.3in",
+      "scale": [0.2, 0.2, 0.2]
+    },
+    {
+      "displayName": "Pastel Chair",
+      "formatType": "OBJ",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/atech-pastel-chair/pastelchair.mtl",
+      "name": "atech_pastel_chair",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/atech-pastel-chair/pastelchair.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/atech-pastel-chair/PASTEL_Chair_small.png",
+      "type": "chair",
+      "dimensions": "24.3in x 32.8in x 24.3",
+      "scale": [0.5, 0.5, 0.5]
+    },
+    {
+      "displayName": "Sektion Storage",
+      "formatType": "OBJ",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-sektion-storage/sektionstorage.mtl",
+      "name": "ikea_sektion_storage",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-sektion-storage/sektionstorage.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-sektion-storage/SEKTION_KALVIA_Storage.png",
+      "type": "storage",
+      "dimensions": "65.2in x 72.9in",
+      "scale": [0.4, 0.4, 0.4]
+    },
+    {
+      "displayName": "Karlstad Footstool Armchair",
+      "formatType": "OBJ",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-karlstad-footstool-armchair/footstoolarmchair.mtl",
+      "name": "ikea_karlstad_footstool_armchair",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-karlstad-footstool-armchair/footstoolarmchair.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-karlstad-footstool-armchair/imageedit_10_3565981529.png",
+      "type": "storage",
+      "dimensions": "35.4in x 31.5in x 35.4",
+      "scale": [0.4, 0.4, 0.4]
+    },
+    {
+      "displayName": "Ektorp Sofa",
+      "formatType": "OBJ",
+      "mtlurl": "https://s3.amazonaws.com/furniture-ar/ikea-ektorp-sofa/ektorpsofa.mtl",
+      "name": "ikea_ektorp_sofa",
+      "objurl": "https://s3.amazonaws.com/furniture-ar/ikea-ektorp-sofa/ektorpsofa.obj",
+      "thumbnail": "https://s3.amazonaws.com/furniture-ar/ikea-ektorp-sofa/imageedit_20_2060917835.png",
+      "type": "sofa",
+      "dimensions": "33.8in x 13.6",
+      "scale": [0.5, 0.5, 0.5]
     }
   ]
 }

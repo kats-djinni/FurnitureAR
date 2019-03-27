@@ -20,6 +20,11 @@ export default class SingleProduct extends Component {
     this._onPinch = this._onPinch.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({ scale: this.props.item.scale });
+    console.log("mounted");
+  }
+
   _onRotate(rotateState, rotationFactor, source) {
     if (rotateState == 3) {
       this.setState({
@@ -45,16 +50,15 @@ export default class SingleProduct extends Component {
   }
 
   render() {
-
     //placeholder:
-    // const initialScale = this.props.initialScale
+    const initialScale = this.props.item.scale[0];
     //divisor should be initialScale of object
-    const pinchScale = (this.state.scale[0] / 0.75) * 100;
+    const pinchScale = (this.state.scale[0] / initialScale) * 100;
     ViroMaterials.createMaterials({
       ViroARPlaneSelector_Translucent: {
         lightingModel: "Constant",
         diffuseColor: "rgba(0, 128, 0, 0.3)"
-      },
+      }
     });
     return (
       <ViroNode onDrag={() => {}}>
@@ -94,7 +98,7 @@ export default class SingleProduct extends Component {
             onClick={() => this.props.triggerItem(this.props.index)}
             type="OBJ"
           />
-          </ViroARPlaneSelector>
+        </ViroARPlaneSelector>
       </ViroNode>
     );
   }

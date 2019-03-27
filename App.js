@@ -265,18 +265,21 @@ export default class ViroSample extends Component {
         <View style={styles.itemBar}>
           <TouchableOpacity
             onPress={this.deleteButton}
+            style={styles.eachButton}
           >
             <Image source={require("./js/res/icons/delete-outline.png")} style={styles.itemButton}/>
           </TouchableOpacity>
           
           <TouchableOpacity
             onPress={this.deleteButton}
+            style={styles.eachButton}
           >
             <Image source={require("./js/res/icons/delete-outline.png")} style={styles.itemButton}/>
           </TouchableOpacity>
           
           <TouchableOpacity
             onPress={this.deleteAllButton}
+            style={styles.eachButton}
           >
             <Image source={require("./js/res/icons/box-outline.png")} style={styles.itemButton}/>
           </TouchableOpacity>
