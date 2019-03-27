@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     eachButton: {
-        padding: 5    
+        paddingBottom: 20
     },
     
     itemButton: {
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 
     savingMessage : {
         textAlign: 'center',
-        fontFamily: "Didot-Bold",
+        fontFamily: "Arial",
         fontWeight: 'bold',
         fontSize: 20,
         color: "#fff"
