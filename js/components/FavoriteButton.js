@@ -3,7 +3,7 @@ import {
   View,
   StyleSheet,
   Image,
-  TouchableHighlight
+  TouchableOpacity
 } from "react-native"
 import { connect } from "react-redux"
 import { storeFavorite, removeFavorite } from ".././store/favorites"
@@ -40,7 +40,7 @@ export class FavoriteButton extends Component {
   render() {
     return (
       <View style={{ justifyContent: "center" }}>
-        <TouchableHighlight
+        <TouchableOpacity
           onPress={() => this.handlePress()}
           style={this.state.active ? styles.btnActive : styles.btn}
         >
@@ -48,7 +48,7 @@ export class FavoriteButton extends Component {
             style={this.state.active ? styles.imageActive : styles.image}
             source={require(".././res/icons/heart-outline.png")}
           />
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     );
   }

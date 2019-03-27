@@ -6,7 +6,7 @@ import {
   View,
   Image,
   FlatList,
-  TouchableHighlight,
+  TouchableOpacity,
   Dimensions
 } from "react-native";
 import { connect } from "react-redux";
@@ -53,11 +53,11 @@ export class FavoritesPage extends Component {
     return !this.props.favorites.length ? (
       <View style={styles.container}>
         <Card>
-        <Image 
-          source={require('../res/sad_face.png')} 
-          style={styles.noFavesImage}
-        />
-        <Text style={styles.noFavesText}>Looks like you don't have any favorites yet. Time to go browsing!</Text>
+          <Image 
+            source={require('../res/sad_face.png')} 
+            style={styles.noFavesImage}
+          />
+          <Text style={styles.noFavesText}>Looks like you don't have any favorites yet. Time to go browsing!</Text>
         </Card>
       </View>
     ) : (
@@ -68,25 +68,25 @@ export class FavoritesPage extends Component {
 
         <FlatList
           data={this.state.favorites}
-          renderItem={({item }) => (
+          renderItem={({item, index }) => (
             <View style={styles.container}>
               <Card
                 title={<Text style={styles.itemName}>{item.displayName}</Text>}
               >
-                  <TouchableHighlight onPress={() => this._handlePress(item)}>
+                  <TouchableOpacity onPress={() => this._handlePress(item)}>
                     <Image
                       style={styles.faveImage}
                       source={{ uri: item.thumbnail }}
                     />
-                  </TouchableHighlight>
-              <TouchableHighlight onPress={() => this._deleteFavorite(item)}>
+                  </TouchableOpacity>
+              <TouchableOpacity onPress={() => this._deleteFavorite(item)}>
                 <View style={styles.imageContainer}>
                   <Image
                     style={styles.deleteButton}
                     source={require(".././res/icons/clear-circle.png")}
                   />
                 </View>
-              </TouchableHighlight>
+              </TouchableOpacity>
               </Card>
               
             </View>
@@ -128,6 +128,7 @@ var styles = StyleSheet.create({
   noFavesImage: {
       width: 185,
       height: 185,
+      // alignSelf: "center"
   },
 
   itemName: {

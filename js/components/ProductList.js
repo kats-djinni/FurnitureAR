@@ -3,7 +3,7 @@ import {
   View,
   Image,
   FlatList,
-  TouchableHighlight,
+  TouchableOpacity,
   Text,
   StyleSheet
 } from "react-native";
@@ -46,7 +46,7 @@ class ProductList extends Component {
         renderItem={({ item}) => (
           <View>
             <Card title={<Text style={styles.header}>{item.displayName}</Text>}>
-            <TouchableHighlight
+            <TouchableOpacity
               onPress={() => this.props.handlePress(item)}
               style={{ width: 200, height: 200 }}
             >
@@ -54,7 +54,7 @@ class ProductList extends Component {
                 style={{ width: 200, height: 200 }}
                 source={{ uri: item.thumbnail }}
               />
-            </TouchableHighlight>
+            </TouchableOpacity>
             <View style={styles.imageContainer}>
               <FavoriteButton
                 faveItem={item}
