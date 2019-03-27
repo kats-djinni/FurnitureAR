@@ -61,7 +61,10 @@ const styles = StyleSheet.create({
         paddingBottom: 85,
         padding: 20
     },
-
+    eachButton: {
+        paddingBottom: 20
+    },
+    
     itemButton: {
         resizeMode: "cover",
     },

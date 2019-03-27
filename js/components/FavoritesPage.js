@@ -70,7 +70,7 @@ export class FavoritesPage extends Component {
           data={this.state.favorites}
           renderItem={({item }) => (
             <View style={styles.container}>
-              <Card>
+              <Card
                 title={<Text style={styles.itemName}>{item.displayName}</Text>}
               >
                   <TouchableHighlight onPress={() => this._handlePress(item)}>
