@@ -7,12 +7,10 @@ import {
   Text,
   StyleSheet
 } from "react-native";
-import { Card } from "react-native-elements"
+import { Card } from "react-native-elements";
 import { connect } from "react-redux";
 import FavoriteButton from "./FavoriteButton";
-import {
-  getAllFavorites,
-} from "../store/favorites";
+import { getAllFavorites } from "../store/favorites";
 
 class ProductList extends Component {
   state = {
@@ -43,25 +41,26 @@ class ProductList extends Component {
     return (
       <FlatList
         data={this.props.data}
-        renderItem={({ item}) => (
+        renderItem={({ item }) => (
           <View>
             <Card title={<Text style={styles.header}>{item.displayName}</Text>}>
-            <TouchableOpacity
-              onPress={() => this.props.handlePress(item)}
-              style={{ width: 200, height: 200 }}
-            >
-              <Image
+              <TouchableOpacity
+                onPress={() => this.props.handlePress(item)}
                 style={{ width: 200, height: 200 }}
-                source={{ uri: item.thumbnail }}
-              />
-            </TouchableOpacity>
-            <View style={styles.imageContainer}>
-              <FavoriteButton
-                faveItem={item}
-                category={this.props.category}
-                active={this.filterFave(item)}
-              />
-            </View>
+              >
+                <Image
+                  style={{ width: 200, height: 200 }}
+                  source={{ uri: item.thumbnail }}
+                />
+              </TouchableOpacity>
+              <Text style={styles.text}>Dimensions: {item.dimensions}</Text>
+              <View style={styles.imageContainer}>
+                <FavoriteButton
+                  faveItem={item}
+                  category={this.props.category}
+                  active={this.filterFave(item)}
+                />
+              </View>
             </Card>
           </View>
         )}
@@ -97,6 +96,14 @@ var styles = StyleSheet.create({
     fontWeight: "300",
     fontFamily: "Didot",
     fontSize: 20
+  },
+  text: {
+    marginBottom: 10,
+    color: "#394730",
+    textAlign: "center",
+    fontWeight: "300",
+    fontFamily: "Didot",
+    fontSize: 15
   },
 
   imageContainer: {
