@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   View,
-  TouchableHighlight,
+  TouchableOpacity,
   Image,
   Dimensions,
   Text
@@ -171,21 +171,21 @@ export default class ViroSample extends Component {
         />
 
         <View style={styles.navBar}>
-          <TouchableHighlight
+          <TouchableOpacity
             underlayColor={"#00000000"}
             onPress={this.favoritesButton}>
             <Image width="100" height="100" source={require("./js/res/icons/heart-outline.png")} accessibilityLabel="heart icon" />
-          </TouchableHighlight>
+          </TouchableOpacity>
 
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={this.productsButton}>
             <Image source={require("./js/res/icons/add-circle.png")} accessibilityLabel="plus icon"/>
-          </TouchableHighlight>
+          </TouchableOpacity>
 
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={this.takeScreenShot}>
             <Image source={require("./js/res/icons/camera.png")} accessibilityLabel="camera icon"/>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
 
         <Overlay
@@ -263,23 +263,23 @@ export default class ViroSample extends Component {
         />
         
         <View style={styles.itemBar}>
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={this.deleteButton}
           >
             <Image source={require("./js/res/icons/delete-outline.png")} style={styles.itemButton}/>
-          </TouchableHighlight>
+          </TouchableOpacity>
           
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={this.deleteButton}
           >
             <Image source={require("./js/res/icons/delete-outline.png")} style={styles.itemButton}/>
-          </TouchableHighlight>
+          </TouchableOpacity>
           
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={this.deleteAllButton}
           >
             <Image source={require("./js/res/icons/box-outline.png")} style={styles.itemButton}/>
-          </TouchableHighlight>
+          </TouchableOpacity>
 
           <FavoriteButton faveItem={item} itemIndex={itemIndex} active={this.filterFave(item)} onPress={this.singleItemFavoriteButton} />
     
