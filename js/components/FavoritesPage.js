@@ -52,8 +52,11 @@ export class FavoritesPage extends Component {
   render() {
     return !this.props.favorites.length ? (
       <View style={styles.container}>
-        <Card
-        >
+        <Card>
+        <Image 
+          source={require('../res/sad_face.png')} 
+          style={styles.noFavesImage}
+        />
         <Text style={styles.noFavesText}>Looks like you don't have any favorites yet. Time to go browsing!</Text>
         </Card>
       </View>
@@ -64,11 +67,10 @@ export class FavoritesPage extends Component {
         </Text>
 
         <FlatList
-          
           data={this.state.favorites}
-          renderItem={({ item, index }) => (
+          renderItem={({item }) => (
             <View style={styles.container}>
-              <Card
+              <Card>
                 title={<Text style={styles.itemName}>{item.displayName}</Text>}
               >
                   <TouchableHighlight onPress={() => this._handlePress(item)}>
@@ -123,6 +125,11 @@ var styles = StyleSheet.create({
     alignSelf: "center"
   },
 
+  noFavesImage: {
+      width: 185,
+      height: 185,
+  },
+
   itemName: {
     fontWeight: "bold",
     textAlign: "center",
@@ -145,7 +152,8 @@ var styles = StyleSheet.create({
   noFavesText: {
     color: "#394730",
     fontWeight: "bold",
-    fontFamily: "Didot"
+    fontFamily: "Didot",
+    fontSize: 35
   },
 
   deleteButton: {
